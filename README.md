@@ -20,6 +20,6 @@
 ![](http://ww4.sinaimg.cn/large/c6a1cfeagw1f9p48oumbkg208g0fd0wo.gif)
 
 ### V1.2
-* 实现了第二个用户之后送礼物替换较早的弹幕效果(待完善)
+* 实现了第二个用户之后送礼物替换较早的弹幕效果(完善)
 
 ![](http://ww3.sinaimg.cn/large/c6a1cfeagw1f9p51eh3ltg208g0fdwif.gif)
