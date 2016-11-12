@@ -23,3 +23,9 @@
 * 实现了第二个用户之后送礼物替换较早的弹幕效果(完善)
 
 ![](http://ww3.sinaimg.cn/large/c6a1cfeagw1f9p51eh3ltg208g0fdwif.gif)
+
+### V1.3
+* 实现了上面的视图移除后，正在连击的下面的视图移动到上面的效果
+
+![](http://ww3.sinaimg.cn/large/c6a1cfeagw1f9p6jibv9gg208g0fdq3i.gif)
+

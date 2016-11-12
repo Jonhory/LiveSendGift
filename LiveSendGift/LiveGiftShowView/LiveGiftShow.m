@@ -42,26 +42,12 @@ static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移
                             NSInteger result = [viewNow.creatDate compare:viewAgo.creatDate];
                             if (result == 1) {
                                 //替换模型之后 字典的key要改变
-                                NSString * oldKey = [NSString stringWithFormat:@"%@%@",viewAgo.model.user.name,viewAgo.model.giftModel.type];
-                                //找到时间早的那个视图 替换模型 重置数字
-                                viewAgo.model = model;
-                                [viewAgo resetTimeAndNumberFrom:1];
-                                [self.giftModelDict removeObjectForKey:oldKey];
-                                NSLog(@"%@",self.giftModelDict);
-                                [self.giftModelDict setObject:viewAgo forKey:dictKey];
-                                NSLog(@"%@",self.giftModelDict);
+                                [self resetView:viewAgo nowModel:model];
                                 return;
                             }
                             else{//否则viewNow是更早的时间 替换该视图
                                 //替换模型之后 字典的key要改变
-                                NSString * oldKey = [NSString stringWithFormat:@"%@%@",viewNow.model.user.name,viewNow.model.giftModel.type];
-                                //找到时间早的那个视图 替换模型 重置数字
-                                viewNow.model = model;
-                                [viewNow resetTimeAndNumberFrom:1];
-                                [self.giftModelDict removeObjectForKey:oldKey];
-                                NSLog(@"%@",self.giftModelDict);
-                                [self.giftModelDict setObject:viewNow forKey:dictKey];
-                                NSLog(@"%@",self.giftModelDict);
+                                [self resetView:viewNow nowModel:model];
                                 return;
                             }
                         }
@@ -89,7 +75,7 @@ static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移
                 make.height.equalTo(@((kViewHeight+kGiftViewMargin) * [weakSelf.giftModelDict allKeys].count));
             }];
             
-            NSLog(@"%@",weakSelf.giftModelDict);
+//            NSLog(@"%@",weakSelf.giftModelDict);
         };
         
         view.model = model;
@@ -117,15 +103,33 @@ static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移
     }else{//存在该用户 修改数值
         [showView addGiftNumberFrom:1];
 //        NSLog(@"获取第N次创建的数字 %zi",[showView.numberView getLastNumber]);
+        if ([self.giftViewArr containsObject:kGiftViewRemoved]) {
+            NSLog(@"交换之前%@",self.giftViewArr);
+            if ([self.giftViewArr indexOfObject:kGiftViewRemoved] == 0) {
+                [UIView animateWithDuration:0.25 animations:^{
+                    CGRect frame = showView.frame;
+                    frame.origin.y = 0;
+                    showView.frame = frame;
+                } completion:^(BOOL finished) {
+                    if (finished) {
+                        showView.index = 0;
+                        [self .giftViewArr exchangeObjectAtIndex:0 withObjectAtIndex:1];
+                        NSLog(@"交换之后%@",self.giftViewArr);
+                    }
+                }];
+            }
+        }
+        
+//        NSLog(@"%@",self.giftViewArr);
 //        for (int i = 0; i<self.giftViewArr.count; i++) {
 //            LiveGiftShowView * view = self.giftViewArr[i];
 //            if (view && [view isKindOfClass:[LiveGiftShowView class]]) {//安全判断
-//                NSLog(@"用户%@送了%zi个礼物",[showView getUserName],[view.numberView getLastNumber]);
+////                NSLog(@"用户%@送了%zi个礼物",[showView getUserName],[view.numberView getLastNumber]);
 //                if (i>0) {//第一个用户之后的用户
 //                    LiveGiftShowView * firstView = self.giftViewArr[0];//第一个用户
-//                    if (view && [view isKindOfClass:[LiveGiftShowView class]]) {//安全判断
-//                        if ([view.numberView getLastNumber] > [firstView.numberView getLastNumber]){
-//                            
+//                    if (firstView && [firstView isKindOfClass:[LiveGiftShowView class]]) {//安全判断
+//                        if ([view.numberView getLastNumber] > [firstView.numberView getLastNumber] && view.isAnimation == NO && firstView.isAnimation == NO){//如果后一个弹幕数字大于第一个弹幕数字
+//                            NSLog(@"如果后一个弹幕数字大于第一个弹幕数字");
 //                        }
 //                    }
 //                }
@@ -135,6 +139,18 @@ static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移
         
     }
     
+}
+
+- (void)resetView:(LiveGiftShowView *)view nowModel:(LiveGiftShowModel *)model{
+    NSString * oldKey = [NSString stringWithFormat:@"%@%@",view.model.user.name,view.model.giftModel.type];
+    NSString * dictKey = [NSString stringWithFormat:@"%@%@",model.user.name,model.giftModel.type];
+    //找到时间早的那个视图 替换模型 重置数字
+    view.model = model;
+    [view resetTimeAndNumberFrom:1];
+    [self.giftModelDict removeObjectForKey:oldKey];
+//    NSLog(@"%@",self.giftModelDict);
+    [self.giftModelDict setObject:view forKey:dictKey];
+//    NSLog(@"%@",self.giftModelDict);
 }
 
 - (NSMutableDictionary *)giftModelDict{

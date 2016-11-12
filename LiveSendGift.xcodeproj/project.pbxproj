@@ -13,6 +13,7 @@
 		BB4BF1B61DD60ECF0017DA99 /* LiveGiftShowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1B51DD60ECF0017DA99 /* LiveGiftShowModel.m */; };
 		BB4BF1B91DD60F030017DA99 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1B81DD60F030017DA99 /* UserModel.m */; };
 		BB5E4F201DD5E77C005CBFC5 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5E4F1F1DD5E77C005CBFC5 /* SecondViewController.m */; };
+		BB6CC2BE1DD6C642003F58BC /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */; };
 		BBD12B281DD59437007D31D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B271DD59437007D31D6 /* main.m */; };
 		BBD12B2B1DD59437007D31D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B2A1DD59437007D31D6 /* AppDelegate.m */; };
 		BBD12B2E1DD59437007D31D6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B2D1DD59437007D31D6 /* ViewController.m */; };
@@ -37,6 +38,7 @@
 		BB4BF1B81DD60F030017DA99 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 		BB5E4F1E1DD5E77C005CBFC5 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		BB5E4F1F1DD5E77C005CBFC5 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+Log.m"; sourceTree = "<group>"; };
 		BBD12B231DD59437007D31D6 /* LiveSendGift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveSendGift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBD12B271DD59437007D31D6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BBD12B291DD59437007D31D6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				BB4BF1AC1DD6013E0017DA99 /* ThirdViewController.m */,
 				BB4BF1B71DD60F030017DA99 /* UserModel.h */,
 				BB4BF1B81DD60F030017DA99 /* UserModel.m */,
+				BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */,
 				BBD12B2F1DD59437007D31D6 /* Main.storyboard */,
 				BBD12B321DD59437007D31D6 /* Assets.xcassets */,
 				BBD12B341DD59437007D31D6 /* LaunchScreen.storyboard */,
@@ -292,6 +295,7 @@
 				BBD12B401DD59839007D31D6 /* ZYGiftListModel.m in Sources */,
 				BBD12B751DD59C1B007D31D6 /* LiveGiftShowView.m in Sources */,
 				BBD12B281DD59437007D31D6 /* main.m in Sources */,
+				BB6CC2BE1DD6C642003F58BC /* Foundation+Log.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
