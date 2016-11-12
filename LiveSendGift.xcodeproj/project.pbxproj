@@ -1,0 +1,458 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8995D2E5755A4D6C53754E36 /* libPods-LiveSendGift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CB2247965468A4CEE9A5783 /* libPods-LiveSendGift.a */; };
+		BB4BF1AD1DD6013E0017DA99 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1AC1DD6013E0017DA99 /* ThirdViewController.m */; };
+		BB4BF1B31DD606C90017DA99 /* LiveGiftShow.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1B21DD606C90017DA99 /* LiveGiftShow.m */; };
+		BB4BF1B61DD60ECF0017DA99 /* LiveGiftShowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1B51DD60ECF0017DA99 /* LiveGiftShowModel.m */; };
+		BB4BF1B91DD60F030017DA99 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1B81DD60F030017DA99 /* UserModel.m */; };
+		BB5E4F201DD5E77C005CBFC5 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5E4F1F1DD5E77C005CBFC5 /* SecondViewController.m */; };
+		BBD12B281DD59437007D31D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B271DD59437007D31D6 /* main.m */; };
+		BBD12B2B1DD59437007D31D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B2A1DD59437007D31D6 /* AppDelegate.m */; };
+		BBD12B2E1DD59437007D31D6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B2D1DD59437007D31D6 /* ViewController.m */; };
+		BBD12B311DD59437007D31D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBD12B2F1DD59437007D31D6 /* Main.storyboard */; };
+		BBD12B331DD59437007D31D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBD12B321DD59437007D31D6 /* Assets.xcassets */; };
+		BBD12B361DD59437007D31D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBD12B341DD59437007D31D6 /* LaunchScreen.storyboard */; };
+		BBD12B401DD59839007D31D6 /* ZYGiftListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B3F1DD59839007D31D6 /* ZYGiftListModel.m */; };
+		BBD12B751DD59C1B007D31D6 /* LiveGiftShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B741DD59C1B007D31D6 /* LiveGiftShowView.m */; };
+		BBD12B781DD59EFF007D31D6 /* LiveGiftShowNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B771DD59EFF007D31D6 /* LiveGiftShowNumberView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5CB2247965468A4CEE9A5783 /* libPods-LiveSendGift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LiveSendGift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7729173E74450786A74B18B1 /* Pods-LiveSendGift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveSendGift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LiveSendGift/Pods-LiveSendGift.debug.xcconfig"; sourceTree = "<group>"; };
+		BB4BF1AB1DD6013E0017DA99 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
+		BB4BF1AC1DD6013E0017DA99 /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
+		BB4BF1B11DD606C90017DA99 /* LiveGiftShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShow.h; sourceTree = "<group>"; };
+		BB4BF1B21DD606C90017DA99 /* LiveGiftShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftShow.m; sourceTree = "<group>"; };
+		BB4BF1B41DD60ECF0017DA99 /* LiveGiftShowModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShowModel.h; sourceTree = "<group>"; };
+		BB4BF1B51DD60ECF0017DA99 /* LiveGiftShowModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftShowModel.m; sourceTree = "<group>"; };
+		BB4BF1B71DD60F030017DA99 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
+		BB4BF1B81DD60F030017DA99 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
+		BB5E4F1E1DD5E77C005CBFC5 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		BB5E4F1F1DD5E77C005CBFC5 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		BBD12B231DD59437007D31D6 /* LiveSendGift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveSendGift.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBD12B271DD59437007D31D6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BBD12B291DD59437007D31D6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		BBD12B2A1DD59437007D31D6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		BBD12B2C1DD59437007D31D6 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		BBD12B2D1DD59437007D31D6 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		BBD12B301DD59437007D31D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BBD12B321DD59437007D31D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BBD12B351DD59437007D31D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BBD12B371DD59437007D31D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BBD12B3E1DD59839007D31D6 /* ZYGiftListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYGiftListModel.h; sourceTree = "<group>"; };
+		BBD12B3F1DD59839007D31D6 /* ZYGiftListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYGiftListModel.m; sourceTree = "<group>"; };
+		BBD12B731DD59C1B007D31D6 /* LiveGiftShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShowView.h; sourceTree = "<group>"; };
+		BBD12B741DD59C1B007D31D6 /* LiveGiftShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftShowView.m; sourceTree = "<group>"; };
+		BBD12B761DD59EFF007D31D6 /* LiveGiftShowNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShowNumberView.h; sourceTree = "<group>"; };
+		BBD12B771DD59EFF007D31D6 /* LiveGiftShowNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftShowNumberView.m; sourceTree = "<group>"; };
+		C01F1BB1DE7BA1EFE3269BDC /* Pods-LiveSendGift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveSendGift.release.xcconfig"; path = "Pods/Target Support Files/Pods-LiveSendGift/Pods-LiveSendGift.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BBD12B201DD59437007D31D6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8995D2E5755A4D6C53754E36 /* libPods-LiveSendGift.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BBD12B1A1DD59437007D31D6 = {
+			isa = PBXGroup;
+			children = (
+				BBD12B251DD59437007D31D6 /* LiveSendGift */,
+				BBD12B241DD59437007D31D6 /* Products */,
+				E80023422568FECC1F86D560 /* Pods */,
+				C6E7558AED25B233D80BF99D /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		BBD12B241DD59437007D31D6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BBD12B231DD59437007D31D6 /* LiveSendGift.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BBD12B251DD59437007D31D6 /* LiveSendGift */ = {
+			isa = PBXGroup;
+			children = (
+				BBD12B3D1DD5982E007D31D6 /* ZYGiftListModel */,
+				BBD12B721DD59C09007D31D6 /* LiveGiftShowView */,
+				BBD12B291DD59437007D31D6 /* AppDelegate.h */,
+				BBD12B2A1DD59437007D31D6 /* AppDelegate.m */,
+				BBD12B2C1DD59437007D31D6 /* ViewController.h */,
+				BBD12B2D1DD59437007D31D6 /* ViewController.m */,
+				BB5E4F1E1DD5E77C005CBFC5 /* SecondViewController.h */,
+				BB5E4F1F1DD5E77C005CBFC5 /* SecondViewController.m */,
+				BB4BF1AB1DD6013E0017DA99 /* ThirdViewController.h */,
+				BB4BF1AC1DD6013E0017DA99 /* ThirdViewController.m */,
+				BB4BF1B71DD60F030017DA99 /* UserModel.h */,
+				BB4BF1B81DD60F030017DA99 /* UserModel.m */,
+				BBD12B2F1DD59437007D31D6 /* Main.storyboard */,
+				BBD12B321DD59437007D31D6 /* Assets.xcassets */,
+				BBD12B341DD59437007D31D6 /* LaunchScreen.storyboard */,
+				BBD12B371DD59437007D31D6 /* Info.plist */,
+				BBD12B261DD59437007D31D6 /* Supporting Files */,
+			);
+			path = LiveSendGift;
+			sourceTree = "<group>";
+		};
+		BBD12B261DD59437007D31D6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BBD12B271DD59437007D31D6 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BBD12B3D1DD5982E007D31D6 /* ZYGiftListModel */ = {
+			isa = PBXGroup;
+			children = (
+				BBD12B3E1DD59839007D31D6 /* ZYGiftListModel.h */,
+				BBD12B3F1DD59839007D31D6 /* ZYGiftListModel.m */,
+			);
+			path = ZYGiftListModel;
+			sourceTree = "<group>";
+		};
+		BBD12B721DD59C09007D31D6 /* LiveGiftShowView */ = {
+			isa = PBXGroup;
+			children = (
+				BB4BF1B11DD606C90017DA99 /* LiveGiftShow.h */,
+				BB4BF1B21DD606C90017DA99 /* LiveGiftShow.m */,
+				BBD12B731DD59C1B007D31D6 /* LiveGiftShowView.h */,
+				BBD12B741DD59C1B007D31D6 /* LiveGiftShowView.m */,
+				BBD12B761DD59EFF007D31D6 /* LiveGiftShowNumberView.h */,
+				BBD12B771DD59EFF007D31D6 /* LiveGiftShowNumberView.m */,
+				BB4BF1B41DD60ECF0017DA99 /* LiveGiftShowModel.h */,
+				BB4BF1B51DD60ECF0017DA99 /* LiveGiftShowModel.m */,
+			);
+			path = LiveGiftShowView;
+			sourceTree = "<group>";
+		};
+		C6E7558AED25B233D80BF99D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5CB2247965468A4CEE9A5783 /* libPods-LiveSendGift.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E80023422568FECC1F86D560 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7729173E74450786A74B18B1 /* Pods-LiveSendGift.debug.xcconfig */,
+				C01F1BB1DE7BA1EFE3269BDC /* Pods-LiveSendGift.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BBD12B221DD59437007D31D6 /* LiveSendGift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BBD12B3A1DD59437007D31D6 /* Build configuration list for PBXNativeTarget "LiveSendGift" */;
+			buildPhases = (
+				B15CA0342F07BFFCD48B5D0A /* [CP] Check Pods Manifest.lock */,
+				BBD12B1F1DD59437007D31D6 /* Sources */,
+				BBD12B201DD59437007D31D6 /* Frameworks */,
+				BBD12B211DD59437007D31D6 /* Resources */,
+				1696ABCD4D0D5D963EB00486 /* [CP] Embed Pods Frameworks */,
+				E35D53A525BFCA18EE60A54F /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LiveSendGift;
+			productName = LiveSendGift;
+			productReference = BBD12B231DD59437007D31D6 /* LiveSendGift.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BBD12B1B1DD59437007D31D6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = com.wujh;
+				TargetAttributes = {
+					BBD12B221DD59437007D31D6 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = BBD12B1E1DD59437007D31D6 /* Build configuration list for PBXProject "LiveSendGift" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BBD12B1A1DD59437007D31D6;
+			productRefGroup = BBD12B241DD59437007D31D6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BBD12B221DD59437007D31D6 /* LiveSendGift */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BBD12B211DD59437007D31D6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BBD12B361DD59437007D31D6 /* LaunchScreen.storyboard in Resources */,
+				BBD12B331DD59437007D31D6 /* Assets.xcassets in Resources */,
+				BBD12B311DD59437007D31D6 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1696ABCD4D0D5D963EB00486 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LiveSendGift/Pods-LiveSendGift-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B15CA0342F07BFFCD48B5D0A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E35D53A525BFCA18EE60A54F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LiveSendGift/Pods-LiveSendGift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BBD12B1F1DD59437007D31D6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BBD12B2E1DD59437007D31D6 /* ViewController.m in Sources */,
+				BBD12B2B1DD59437007D31D6 /* AppDelegate.m in Sources */,
+				BB4BF1B61DD60ECF0017DA99 /* LiveGiftShowModel.m in Sources */,
+				BB4BF1B91DD60F030017DA99 /* UserModel.m in Sources */,
+				BB4BF1AD1DD6013E0017DA99 /* ThirdViewController.m in Sources */,
+				BBD12B781DD59EFF007D31D6 /* LiveGiftShowNumberView.m in Sources */,
+				BB5E4F201DD5E77C005CBFC5 /* SecondViewController.m in Sources */,
+				BB4BF1B31DD606C90017DA99 /* LiveGiftShow.m in Sources */,
+				BBD12B401DD59839007D31D6 /* ZYGiftListModel.m in Sources */,
+				BBD12B751DD59C1B007D31D6 /* LiveGiftShowView.m in Sources */,
+				BBD12B281DD59437007D31D6 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		BBD12B2F1DD59437007D31D6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BBD12B301DD59437007D31D6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		BBD12B341DD59437007D31D6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BBD12B351DD59437007D31D6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BBD12B381DD59437007D31D6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BBD12B391DD59437007D31D6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BBD12B3B1DD59437007D31D6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7729173E74450786A74B18B1 /* Pods-LiveSendGift.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = LiveSendGift/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jonhory.LiveSendGift;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BBD12B3C1DD59437007D31D6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C01F1BB1DE7BA1EFE3269BDC /* Pods-LiveSendGift.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = LiveSendGift/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jonhory.LiveSendGift;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BBD12B1E1DD59437007D31D6 /* Build configuration list for PBXProject "LiveSendGift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BBD12B381DD59437007D31D6 /* Debug */,
+				BBD12B391DD59437007D31D6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BBD12B3A1DD59437007D31D6 /* Build configuration list for PBXNativeTarget "LiveSendGift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BBD12B3B1DD59437007D31D6 /* Debug */,
+				BBD12B3C1DD59437007D31D6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BBD12B1B1DD59437007D31D6 /* Project object */;
+}
