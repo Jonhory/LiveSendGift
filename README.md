@@ -10,4 +10,6 @@
 ### V1.0
 * 大致实现了不同用户增加弹幕的效果
 
+![](http://ww4.sinaimg.cn/large/c6a1cfeagw1f9p4246hkgg208g0fdmyy.gif)
+
 
