@@ -51,7 +51,19 @@ static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移
                                 [self.giftModelDict setObject:viewAgo forKey:dictKey];
                                 NSLog(@"%@",self.giftModelDict);
                                 return;
-                            }//TODO:否则viewNow是更早的时间 替换该视图
+                            }
+                            else{//否则viewNow是更早的时间 替换该视图
+                                //替换模型之后 字典的key要改变
+                                NSString * oldKey = [NSString stringWithFormat:@"%@%@",viewNow.model.user.name,viewNow.model.giftModel.type];
+                                //找到时间早的那个视图 替换模型 重置数字
+                                viewNow.model = model;
+                                [viewNow resetTimeAndNumberFrom:1];
+                                [self.giftModelDict removeObjectForKey:oldKey];
+                                NSLog(@"%@",self.giftModelDict);
+                                [self.giftModelDict setObject:viewNow forKey:dictKey];
+                                NSLog(@"%@",self.giftModelDict);
+                                return;
+                            }
                         }
                     }
                 }
