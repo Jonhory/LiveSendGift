@@ -31,7 +31,7 @@
 - (UserModel *)user1{
     if (!_user1) {
         _user1 = [UserModel random];
-//        _user1.name = @"哈哈哈啊哈";
+        _user1.name = @"依依依依";
     }
     return _user1;
 }
@@ -39,7 +39,7 @@
 - (UserModel *)user2{
     if (!_user2) {
         _user2 = [UserModel random];
-//        _user2.name = @"呵呵呵";
+        _user2.name = @"热热热热";
     }
     return _user2;
 }
@@ -79,10 +79,10 @@
 
 - (void)bbb:(UIButton *)btn{
     if (btn.tag == 101) {
-        LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[1] userModel:[UserModel random]];
+        LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[1] userModel:self.user1];
         [self.giftShow addGiftListModel:listModel];
     }else{
-        LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[0] userModel:[UserModel random]];
+        LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[0] userModel:self.user2];
         [self.giftShow addGiftListModel:listModel];
     }
 }

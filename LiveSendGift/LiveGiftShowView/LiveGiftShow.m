@@ -27,8 +27,7 @@ static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移
         return;
     }
     //
-    NSString * dictKey = model.user.name;
-//    NSString * dictKey = [NSString stringWithFormat:@"%@%@",model.user.name,model.giftModel.type];
+    NSString * dictKey = [NSString stringWithFormat:@"%@%@",model.user.name,model.giftModel.type];
     
     LiveGiftShowView * showView = [self.giftModelDict objectForKey:dictKey];
     if (!showView && ![showView isKindOfClass:[LiveGiftShowView class]]) {//如果不存在该用户 新建
@@ -68,9 +67,9 @@ static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移
         __weak __typeof(self)weakSelf = self;
         view.liveGiftShowViewTimeOut = ^(){//视图移除之后
             
-//            LiveGiftShowView * showView = [weakSelf.giftModelDict objectForKey:dictKey];
+            LiveGiftShowView * showView = [weakSelf.giftModelDict objectForKey:dictKey];
             //从数组移除
-//            [weakSelf.giftViewArr replaceObjectAtIndex:showView.index withObject:kGiftViewRemoved];
+            [weakSelf.giftViewArr replaceObjectAtIndex:showView.index withObject:kGiftViewRemoved];
             
             //从字典移除
             [weakSelf.giftModelDict removeObjectForKey:dictKey];
@@ -86,13 +85,13 @@ static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移
         [self addSubview:view];
         
         //将视图加入数组
-//        if ([self.giftViewArr containsObject:kGiftViewRemoved]) {
-//            view.index = index;
-//            [self.giftViewArr replaceObjectAtIndex:index withObject:view];
-//        }else {
+        if ([self.giftViewArr containsObject:kGiftViewRemoved]) {
+            view.index = index;
+            [self.giftViewArr replaceObjectAtIndex:index withObject:view];
+        }else {
             view.index = self.giftViewArr.count;
             [self.giftViewArr addObject:view];
-//        }
+        }
 
         
         //将视图加入字典

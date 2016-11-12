@@ -13,3 +13,9 @@
 ![](http://ww4.sinaimg.cn/large/c6a1cfeagw1f9p4246hkgg208g0fdmyy.gif)
 
 
+### V1.2
+* 实现了用户连续发送数字增加效果
+* 实现了新增弹幕从空位出现的效果
+
+![](http://ww4.sinaimg.cn/large/c6a1cfeagw1f9p48oumbkg208g0fd0wo.gif)
+
