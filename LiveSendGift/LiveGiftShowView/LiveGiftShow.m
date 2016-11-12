@@ -10,7 +10,7 @@
 #import "ZYGiftListModel.h"
 #import "LiveGiftShowView.h"
 
-static CGFloat const kGiftViewMargin = 50;/**< 两个弹幕之间的高度差 */
+static CGFloat const kGiftViewMargin = 50.0;/**< 两个弹幕之间的高度差 */
 static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移除的key */
 static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
 

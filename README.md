@@ -1,4 +1,4 @@
-![](http://ww2.sinaimg.cn/large/c6a1cfeagw1f9ph4kcz8kj20em0o6756.jpg)
+![](http://ww4.sinaimg.cn/large/c6a1cfeagw1f9ptsozcu5j20b206rt92.jpg)
 
 
 按照惯例，先贴[GitHub源码地址](https://github.com/JonHory/LiveSendGift)
@@ -7,6 +7,7 @@
 * [目标](#目标)
 * [版本更新说明](#版本更新说明)
 * [快速使用](#快速使用)
+* [自定义配置](#自定义配置)
 
 ##<a id="目标"></a>目标:
 
@@ -81,3 +82,24 @@ LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[3]
 [self.giftShow addGiftListModel:listModel];
 ```
 即可完成接入。每一次点击只需要`[self.giftShow addGiftListModel:listModel];`即可自动计数加一。最高支持显示9999。
+
+###<a id="自定义配置"></a>自定义配置
+* `LiveGiftShow` 管理所有弹幕的视图
+
+|两个弹幕之间的高度差|两个交换动画时长|
+|:----------------:|:------------:|
+|kGiftViewMargin  |kExchangeAnimationTime|
+|50.0               |0.25         |
+
+* `LiveGiftShowView`一个弹幕的视图
+
+|弹幕背景宽|弹幕背景高|送礼者名称字号|送礼者名称文字颜色|礼物寄语字号|礼物寄语文字颜色|
+|:------:|:------:|:------:|:------:|:------:|:------:|
+|kViewWidth|kViewHeight|kNameLabelFont|kNameLabelTextColor|kGiftLabelFont|kGiftLabelTextColor|
+|240.0|44.0|12.0|whiteColor|10.0|orangeColor|
+
+|每个数字图片宽度|弹幕几秒后消失|数字改变动画时长|弹幕消失动画时长|
+|:------:|:------:|:------:|:------:|
+|kGiftNumberWidth|kTimeOut|kNumberAnimationTime|kRemoveAnimationTime|
+|15.0|3|0.25|0.5|
+

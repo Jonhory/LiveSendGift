@@ -14,14 +14,16 @@
 //#import "HexColor.h"
 
 static CGFloat const kNameLabelFont = 12.0;//送礼者
-static NSString * const kNameLabelTextColor = @"#ffffff";//送礼者
+#define kNameLabelTextColor [UIColor whiteColor]//送礼者颜色
 
-static CGFloat const kGiftLabelFont = 10.0;//送出 和 礼物名称  字体大小
-static NSString * const kGiftLabelTextColor = @"#ffc500";//送出 和 礼物名称 字体颜色
+static CGFloat const kGiftLabelFont = 10.0;//送出礼物寄语  字体大小
+#define kGiftLabelTextColor [UIColor orangeColor]//礼物寄语 字体颜色
 
 static CGFloat const kGiftNumberWidth = 15.0;
 
 static NSInteger const kTimeOut = 3;/**< 超时移除时长 */
+static CGFloat const kRemoveAnimationTime = 0.5;/**< 移除动画时长 */
+static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 */
 
 @interface LiveGiftShowView ()
 
@@ -130,16 +132,16 @@ static NSInteger const kTimeOut = 3;/**< 超时移除时长 */
     CGFloat giftRight = numStr.length * kGiftNumberWidth + kGiftNumberWidth;
     
     [self.giftIV mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.mas_right).offset(-15-giftRight);
+        make.right.equalTo(self.mas_right).offset(-kGiftNumberWidth - giftRight);
     }];
     
     if (numStr.length >= 4) {
         [self.giftIV mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.mas_right).offset(-15*6);
+            make.right.equalTo(self.mas_right).offset(-kGiftNumberWidth * 6);
         }];
     }
     
-    [UIView animateWithDuration:0.25 animations:^{
+    [UIView animateWithDuration:kNumberAnimationTime animations:^{
         self.numberView.transform = CGAffineTransformMakeScale(1.5,1.5);
     } completion:^(BOOL finished) {
         self.numberView.transform = CGAffineTransformIdentity;
@@ -156,7 +158,7 @@ static NSInteger const kTimeOut = 3;/**< 超时移除时长 */
             return;
         }
         self.isAnimation = YES;
-        [UIView animateWithDuration:0.5 delay:0.25 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        [UIView animateWithDuration:kRemoveAnimationTime delay:kNumberAnimationTime options:UIViewAnimationOptionCurveEaseIn animations:^{
             self.transform = CGAffineTransformTranslate(self.transform, [UIScreen mainScreen].bounds.size.width, 0);
         } completion:^(BOOL finished) {
             if (finished) {
@@ -203,7 +205,7 @@ static NSInteger const kTimeOut = 3;/**< 超时移除时长 */
     }];
     
     [self.numberView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.mas_right).offset(-15);
+        make.right.equalTo(self.mas_right).offset(-kGiftNumberWidth);
         make.centerY.height.equalTo(self);
     }];
 }
@@ -228,7 +230,7 @@ static NSInteger const kTimeOut = 3;/**< 超时移除时长 */
 - (UILabel *)nameLabel{
     if (!_nameLabel) {
         _nameLabel = [self creatLabel];
-        _nameLabel.textColor = [UIColor whiteColor];//[UIColor colorWithHexString:kNameLabelTextColor];
+        _nameLabel.textColor = kNameLabelTextColor;
         _nameLabel.font = [UIFont systemFontOfSize:kNameLabelFont];
     }
     return _nameLabel;
@@ -238,7 +240,7 @@ static NSInteger const kTimeOut = 3;/**< 超时移除时长 */
     if (!_sendLabel) {
         _sendLabel = [self creatLabel];
         _sendLabel.font = [UIFont systemFontOfSize:kGiftLabelFont];
-        _sendLabel.textColor = [UIColor orangeColor];//[UIColor colorWithHexString:kGiftLabelTextColor];
+        _sendLabel.textColor = kGiftLabelTextColor;
     }
     return _sendLabel;
 }
