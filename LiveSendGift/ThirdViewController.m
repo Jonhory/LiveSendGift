@@ -82,7 +82,7 @@
         LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[1] userModel:self.user1];
         [self.giftShow addGiftListModel:listModel];
     }else{
-        LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[0] userModel:self.user2];
+        LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[arc4random()%10] userModel:self.user2];
         [self.giftShow addGiftListModel:listModel];
     }
 }

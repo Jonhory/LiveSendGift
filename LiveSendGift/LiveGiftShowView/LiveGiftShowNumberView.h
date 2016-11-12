@@ -4,7 +4,7 @@
 //
 //  Created by Jonhory on 2016/11/11.
 //  Copyright © 2016年 com.wujh. All rights reserved.
-//
+//  弹幕效果数字变化的视图
 
 #import <UIKit/UIKit.h>
 

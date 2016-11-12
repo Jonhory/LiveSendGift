@@ -75,8 +75,6 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
             [weakSelf mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.equalTo(@((kViewHeight+kGiftViewMargin) * [weakSelf.giftModelDict allKeys].count));
             }];
-            
-//            NSLog(@"%@",weakSelf.giftModelDict);
         };
         
         view.model = model;
@@ -99,11 +97,8 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
         [self mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@(topOrY+(kViewHeight+kGiftViewMargin)));
         }];
-        
-//        NSLog(@"获取第一次创建的数字 %zi",[showView.numberView getLastNumber]);
     }else{//存在该用户 修改数值
         [showView addGiftNumberFrom:1];
-//        NSLog(@"获取第N次创建的数字 %zi",[showView.numberView getLastNumber]);
         if ([self.giftViewArr containsObject:kGiftViewRemoved]) {
             NSLog(@"交换之前%@",self.giftViewArr);
             if ([self.giftViewArr indexOfObject:kGiftViewRemoved] == 0 && showView.isAnimation == NO) {
@@ -143,23 +138,6 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
                 [self.giftViewArr exchangeObjectAtIndex:0 withObjectAtIndex:1];
             }
         }
-//        NSLog(@"%@",self.giftViewArr);
-//        for (int i = 0; i<self.giftViewArr.count; i++) {
-//            LiveGiftShowView * view = self.giftViewArr[i];
-//            if (view && [view isKindOfClass:[LiveGiftShowView class]]) {//安全判断
-////                NSLog(@"用户%@送了%zi个礼物",[showView getUserName],[view.numberView getLastNumber]);
-//                if (i>0) {//第一个用户之后的用户
-//                    LiveGiftShowView * firstView = self.giftViewArr[0];//第一个用户
-//                    if (firstView && [firstView isKindOfClass:[LiveGiftShowView class]]) {//安全判断
-//                        if ([view.numberView getLastNumber] > [firstView.numberView getLastNumber] && view.isAnimation == NO && firstView.isAnimation == NO){//如果后一个弹幕数字大于第一个弹幕数字
-//                            NSLog(@"如果后一个弹幕数字大于第一个弹幕数字");
-//                        }
-//                    }
-//                }
-//                
-//            }
-//        }
-        
     }
     
 }
@@ -171,9 +149,7 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
     view.model = model;
     [view resetTimeAndNumberFrom:1];
     [self.giftModelDict removeObjectForKey:oldKey];
-//    NSLog(@"%@",self.giftModelDict);
     [self.giftModelDict setObject:view forKey:dictKey];
-//    NSLog(@"%@",self.giftModelDict);
 }
 
 - (NSMutableDictionary *)giftModelDict{

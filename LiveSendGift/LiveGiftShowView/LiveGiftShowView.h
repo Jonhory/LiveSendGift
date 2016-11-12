@@ -4,7 +4,7 @@
 //
 //  Created by Jonhory on 2016/11/11.
 //  Copyright © 2016年 com.wujh. All rights reserved.
-//
+//  一个弹幕效果视图
 
 #import <UIKit/UIKit.h>
 #import "LiveGiftShowModel.h"
