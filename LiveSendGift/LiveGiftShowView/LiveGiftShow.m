@@ -12,6 +12,7 @@
 
 static CGFloat const kGiftViewMargin = 50;/**< 两个弹幕之间的高度差 */
 static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移除的key */
+static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
 
 @interface LiveGiftShow ()
 
@@ -105,21 +106,43 @@ static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移
 //        NSLog(@"获取第N次创建的数字 %zi",[showView.numberView getLastNumber]);
         if ([self.giftViewArr containsObject:kGiftViewRemoved]) {
             NSLog(@"交换之前%@",self.giftViewArr);
-            if ([self.giftViewArr indexOfObject:kGiftViewRemoved] == 0) {
-                [UIView animateWithDuration:0.25 animations:^{
+            if ([self.giftViewArr indexOfObject:kGiftViewRemoved] == 0 && showView.isAnimation == NO) {
+                [UIView animateWithDuration:kExchangeAnimationTime animations:^{
                     CGRect frame = showView.frame;
                     frame.origin.y = 0;
                     showView.frame = frame;
                 } completion:^(BOOL finished) {
                     if (finished) {
-                        showView.index = 0;
-                        [self .giftViewArr exchangeObjectAtIndex:0 withObjectAtIndex:1];
+                        
                         NSLog(@"交换之后%@",self.giftViewArr);
                     }
                 }];
+                showView.index = 0;
+                showView.isAnimation = YES;
+                [self.giftViewArr exchangeObjectAtIndex:0 withObjectAtIndex:1];
             }
         }
         
+        LiveGiftShowView * firstShowView = self.giftViewArr[0];
+        if (firstShowView && [firstShowView isKindOfClass:[LiveGiftShowView class]] && firstShowView != showView) {
+            if ([showView.numberView getLastNumber] > [firstShowView.numberView getLastNumber]){
+                [UIView animateWithDuration:kExchangeAnimationTime animations:^{
+                    CGRect firstF = firstShowView.frame;
+                    CGRect showF = showView.frame;
+                    showF.origin.y = 0;
+                    firstF.origin.y = kViewHeight+kGiftViewMargin;
+                    firstShowView.frame = firstF;
+                    showView.frame = showF;
+                } completion:^(BOOL finished) {
+                    
+                }];
+                showView.isAnimation = YES;
+                firstShowView.isAnimation = YES;
+                showView.index = 0;
+                firstShowView.index = 1;
+                [self.giftViewArr exchangeObjectAtIndex:0 withObjectAtIndex:1];
+            }
+        }
 //        NSLog(@"%@",self.giftViewArr);
 //        for (int i = 0; i<self.giftViewArr.count; i++) {
 //            LiveGiftShowView * view = self.giftViewArr[i];

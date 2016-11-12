@@ -29,3 +29,8 @@
 
 ![](http://ww3.sinaimg.cn/large/c6a1cfeagw1f9p6jibv9gg208g0fdq3i.gif)
 
+###V 1.4
+* 实现了目标效果😊😊😊
+
+![](http://ww2.sinaimg.cn/large/c6a1cfeagw1f9p7t0w9bng208g0fd0x3.gif)
+

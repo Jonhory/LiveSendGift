@@ -21,7 +21,7 @@ static NSString * const kGiftLabelTextColor = @"#ffc500";//送出 和 礼物名�
 
 static CGFloat const kGiftNumberWidth = 15.0;
 
-static NSInteger const kTimeOut = 2;/**< 超时移除时长 */
+static NSInteger const kTimeOut = 3;/**< 超时移除时长 */
 
 @interface LiveGiftShowView ()
 
@@ -151,6 +151,10 @@ static NSInteger const kTimeOut = 2;/**< 超时移除时长 */
 - (void)liveTimerRunning{
     self.liveTimerForSecond += 1;
     if (self.liveTimerForSecond > kTimeOut) {
+        if (self.isAnimation == YES) {
+            self.isAnimation = NO;
+            return;
+        }
         self.isAnimation = YES;
         [UIView animateWithDuration:0.5 delay:0.25 options:UIViewAnimationOptionCurveEaseIn animations:^{
             self.transform = CGAffineTransformTranslate(self.transform, [UIScreen mainScreen].bounds.size.width, 0);
@@ -216,7 +220,6 @@ static NSInteger const kTimeOut = 2;/**< 超时移除时长 */
     if (!_iconIV) {
         _iconIV = [self creatIV];
         _iconIV.layer.cornerRadius = 15;
-        _iconIV.backgroundColor = [UIColor redColor];
         _iconIV.layer.masksToBounds = YES;
     }
     return _iconIV;
