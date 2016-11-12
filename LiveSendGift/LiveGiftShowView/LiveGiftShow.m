@@ -23,11 +23,18 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
 
 @implementation LiveGiftShow
 
+
+
+/**
+ 唯一入口
+ 
+ @param model 传入模型数据 显示的数字自动从1开始加1
+ */
 - (void)addGiftListModel:(LiveGiftShowModel *)model{
     if (!model) {
         return;
     }
-    //
+    
     NSString * dictKey = [NSString stringWithFormat:@"%@%@",model.user.name,model.giftModel.type];
     
     LiveGiftShowView * showView = [self.giftModelDict objectForKey:dictKey];
@@ -45,8 +52,7 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
                                 //替换模型之后 字典的key要改变
                                 [self resetView:viewAgo nowModel:model];
                                 return;
-                            }
-                            else{//否则viewNow是更早的时间 替换该视图
+                            }else{//否则viewNow是更早的时间 替换该视图
                                 //替换模型之后 字典的key要改变
                                 [self resetView:viewNow nowModel:model];
                                 return;
@@ -57,8 +63,9 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
             }
         }
         
-        CGFloat topOrY = (kViewHeight+kGiftViewMargin) * [self.giftModelDict allKeys].count;
+        CGFloat   topOrY = (kViewHeight + kGiftViewMargin) * [self.giftModelDict allKeys].count;
         NSInteger index = [self.giftViewArr indexOfObject:kGiftViewRemoved];
+        
         if ([self.giftViewArr containsObject:kGiftViewRemoved]) {
             topOrY = index * (kViewHeight+kGiftViewMargin);
         }
@@ -100,7 +107,6 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
     }else{//存在该用户 修改数值
         [showView addGiftNumberFrom:1];
         if ([self.giftViewArr containsObject:kGiftViewRemoved]) {
-            NSLog(@"交换之前%@",self.giftViewArr);
             if ([self.giftViewArr indexOfObject:kGiftViewRemoved] == 0 && showView.isAnimation == NO) {
                 [UIView animateWithDuration:kExchangeAnimationTime animations:^{
                     CGRect frame = showView.frame;
@@ -108,8 +114,6 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
                     showView.frame = frame;
                 } completion:^(BOOL finished) {
                     if (finished) {
-                        
-                        NSLog(@"交换之后%@",self.giftViewArr);
                     }
                 }];
                 showView.index = 0;

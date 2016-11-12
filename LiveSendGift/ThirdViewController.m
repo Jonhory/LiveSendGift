@@ -32,6 +32,7 @@
     if (!_user1) {
         _user1 = [UserModel random];
         _user1.name = @"依依依依";
+        _user1.iconUrl = @"http://cache-img1.51songguo.com/image/gift/songguo_live@2x.png";
     }
     return _user1;
 }
@@ -40,6 +41,7 @@
     if (!_user2) {
         _user2 = [UserModel random];
         _user2.name = @"热热热热";
+        _user2.iconUrl = @"http://cache-img1.51songguo.com/image/gift/flower_live@2x.png";
     }
     return _user2;
 }
@@ -68,7 +70,6 @@
     [self.view addSubview:self.btn2];
     
     LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:[UserModel random]];
-    
     [self.giftShow addGiftListModel:listModel];
     
     
@@ -82,7 +83,7 @@
         LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[1] userModel:self.user1];
         [self.giftShow addGiftListModel:listModel];
     }else{
-        LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[arc4random()%10] userModel:self.user2];
+        LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[2] userModel:self.user2];
         [self.giftShow addGiftListModel:listModel];
     }
 }

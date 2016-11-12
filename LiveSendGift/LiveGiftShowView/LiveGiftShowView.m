@@ -68,7 +68,7 @@ static NSInteger const kTimeOut = 3;/**< 超时移除时长 */
     
     self.nameLabel.text = model.user.name;
     
-    [self.iconIV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@_live@2x.png",model.giftModel.picUrl]] placeholderImage:nil];
+    [self.iconIV sd_setImageWithURL:[NSURL URLWithString:model.user.iconUrl] placeholderImage:nil];
     
     self.sendLabel.text = model.giftModel.rewardMsg;
     [self.giftIV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@_live@2x.png",model.giftModel.picUrl]] placeholderImage:nil];

@@ -10,7 +10,8 @@
 
 @interface UserModel : NSObject
 
-@property (nonatomic ,strong) NSString * name;
+@property (nonatomic ,copy) NSString * name;
+@property (nonatomic ,copy) NSString * iconUrl;
 
 + (instancetype)random;
 

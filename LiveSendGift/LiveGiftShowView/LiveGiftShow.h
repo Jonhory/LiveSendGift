@@ -13,6 +13,12 @@
 
 @interface LiveGiftShow : UIView
 
+
+/**
+ 唯一入口
+
+ @param model 传入模型数据 显示的数字自动从1开始加1
+ */
 - (void)addGiftListModel:(LiveGiftShowModel *)model;
 
 @end
