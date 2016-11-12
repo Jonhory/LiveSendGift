@@ -48,10 +48,10 @@
             Y = 200;
         }
         LiveGiftShowView * v = [[LiveGiftShowView alloc]initWithFrame:CGRectMake(0, Y, 0, 0)];
-        __weak __typeof(self)weakSelf = self;
-        v.liveGiftShowViewTimeOut = ^(){
-            weakSelf.giftSendTimeFirst = 0;
-        };
+//        __weak __typeof(self)weakSelf = self;
+//        v.liveGiftShowViewTimeOut = ^(){
+//            weakSelf.giftSendTimeFirst = 0;
+//        };
         [self.view addSubview:v];
         _giftViewFirst = v;
     }
@@ -65,10 +65,10 @@
             Y = 200;
         }
         LiveGiftShowView * v = [[LiveGiftShowView alloc]initWithFrame:CGRectMake(0, Y, 0, 0)];
-        __weak __typeof(self)weakSelf = self;
-        v.liveGiftShowViewTimeOut = ^(){
-            weakSelf.giftSendTimeSecond = 0;
-        };
+//        __weak __typeof(self)weakSelf = self;
+//        v.liveGiftShowViewTimeOut = ^(){
+//            weakSelf.giftSendTimeSecond = 0;
+//        };
         [self.view addSubview:v];
         _giftViewSecond = v;
     }

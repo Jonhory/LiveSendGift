@@ -25,7 +25,7 @@ static CGFloat const kViewHeight = 44.0;//背景高
 
 @property (nonatomic ,assign) BOOL isAnimation;/**< 是否正处于动画，用于上下视图交换位置时使用 */
 
-@property (nonatomic ,copy) void(^liveGiftShowViewTimeOut)();
+@property (nonatomic ,copy) void(^liveGiftShowViewTimeOut)(LiveGiftShowView *);
 
 
 /**

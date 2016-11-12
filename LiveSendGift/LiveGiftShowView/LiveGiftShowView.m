@@ -157,7 +157,7 @@ static NSInteger const kTimeOut = 2;/**< 超时移除时长 */
         } completion:^(BOOL finished) {
             if (finished) {
                 if (self.liveGiftShowViewTimeOut) {
-                    self.liveGiftShowViewTimeOut();
+                    self.liveGiftShowViewTimeOut(self);
                 }
                 [self removeFromSuperview];
             }

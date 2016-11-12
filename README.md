@@ -13,9 +13,13 @@
 ![](http://ww4.sinaimg.cn/large/c6a1cfeagw1f9p4246hkgg208g0fdmyy.gif)
 
 
-### V1.2
+### V1.1
 * 实现了用户连续发送数字增加效果
 * 实现了新增弹幕从空位出现的效果
 
 ![](http://ww4.sinaimg.cn/large/c6a1cfeagw1f9p48oumbkg208g0fd0wo.gif)
 
+### V1.2
+* 实现了第二个用户之后送礼物替换较早的弹幕效果(待完善)
+
+![](http://ww3.sinaimg.cn/large/c6a1cfeagw1f9p51eh3ltg208g0fdwif.gif)

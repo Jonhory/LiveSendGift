@@ -32,29 +32,31 @@ static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移
     LiveGiftShowView * showView = [self.giftModelDict objectForKey:dictKey];
     if (!showView && ![showView isKindOfClass:[LiveGiftShowView class]]) {//如果不存在该用户 新建
         //此处用来判断最多显示两个弹幕,第三个弹幕进来时，替换旧的弹幕
-//        if (self.giftViewArr.count >= 1) {
-//            for (int i = 0; i<self.giftViewArr.count; i++) {
-//                LiveGiftShowView * viewNow = self.giftViewArr[i];
-//                if (viewNow && [viewNow isKindOfClass:[LiveGiftShowView class]]) {//安全判断
-//                    if (i>0) {
-//                        LiveGiftShowView * viewAgo = self.giftViewArr[i-1];//前一个视图
-//                        if (viewAgo && [viewAgo isKindOfClass:[LiveGiftShowView class]]) {//安全判断
-//                            NSInteger result = [viewNow.creatDate compare:viewAgo.creatDate];
-//                            if (result == 1) {
-//                                //替换模型之后 字典的key要改变
-//                                NSString * oldKey = [NSString stringWithFormat:@"%@%@",viewAgo.model.user.name,viewAgo.model.giftModel.type];
-//                                [self.giftModelDict removeObjectForKey:oldKey];
-//                                //找到时间早的那个视图 替换模型 重置数字
-//                                viewAgo.model = model;
-//                                [viewAgo resetTimeAndNumberFrom:1];
-//                                [self.giftModelDict setObject:viewAgo forKey:dictKey];
-//                                return;
-//                            }//TODO:否则viewNow是更早的时间 替换该视图
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        if (self.giftViewArr.count >= 1) {
+            for (int i = 0; i<self.giftViewArr.count; i++) {
+                LiveGiftShowView * viewNow = self.giftViewArr[i];
+                if (viewNow && [viewNow isKindOfClass:[LiveGiftShowView class]]) {//安全判断
+                    if (i>0) {
+                        LiveGiftShowView * viewAgo = self.giftViewArr[i-1];//前一个视图
+                        if (viewAgo && [viewAgo isKindOfClass:[LiveGiftShowView class]]) {//安全判断
+                            NSInteger result = [viewNow.creatDate compare:viewAgo.creatDate];
+                            if (result == 1) {
+                                //替换模型之后 字典的key要改变
+                                NSString * oldKey = [NSString stringWithFormat:@"%@%@",viewAgo.model.user.name,viewAgo.model.giftModel.type];
+                                //找到时间早的那个视图 替换模型 重置数字
+                                viewAgo.model = model;
+                                [viewAgo resetTimeAndNumberFrom:1];
+                                [self.giftModelDict removeObjectForKey:oldKey];
+                                NSLog(@"%@",self.giftModelDict);
+                                [self.giftModelDict setObject:viewAgo forKey:dictKey];
+                                NSLog(@"%@",self.giftModelDict);
+                                return;
+                            }//TODO:否则viewNow是更早的时间 替换该视图
+                        }
+                    }
+                }
+            }
+        }
         
         CGFloat topOrY = (kViewHeight+kGiftViewMargin) * [self.giftModelDict allKeys].count;
         NSInteger index = [self.giftViewArr indexOfObject:kGiftViewRemoved];
@@ -65,21 +67,19 @@ static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移
         LiveGiftShowView * view = [[LiveGiftShowView alloc]initWithFrame:CGRectMake(0, topOrY, 0, 0)];
         view.creatDate = [NSDate date];
         __weak __typeof(self)weakSelf = self;
-        view.liveGiftShowViewTimeOut = ^(){//视图移除之后
-            
-            LiveGiftShowView * showView = [weakSelf.giftModelDict objectForKey:dictKey];
+        view.liveGiftShowViewTimeOut = ^(LiveGiftShowView * selfView){//视图移除之后
             //从数组移除
-            [weakSelf.giftViewArr replaceObjectAtIndex:showView.index withObject:kGiftViewRemoved];
-            
+            [weakSelf.giftViewArr replaceObjectAtIndex:selfView.index withObject:kGiftViewRemoved];
             //从字典移除
-            [weakSelf.giftModelDict removeObjectForKey:dictKey];
+            NSString * selfViewKey = [NSString stringWithFormat:@"%@%@",selfView.model.user.name,selfView.model.giftModel.type];
+            [weakSelf.giftModelDict removeObjectForKey:selfViewKey];
             [weakSelf mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.equalTo(@((kViewHeight+kGiftViewMargin) * [weakSelf.giftModelDict allKeys].count));
             }];
             
             NSLog(@"%@",weakSelf.giftModelDict);
-
         };
+        
         view.model = model;
         [view addGiftNumberFrom:1];
         [self addSubview:view];
