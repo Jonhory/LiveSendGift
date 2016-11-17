@@ -11,12 +11,12 @@
 
 @interface LiveGiftShowNumberView ()
 
-@property (nonatomic ,weak) UIImageView * digitIV;
-@property (nonatomic ,weak) UIImageView * ten_digitIV;
-@property (nonatomic ,weak) UIImageView * hundredIV;
-@property (nonatomic ,weak) UIImageView * thousandIV;
+@property (nonatomic ,strong) UIImageView * digitIV;
+@property (nonatomic ,strong) UIImageView * ten_digitIV;
+@property (nonatomic ,strong) UIImageView * hundredIV;
+@property (nonatomic ,strong) UIImageView * thousandIV;
 
-@property (nonatomic ,weak) UIImageView * xIV;
+@property (nonatomic ,strong) UIImageView * xIV;
 
 @property (nonatomic ,assign) NSInteger lastNumber;/**< 最后显示的数字 */
 
@@ -71,6 +71,9 @@
         ge = 9;
     }
     
+    
+    [self addSubview:self.digitIV];
+    
     [self.digitIV mas_updateConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.mas_right);
         make.centerY.equalTo(self);
@@ -81,6 +84,10 @@
     
     if (qian > 0) {
         length = 4;
+        [self addSubview:self.thousandIV];
+        [self addSubview:self.hundredIV];
+        [self addSubview:self.ten_digitIV];
+        
         self.thousandIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",qian]];
         self.hundredIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",bai]];
         self.ten_digitIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",shi]];
@@ -101,8 +108,9 @@
         }];
     }else if (bai > 0){
         length = 3;
-        self.thousandIV.image = nil;
-        [self.thousandIV removeFromSuperview];
+        [self addSubview:self.hundredIV];
+        [self addSubview:self.ten_digitIV];
+        
         self.hundredIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",bai]];
         self.ten_digitIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",shi]];
         
@@ -117,10 +125,7 @@
         }];
     }else if (shi > 0){
         length = 2;
-        self.thousandIV.image = nil;
-        self.hundredIV.image = nil;
-        [self.thousandIV removeFromSuperview];
-        [self.hundredIV removeFromSuperview];
+        [self addSubview:self.ten_digitIV];
         
         self.ten_digitIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",shi]];
         [self.ten_digitIV mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -135,7 +140,8 @@
         [self.ten_digitIV removeFromSuperview];
     }
     
-
+    [self addSubview:self.xIV];
+    
     [self.xIV mas_updateConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.mas_right).offset(-15*length);
         make.centerY.equalTo(self).offset(2);
@@ -183,7 +189,6 @@
 
 - (UIImageView *)creatIV{
     UIImageView * iv = [[UIImageView alloc]init];
-    [self addSubview:iv];
     return iv;
 }
 

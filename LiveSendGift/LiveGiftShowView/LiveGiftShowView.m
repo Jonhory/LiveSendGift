@@ -103,7 +103,6 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
  */
 - (void)addGiftNumberFrom:(NSInteger)number{
     if (!self.isSetNumber) {
-        NSLog(@"aaaaaaaaaa : %zi",number);
         self.numberView.number = number;
         self.isSetNumber = YES;
     }
@@ -120,8 +119,10 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
  @param number 任意数字 >9999 则显示9999
  */
 - (void)changeGiftNumber:(NSInteger)number{
-    [self.numberView changeNumber:number];
-    [self handleNumber:number];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.numberView changeNumber:number];
+        [self handleNumber:number];
+    });
 }
 
 #pragma mark - Private

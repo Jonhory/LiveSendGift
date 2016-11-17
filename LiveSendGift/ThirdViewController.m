@@ -80,11 +80,17 @@
 
 - (void)bbb:(UIButton *)btn{
     if (btn.tag == 101) {
-        LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[1] userModel:self.user1];
-        [self.giftShow addGiftListModel:listModel];
+        for (int i=0; i<99; i++) {
+            LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[1] userModel:self.user1];
+            [self.giftShow addGiftListModel:listModel];
+        }
     }else{
         LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[2] userModel:self.user2];
         [self.giftShow addGiftListModel:listModel];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self bbb:btn];
+        });
     }
 }
 
