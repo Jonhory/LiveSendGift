@@ -108,6 +108,7 @@
         }];
     }else if (bai > 0){
         length = 3;
+        [self.thousandIV removeFromSuperview];
         [self addSubview:self.hundredIV];
         [self addSubview:self.ten_digitIV];
         
@@ -125,6 +126,8 @@
         }];
     }else if (shi > 0){
         length = 2;
+        [self.thousandIV removeFromSuperview];
+        [self.hundredIV removeFromSuperview];
         [self addSubview:self.ten_digitIV];
         
         self.ten_digitIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",shi]];
@@ -134,9 +137,8 @@
         }];
     }else {
         length = 1;
-        self.ten_digitIV.image = nil;
-        self.thousandIV.image = nil;
-        self.hundredIV.image = nil;
+        [self.thousandIV removeFromSuperview];
+        [self.hundredIV removeFromSuperview];
         [self.ten_digitIV removeFromSuperview];
     }
     
@@ -193,7 +195,7 @@
 }
 
 - (void)dealloc{
-//    NSLog(@"Delloc Me Already!!! %@",self);
+    NSLog(@"Delloc !!! %@",self);
 }
 
 @end
