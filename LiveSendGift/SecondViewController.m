@@ -7,7 +7,6 @@
 //
 
 #import "SecondViewController.h"
-#import "ViewController.h"
 #import "ThirdViewController.h"
 
 
@@ -20,27 +19,15 @@
 
 @implementation SecondViewController
 
-- (UIButton *)btn1{
-    if (!_btn1) {
-        UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
-        btn.backgroundColor = [UIColor redColor];
-        btn.center = self.view.center;
-        [self.view addSubview:btn];
-        btn.tag = 101;
-        [btn addTarget:self action:@selector(bbb:) forControlEvents:UIControlEventTouchUpInside];
-        _btn1 = btn;
-    }
-    return _btn1;
-}
-
 - (UIButton *)btn2{
     if (!_btn2) {
-        UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+        UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 100, 50)];
         btn.backgroundColor = [UIColor blueColor];
         btn.center = self.view.center;
+        [btn setTitle:@"Go TestVC" forState:UIControlStateNormal];
         [self.view addSubview:btn];
         btn.tag = 102;
-        [btn addTarget:self action:@selector(bbb:) forControlEvents:UIControlEventTouchUpInside];
+        [btn addTarget:self action:@selector(goTestVC:) forControlEvents:UIControlEventTouchUpInside];
         _btn2 = btn;
     }
     return _btn2;
@@ -57,22 +44,10 @@
 }
 
 
-- (void)bbb:(UIButton *)btn{
-    switch (btn.tag) {
-        case 101:{
-            ViewController * v = [[ViewController alloc]init];
-            [self.navigationController pushViewController:v animated:YES];
-        
-            break;
-        }
-        case 102:{
-            ThirdViewController * v = [[ThirdViewController alloc]init];
-            [self.navigationController pushViewController:v animated:YES];
-            break;
-        }
-        default:
-            break;
-    }
+- (void)goTestVC:(UIButton *)btn{
+    ThirdViewController * v = [[ThirdViewController alloc]init];
+    [self.navigationController pushViewController:v animated:YES];
+
 }
 
 - (void)didReceiveMemoryWarning {

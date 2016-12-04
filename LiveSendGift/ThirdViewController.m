@@ -64,17 +64,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor lightGrayColor];
-    
+    //初始化数据源
     self.giftArr = [ZYGiftListModel mj_objectArrayWithKeyValuesArray:self.giftDataSource];
+    
     [self.view addSubview:self.btn1];
     [self.view addSubview:self.btn2];
     
+    //一进来的时候显示一个
     LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:[UserModel random]];
     [self.giftShow addGiftListModel:listModel];
-    
-    
-    NSArray * a = @[@"12",@"2",@"3",@"1"];
-    NSLog(@"xx : %zi",[a indexOfObject:@"1"]);
 }
 
 
@@ -96,9 +94,9 @@
 
 - (UIButton *)btn1{
     if (!_btn1) {
-        UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(50, 600, 100, 50)];
+        UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(50, 600, 150, 50)];
         btn.backgroundColor = [UIColor redColor];
-        //        btn.center = self.view.center;
+        [btn setTitle:@"一键增加99" forState:UIControlStateNormal];
         [self.view addSubview:btn];
         btn.tag = 101;
         [btn addTarget:self action:@selector(bbb:) forControlEvents:UIControlEventTouchUpInside];
@@ -109,9 +107,9 @@
 
 - (UIButton *)btn2{
     if (!_btn2) {
-        UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(200, 600, 100, 50)];
+        UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(200, 600, 150, 50)];
         btn.backgroundColor = [UIColor blueColor];
-        //        btn.center = self.view.center;
+        [btn setTitle:@"连续增加测试" forState:UIControlStateNormal];
         [self.view addSubview:btn];
         btn.tag = 102;
         [btn addTarget:self action:@selector(bbb:) forControlEvents:UIControlEventTouchUpInside];
@@ -226,7 +224,7 @@
 }
 
 - (void)dealloc{
-    NSLog(@"%@",self);
+    NSLog(@"Dealloc testVC:%@",self);
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -17,6 +17,7 @@
         [str appendFormat:@"%d",i];
     }
     model.name = str;
+    model.iconUrl = @"http://ww3.sinaimg.cn/large/c6a1cfeagw1faewpod4p4j20ii0jw76i.jpg";
     return model;
 }
 
