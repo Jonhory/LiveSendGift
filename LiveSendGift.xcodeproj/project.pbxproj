@@ -14,6 +14,8 @@
 		BB4BF1B91DD60F030017DA99 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1B81DD60F030017DA99 /* UserModel.m */; };
 		BB5E4F201DD5E77C005CBFC5 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5E4F1F1DD5E77C005CBFC5 /* SecondViewController.m */; };
 		BB6CC2BE1DD6C642003F58BC /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */; };
+		BB91CB4F1DF42AD0002A76EB /* LiveGiftShowCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = BB91CB4E1DF42AD0002A76EB /* LiveGiftShowCustom.m */; };
+		BB91CB521DF42D32002A76EB /* V15TestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB91CB511DF42D32002A76EB /* V15TestVC.m */; };
 		BBD12B281DD59437007D31D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B271DD59437007D31D6 /* main.m */; };
 		BBD12B2B1DD59437007D31D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B2A1DD59437007D31D6 /* AppDelegate.m */; };
 		BBD12B331DD59437007D31D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBD12B321DD59437007D31D6 /* Assets.xcassets */; };
@@ -36,6 +38,10 @@
 		BB5E4F1E1DD5E77C005CBFC5 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		BB5E4F1F1DD5E77C005CBFC5 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+Log.m"; sourceTree = "<group>"; };
+		BB91CB4D1DF42AD0002A76EB /* LiveGiftShowCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShowCustom.h; sourceTree = "<group>"; };
+		BB91CB4E1DF42AD0002A76EB /* LiveGiftShowCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftShowCustom.m; sourceTree = "<group>"; };
+		BB91CB501DF42D32002A76EB /* V15TestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V15TestVC.h; sourceTree = "<group>"; };
+		BB91CB511DF42D32002A76EB /* V15TestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = V15TestVC.m; sourceTree = "<group>"; };
 		BBD12B231DD59437007D31D6 /* LiveSendGift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveSendGift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBD12B271DD59437007D31D6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BBD12B291DD59437007D31D6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -92,6 +98,8 @@
 				BB5E4F1F1DD5E77C005CBFC5 /* SecondViewController.m */,
 				BB4BF1AB1DD6013E0017DA99 /* ThirdViewController.h */,
 				BB4BF1AC1DD6013E0017DA99 /* ThirdViewController.m */,
+				BB91CB501DF42D32002A76EB /* V15TestVC.h */,
+				BB91CB511DF42D32002A76EB /* V15TestVC.m */,
 				BB4BF1B71DD60F030017DA99 /* UserModel.h */,
 				BB4BF1B81DD60F030017DA99 /* UserModel.m */,
 				BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */,
@@ -124,6 +132,8 @@
 			children = (
 				BB4BF1B11DD606C90017DA99 /* LiveGiftShow.h */,
 				BB4BF1B21DD606C90017DA99 /* LiveGiftShow.m */,
+				BB91CB4D1DF42AD0002A76EB /* LiveGiftShowCustom.h */,
+				BB91CB4E1DF42AD0002A76EB /* LiveGiftShowCustom.m */,
 				BBD12B731DD59C1B007D31D6 /* LiveGiftShowView.h */,
 				BBD12B741DD59C1B007D31D6 /* LiveGiftShowView.m */,
 				BBD12B761DD59EFF007D31D6 /* LiveGiftShowNumberView.h */,
@@ -276,6 +286,8 @@
 				BB4BF1B91DD60F030017DA99 /* UserModel.m in Sources */,
 				BB4BF1AD1DD6013E0017DA99 /* ThirdViewController.m in Sources */,
 				BBD12B781DD59EFF007D31D6 /* LiveGiftShowNumberView.m in Sources */,
+				BB91CB521DF42D32002A76EB /* V15TestVC.m in Sources */,
+				BB91CB4F1DF42AD0002A76EB /* LiveGiftShowCustom.m in Sources */,
 				BB5E4F201DD5E77C005CBFC5 /* SecondViewController.m in Sources */,
 				BB4BF1B31DD606C90017DA99 /* LiveGiftShow.m in Sources */,
 				BBD12B401DD59839007D31D6 /* ZYGiftListModel.m in Sources */,

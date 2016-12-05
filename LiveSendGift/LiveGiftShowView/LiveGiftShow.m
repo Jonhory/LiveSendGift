@@ -7,7 +7,6 @@
 //
 
 #import "LiveGiftShow.h"
-#import "ZYGiftListModel.h"
 #import "LiveGiftShowView.h"
 
 static CGFloat const kGiftViewMargin = 50.0;/**< 两个弹幕之间的高度差 */
