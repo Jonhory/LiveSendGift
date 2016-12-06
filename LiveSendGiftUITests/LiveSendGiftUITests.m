@@ -40,6 +40,23 @@
     // Use XCTAssert and related functions to verify your tests produce the correct results.
 }
 
+- (void)testV15VCClicked{
+    
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    XCUIElement *goTestvcV15Button = app.buttons[@"Go TestVC = V1.5"];
+    [goTestvcV15Button tap];
+    
+    XCUIElement *backButton = [[[app.navigationBars[@"V1.5 Test"] childrenMatchingType:XCUIElementTypeButton] matchingIdentifier:@"Back"] elementBoundByIndex:0];
+    [backButton tap];
+    [goTestvcV15Button tap];
+    [backButton tap];
+    [goTestvcV15Button tap];
+    [backButton tap];
+    [goTestvcV15Button tap];
+    [backButton tap];
+    
+}
+
 - (void)testSecondVCClicked{
     
     XCUIApplication *app = [[XCUIApplication alloc] init];
