@@ -9,6 +9,10 @@
 #import "LiveGiftShowCustom.h"
 #import "LiveGiftShowView.h"
 
+@interface LiveGiftShowCustom ()
+
+@end
+
 @implementation LiveGiftShowCustom
 
 + (instancetype)addToView:(UIView *)superView{
@@ -32,6 +36,14 @@
     
     
 }
+
+#pragma mark - Private
+- (NSString *)getDictKey:(LiveGiftShowModel *)model{
+    //默认以 用户名+礼物类型 为key
+    NSString * key = [NSString stringWithFormat:@"%@%@",model.user.name,model.giftModel.type];
+    return key;
+}
+
 
 - (void)dealloc{
     NSLog(@"Delloc V1.5 !!  %@",self);

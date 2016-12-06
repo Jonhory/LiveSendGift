@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8995D2E5755A4D6C53754E36 /* libPods-LiveSendGift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CB2247965468A4CEE9A5783 /* libPods-LiveSendGift.a */; };
+		BB3BEBE31DF6350600C9DDFF /* LiveSendGiftTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BEBE21DF6350600C9DDFF /* LiveSendGiftTests.m */; };
+		BB3BEBF11DF63D1B00C9DDFF /* LiveSendGiftUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BEBF01DF63D1B00C9DDFF /* LiveSendGiftUITests.m */; };
 		BB4BF1AD1DD6013E0017DA99 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1AC1DD6013E0017DA99 /* ThirdViewController.m */; };
 		BB4BF1B31DD606C90017DA99 /* LiveGiftShow.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1B21DD606C90017DA99 /* LiveGiftShow.m */; };
 		BB4BF1B61DD60ECF0017DA99 /* LiveGiftShowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1B51DD60ECF0017DA99 /* LiveGiftShowModel.m */; };
@@ -24,9 +26,32 @@
 		BBD12B781DD59EFF007D31D6 /* LiveGiftShowNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B771DD59EFF007D31D6 /* LiveGiftShowNumberView.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		BB3BEBE51DF6350600C9DDFF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BBD12B1B1DD59437007D31D6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBD12B221DD59437007D31D6;
+			remoteInfo = LiveSendGift;
+		};
+		BB3BEBF31DF63D1B00C9DDFF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BBD12B1B1DD59437007D31D6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBD12B221DD59437007D31D6;
+			remoteInfo = LiveSendGift;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		5CB2247965468A4CEE9A5783 /* libPods-LiveSendGift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LiveSendGift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7729173E74450786A74B18B1 /* Pods-LiveSendGift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveSendGift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LiveSendGift/Pods-LiveSendGift.debug.xcconfig"; sourceTree = "<group>"; };
+		BB3BEBE01DF6350600C9DDFF /* LiveSendGiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveSendGiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB3BEBE21DF6350600C9DDFF /* LiveSendGiftTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LiveSendGiftTests.m; sourceTree = "<group>"; };
+		BB3BEBE41DF6350600C9DDFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB3BEBEE1DF63D1B00C9DDFF /* LiveSendGiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveSendGiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB3BEBF01DF63D1B00C9DDFF /* LiveSendGiftUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LiveSendGiftUITests.m; sourceTree = "<group>"; };
+		BB3BEBF21DF63D1B00C9DDFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB4BF1AB1DD6013E0017DA99 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
 		BB4BF1AC1DD6013E0017DA99 /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
 		BB4BF1B11DD606C90017DA99 /* LiveGiftShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShow.h; sourceTree = "<group>"; };
@@ -58,6 +83,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		BB3BEBDD1DF6350600C9DDFF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB3BEBEB1DF63D1B00C9DDFF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BBD12B201DD59437007D31D6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -69,10 +108,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BB3BEBE11DF6350600C9DDFF /* LiveSendGiftTests */ = {
+			isa = PBXGroup;
+			children = (
+				BB3BEBE21DF6350600C9DDFF /* LiveSendGiftTests.m */,
+				BB3BEBE41DF6350600C9DDFF /* Info.plist */,
+			);
+			path = LiveSendGiftTests;
+			sourceTree = "<group>";
+		};
+		BB3BEBEF1DF63D1B00C9DDFF /* LiveSendGiftUITests */ = {
+			isa = PBXGroup;
+			children = (
+				BB3BEBF01DF63D1B00C9DDFF /* LiveSendGiftUITests.m */,
+				BB3BEBF21DF63D1B00C9DDFF /* Info.plist */,
+			);
+			path = LiveSendGiftUITests;
+			sourceTree = "<group>";
+		};
 		BBD12B1A1DD59437007D31D6 = {
 			isa = PBXGroup;
 			children = (
 				BBD12B251DD59437007D31D6 /* LiveSendGift */,
+				BB3BEBE11DF6350600C9DDFF /* LiveSendGiftTests */,
+				BB3BEBEF1DF63D1B00C9DDFF /* LiveSendGiftUITests */,
 				BBD12B241DD59437007D31D6 /* Products */,
 				E80023422568FECC1F86D560 /* Pods */,
 				C6E7558AED25B233D80BF99D /* Frameworks */,
@@ -83,6 +142,8 @@
 			isa = PBXGroup;
 			children = (
 				BBD12B231DD59437007D31D6 /* LiveSendGift.app */,
+				BB3BEBE01DF6350600C9DDFF /* LiveSendGiftTests.xctest */,
+				BB3BEBEE1DF63D1B00C9DDFF /* LiveSendGiftUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -164,6 +225,42 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		BB3BEBDF1DF6350600C9DDFF /* LiveSendGiftTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB3BEBE91DF6350600C9DDFF /* Build configuration list for PBXNativeTarget "LiveSendGiftTests" */;
+			buildPhases = (
+				BB3BEBDC1DF6350600C9DDFF /* Sources */,
+				BB3BEBDD1DF6350600C9DDFF /* Frameworks */,
+				BB3BEBDE1DF6350600C9DDFF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BB3BEBE61DF6350600C9DDFF /* PBXTargetDependency */,
+			);
+			name = LiveSendGiftTests;
+			productName = LiveSendGiftTests;
+			productReference = BB3BEBE01DF6350600C9DDFF /* LiveSendGiftTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		BB3BEBED1DF63D1B00C9DDFF /* LiveSendGiftUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB3BEBF51DF63D1B00C9DDFF /* Build configuration list for PBXNativeTarget "LiveSendGiftUITests" */;
+			buildPhases = (
+				BB3BEBEA1DF63D1B00C9DDFF /* Sources */,
+				BB3BEBEB1DF63D1B00C9DDFF /* Frameworks */,
+				BB3BEBEC1DF63D1B00C9DDFF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BB3BEBF41DF63D1B00C9DDFF /* PBXTargetDependency */,
+			);
+			name = LiveSendGiftUITests;
+			productName = LiveSendGiftUITests;
+			productReference = BB3BEBEE1DF63D1B00C9DDFF /* LiveSendGiftUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		BBD12B221DD59437007D31D6 /* LiveSendGift */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BBD12B3A1DD59437007D31D6 /* Build configuration list for PBXNativeTarget "LiveSendGift" */;
@@ -193,6 +290,16 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = com.wujh;
 				TargetAttributes = {
+					BB3BEBDF1DF6350600C9DDFF = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = BBD12B221DD59437007D31D6;
+					};
+					BB3BEBED1DF63D1B00C9DDFF = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = BBD12B221DD59437007D31D6;
+					};
 					BBD12B221DD59437007D31D6 = {
 						CreatedOnToolsVersion = 8.0;
 						ProvisioningStyle = Automatic;
@@ -213,11 +320,27 @@
 			projectRoot = "";
 			targets = (
 				BBD12B221DD59437007D31D6 /* LiveSendGift */,
+				BB3BEBDF1DF6350600C9DDFF /* LiveSendGiftTests */,
+				BB3BEBED1DF63D1B00C9DDFF /* LiveSendGiftUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		BB3BEBDE1DF6350600C9DDFF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB3BEBEC1DF63D1B00C9DDFF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BBD12B211DD59437007D31D6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -277,6 +400,22 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		BB3BEBDC1DF6350600C9DDFF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB3BEBE31DF6350600C9DDFF /* LiveSendGiftTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB3BEBEA1DF63D1B00C9DDFF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB3BEBF11DF63D1B00C9DDFF /* LiveSendGiftUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BBD12B1F1DD59437007D31D6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -299,7 +438,70 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		BB3BEBE61DF6350600C9DDFF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBD12B221DD59437007D31D6 /* LiveSendGift */;
+			targetProxy = BB3BEBE51DF6350600C9DDFF /* PBXContainerItemProxy */;
+		};
+		BB3BEBF41DF63D1B00C9DDFF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBD12B221DD59437007D31D6 /* LiveSendGift */;
+			targetProxy = BB3BEBF31DF63D1B00C9DDFF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		BB3BEBE71DF6350600C9DDFF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = LiveSendGiftTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jonhory.LiveSendGiftTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LiveSendGift.app/LiveSendGift";
+			};
+			name = Debug;
+		};
+		BB3BEBE81DF6350600C9DDFF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = LiveSendGiftTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jonhory.LiveSendGiftTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LiveSendGift.app/LiveSendGift";
+			};
+			name = Release;
+		};
+		BB3BEBF61DF63D1B00C9DDFF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = LiveSendGiftUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jonhory.LiveSendGiftUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = LiveSendGift;
+			};
+			name = Debug;
+		};
+		BB3BEBF71DF63D1B00C9DDFF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = LiveSendGiftUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jonhory.LiveSendGiftUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = LiveSendGift;
+			};
+			name = Release;
+		};
 		BBD12B381DD59437007D31D6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -417,6 +619,22 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		BB3BEBE91DF6350600C9DDFF /* Build configuration list for PBXNativeTarget "LiveSendGiftTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB3BEBE71DF6350600C9DDFF /* Debug */,
+				BB3BEBE81DF6350600C9DDFF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		BB3BEBF51DF63D1B00C9DDFF /* Build configuration list for PBXNativeTarget "LiveSendGiftUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB3BEBF61DF63D1B00C9DDFF /* Debug */,
+				BB3BEBF71DF63D1B00C9DDFF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		BBD12B1E1DD59437007D31D6 /* Build configuration list for PBXProject "LiveSendGift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

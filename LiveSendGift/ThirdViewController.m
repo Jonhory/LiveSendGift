@@ -96,7 +96,7 @@
     if (!_btn1) {
         UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(50, 600, 150, 50)];
         btn.backgroundColor = [UIColor redColor];
-        [btn setTitle:@"一键增加99" forState:UIControlStateNormal];
+        [btn setTitle:@"Btn101" forState:UIControlStateNormal];
         [self.view addSubview:btn];
         btn.tag = 101;
         [btn addTarget:self action:@selector(bbb:) forControlEvents:UIControlEventTouchUpInside];
@@ -109,7 +109,7 @@
     if (!_btn2) {
         UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(200, 600, 150, 50)];
         btn.backgroundColor = [UIColor blueColor];
-        [btn setTitle:@"连续增加测试" forState:UIControlStateNormal];
+        [btn setTitle:@"Btn102" forState:UIControlStateNormal];
         [self.view addSubview:btn];
         btn.tag = 102;
         [btn addTarget:self action:@selector(bbb:) forControlEvents:UIControlEventTouchUpInside];
