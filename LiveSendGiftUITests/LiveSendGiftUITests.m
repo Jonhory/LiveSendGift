@@ -42,18 +42,23 @@
 
 - (void)testV15VCClicked{
     
-    XCUIApplication *app = [[XCUIApplication alloc] init];
-    XCUIElement *goTestvcV15Button = app.buttons[@"Go TestVC = V1.5"];
-    [goTestvcV15Button tap];
     
-    XCUIElement *backButton = [[[app.navigationBars[@"V1.5 Test"] childrenMatchingType:XCUIElementTypeButton] matchingIdentifier:@"Back"] elementBoundByIndex:0];
-    [backButton tap];
-    [goTestvcV15Button tap];
-    [backButton tap];
-    [goTestvcV15Button tap];
-    [backButton tap];
-    [goTestvcV15Button tap];
-    [backButton tap];
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    [app.buttons[@"Go TestVC = V1.5"] tap];
+    
+    XCUIElement *addoldmodelButton = app.buttons[@"addOldModel"];
+    [addoldmodelButton tap];
+    
+    XCUIElement *addnewmodelButton = app.buttons[@"addNewModel"];
+    [addnewmodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    
     
 }
 

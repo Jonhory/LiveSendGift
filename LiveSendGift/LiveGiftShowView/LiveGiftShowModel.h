@@ -10,6 +10,7 @@
 #import "ZYGiftListModel.h"
 #import "UserModel.h"
 
+
 @interface LiveGiftShowModel : NSObject
 
 @property (nonatomic ,strong) ZYGiftListModel * giftModel;

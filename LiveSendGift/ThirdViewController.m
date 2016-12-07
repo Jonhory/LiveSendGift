@@ -11,7 +11,6 @@
 
 #import "MJExtension.h"
 
-
 @interface ThirdViewController ()
 
 @property (nonatomic ,weak) LiveGiftShow * giftShow;

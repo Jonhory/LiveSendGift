@@ -15,6 +15,15 @@
 
 + (instancetype)addToView:(UIView *)superView;
 
+
 - (void)addLiveGiftShowModel:(LiveGiftShowModel *)showModel;
+
+/**
+ 增加或者更新一个礼物视图
+
+ @param showModel 礼物模型
+ @param showNumber 如果传值，则显示改值，否则从1开始自增1
+ */
+- (void)addLiveGiftShowModel:(LiveGiftShowModel *)showModel showNumber:(NSInteger)showNumber;
 
 @end
