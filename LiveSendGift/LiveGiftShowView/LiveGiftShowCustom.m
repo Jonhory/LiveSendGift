@@ -16,6 +16,8 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
 @interface LiveGiftShowCustom ()
 
 @property (nonatomic ,strong) NSMutableDictionary * modelDict;/**< key([self getDictKey]):value(LiveGiftShowView*) */
+//用来记录模型的顺序
+@property (nonatomic ,strong) NSMutableArray * modelArr;
 
 @end
 
@@ -27,6 +29,13 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
         _modelDict = [[NSMutableDictionary alloc]init];
     }
     return _modelDict;
+}
+
+-(NSMutableArray *)modelArr{
+    if (!_modelArr) {
+        _modelArr = [[NSMutableArray alloc]init];
+    }
+    return _modelArr;
 }
 
 #pragma mark - 初始化
@@ -62,24 +71,30 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
     if (!oldShowView || ![oldShowView isKindOfClass:[LiveGiftShowView class]]) {
         //计算视图Y值
         CGFloat   showViewY = (kViewHeight + kGiftViewMargin) * [self.modelDict allKeys].count;
-        
-        NSLog(@"%@ Y = %f",self,showViewY);
-
+        //获取已移除的key的index
+        NSInteger kRemovedViewIndex = [self.modelArr indexOfObject:kGiftViewRemoved];
+        if ([self.modelArr containsObject:kGiftViewRemoved]) {
+            showViewY = kRemovedViewIndex * (kViewHeight+kGiftViewMargin);
+        }
         //创建新模型
         LiveGiftShowView * newShowView = [[LiveGiftShowView alloc]initWithFrame:CGRectMake(0, showViewY, 0, 0)];
         //赋值
         newShowView.model = showModel;
+        //改变礼物数量
         if (isResetNumber) {
             [newShowView resetTimeAndNumberFrom:showNumber];
         }else{
             [newShowView addGiftNumberFrom:1];
         }
-        //超时动画
+        //超时移除
         __weak __typeof(self)weakSelf = self;
         newShowView.liveGiftShowViewTimeOut = ^(LiveGiftShowView * willReMoveShowView){
+            //从数组移除
+            [weakSelf.modelArr replaceObjectAtIndex:willReMoveShowView.index withObject:kGiftViewRemoved];
             //从字典移除
             NSString * willReMoveShowViewKey = [NSString stringWithFormat:@"%@%@",willReMoveShowView.model.user.name,willReMoveShowView.model.giftModel.type];
             [weakSelf.modelDict removeObjectForKey:willReMoveShowViewKey];
+            
             //移除之后更新自身约束
             [weakSelf mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.equalTo(@((kViewHeight+kGiftViewMargin) * [weakSelf.modelDict allKeys].count));
@@ -87,6 +102,15 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
         };
         
         [self addSubview:newShowView];
+        
+        //加入数组
+        if ([self.modelArr containsObject:kGiftViewRemoved]) {
+            newShowView.index = kRemovedViewIndex;
+            [self.modelArr replaceObjectAtIndex:kRemovedViewIndex withObject:newShowView];
+        }else{
+            newShowView.index = self.modelArr.count;
+            [self.modelArr addObject:newShowView];
+        }
         
         //加入字典
         [self.modelDict setObject:newShowView forKey:[self getDictKey:showModel]];
@@ -106,6 +130,14 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
 }
 
 #pragma mark - Private
+- (void)removeObjectFromModelArrAtIndex:(NSUInteger)index{
+    NSLog(@" \n removeObjectFromModelA   ==== %zi",index);
+}
+
+- (void)removeModelArr:(NSSet *)objects{
+    NSLog(@" \n  removeModelArr  ==== %@",objects);
+}
+
 - (NSString *)getDictKey:(LiveGiftShowModel *)model{
     //默认以 用户名+礼物类型 为key
     NSString * key = [NSString stringWithFormat:@"%@%@",model.user.name,model.giftModel.type];

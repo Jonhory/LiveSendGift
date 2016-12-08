@@ -102,12 +102,12 @@ static NSInteger kTag = 200;
     switch (clickedBtn.tag) {
         case 200:{
             LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.oldUser];
-            [self.customGiftShow addLiveGiftShowModel:model showNumber:9898];
+            [self.customGiftShow addLiveGiftShowModel:model showNumber:2];
             break;
         }
         case 201:{
             LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[5] userModel:[UserModel random]];
-            [self.customGiftShow addLiveGiftShowModel:model showNumber:0];
+            [self.customGiftShow addLiveGiftShowModel:model];
             break;
         }
         default:
