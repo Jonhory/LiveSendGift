@@ -81,8 +81,8 @@ static NSInteger kTag = 200;
     self.view.backgroundColor = RGB(237, 237, 237);
     
     //初始化按钮
-    NSArray * titles = @[@"addOldModel",@"addNewModel"];
-    NSInteger maxCount = 2;
+    NSArray * titles = @[@"addOldModel",@"addNewModel",@"randomModel"];
+    NSInteger maxCount = 3;
     for (NSInteger i = 0; i<maxCount; i++) {
         [self createBtnWithTag:i+kTag title:titles[i] maxCount:maxCount];
     }
@@ -102,10 +102,15 @@ static NSInteger kTag = 200;
     switch (clickedBtn.tag) {
         case 200:{
             LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.oldUser];
-            [self.customGiftShow addLiveGiftShowModel:model showNumber:2];
+            [self.customGiftShow addLiveGiftShowModel:model];
             break;
         }
         case 201:{
+            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[4] userModel:self.oldUser];
+            [self.customGiftShow addLiveGiftShowModel:model];
+            break;
+        }
+        case 202:{
             LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[5] userModel:[UserModel random]];
             [self.customGiftShow addLiveGiftShowModel:model];
             break;

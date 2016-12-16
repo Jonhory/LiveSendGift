@@ -111,6 +111,7 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
     NSInteger num = self.numberView.number;
     [self.numberView changeNumber:num];
     [self handleNumber:num];
+    self.creatDate = [NSDate date];
 }
 
 

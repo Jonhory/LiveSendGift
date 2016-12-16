@@ -16,6 +16,19 @@
 + (instancetype)addToView:(UIView *)superView;
 
 
+/**
+ 设置最大礼物数量
+
+ @param maxGiftCount 默认为3
+ */
++ (void)setMaxGiftCount:(NSInteger)maxGiftCount;
+
+
+/**
+ 增加或者更新一个礼物视图
+
+ @param showModel 礼物模型
+ */
 - (void)addLiveGiftShowModel:(LiveGiftShowModel *)showModel;
 
 /**
