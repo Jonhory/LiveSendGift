@@ -40,6 +40,15 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor lightGrayColor];
     
+    UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 300, 100)];
+    label.text = @"V1.5 请移步develop分支  url：https://github.com/JonHory/LiveSendGift/tree/develop";
+    label.numberOfLines = 0;
+    label.center = CGPointMake(self.view.center.x, self.btn1.center.y - 150);
+    label.textColor = [UIColor redColor];
+    [label sizeToFit];
+
+    [self.view addSubview:label];
+    
     self.btn1.center = CGPointMake(self.view.center.x, self.btn1.center.y);
     self.btn2.center = CGPointMake(self.view.center.x, self.btn1.center.y + 150);
     // Do any additional setup after loading the view.
