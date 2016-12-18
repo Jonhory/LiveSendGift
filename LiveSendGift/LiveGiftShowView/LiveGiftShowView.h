@@ -16,7 +16,7 @@ static CGFloat const kViewHeight = 44.0;//背景高
 
 @interface LiveGiftShowView : UIView
 
-@property (nonatomic ,copy) NSDate * creatDate;/**< 视图创建时间，用于LiveGiftShow替换旧的视图 */
+@property (nonatomic ,copy) NSDate * creatDate;/**< 视图创建时间，用于LiveGiftShow替换旧的视图 V1.5在内部创建*/
 @property (nonatomic ,assign) NSInteger index;/**< 用于LiveGiftShow判断是第几个视图 */
 
 @property (nonatomic ,strong) LiveGiftShowModel * model;
@@ -24,6 +24,7 @@ static CGFloat const kViewHeight = 44.0;//背景高
 @property (nonatomic ,weak) LiveGiftShowNumberView * numberView;
 
 @property (nonatomic ,assign) BOOL isAnimation;/**< 是否正处于动画，用于上下视图交换位置时使用 */
+@property (nonatomic ,assign) BOOL isLeavingAnimation;/**< 是否正处于动画，用于视图正在向右飞出时不要交换位置 */
 
 @property (nonatomic ,copy) void(^liveGiftShowViewTimeOut)(LiveGiftShowView *);
 

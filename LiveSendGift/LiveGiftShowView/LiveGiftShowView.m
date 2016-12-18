@@ -49,6 +49,7 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
     if (self) {
         self.liveTimerForSecond = 0;
         [self setupContentContraints];
+        self.creatDate = [NSDate date];
     }
     return self;
 }
@@ -110,6 +111,7 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
     NSInteger num = self.numberView.number;
     [self.numberView changeNumber:num];
     [self handleNumber:num];
+    self.creatDate = [NSDate date];
 }
 
 
@@ -126,9 +128,14 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
 }
 
 #pragma mark - Private
+/**
+ 处理显示数字 开启定时器
+
+ @param number 显示数字的值
+ */
 - (void)handleNumber:(NSInteger )number{
     self.liveTimerForSecond = 0;
-    
+    //根据数字修改self.giftIV的约束 比如 1 占 10 的宽度，10 占 20的宽度
     NSString * numStr = [NSString stringWithFormat:@"%zi",number];
     CGFloat giftRight = numStr.length * kGiftNumberWidth + kGiftNumberWidth;
     
@@ -159,10 +166,12 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
             return;
         }
         self.isAnimation = YES;
+        self.isLeavingAnimation = YES;
         [UIView animateWithDuration:kRemoveAnimationTime delay:kNumberAnimationTime options:UIViewAnimationOptionCurveEaseIn animations:^{
             self.transform = CGAffineTransformTranslate(self.transform, [UIScreen mainScreen].bounds.size.width, 0);
         } completion:^(BOOL finished) {
             if (finished) {
+                self.isLeavingAnimation = NO;
                 if (self.liveGiftShowViewTimeOut) {
                     self.liveGiftShowViewTimeOut(self);
                 }

@@ -11,8 +11,6 @@
 
 #import "MJExtension.h"
 
-#define SCREEN [UIScreen mainScreen].bounds.size
-
 @interface ThirdViewController ()
 
 @property (nonatomic ,weak) LiveGiftShow * giftShow;

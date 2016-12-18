@@ -55,7 +55,7 @@ XCTAssertEqual(a1, a2, format...)的判断条件是a1 == a2是否返回一个YES
 #import "LiveGiftShowModel.h"
 
 @interface LiveSendGiftTests : XCTestCase
-
+@property (nonatomic ,strong) NSMutableArray * showViewArr;
 @end
 
 @implementation LiveSendGiftTests
@@ -65,7 +65,16 @@ XCTAssertEqual(a1, a2, format...)的判断条件是a1 == a2是否返回一个YES
     //每次测试前调用，可以在测试之前创建在test case方法中需要用到的一些对象等
     // Put setup code here. This method is called before the invocation of each test method in the class.
     
-    
+    self.showViewArr = [[NSMutableArray alloc]init];
+    [self.showViewArr addObject:@"kk"];
+    [self.showViewArr addObject:@"kk"];
+    [self.showViewArr addObject:@"kk"];
+    [self.showViewArr addObject:@11];
+    [self.showViewArr addObject:@33];
+    [self.showViewArr addObject:@"kk"];
+    [self.showViewArr addObject:@22];
+
+
 }
 
 - (void)tearDown {
@@ -92,6 +101,31 @@ XCTAssertEqual(a1, a2, format...)的判断条件是a1 == a2是否返回一个YES
     //默认以 用户名+礼物类型 为key
     NSString * key = [NSString stringWithFormat:@"%@%@",model.user.name,model.giftModel.type];
     return key;
+}
+
+
+- (void)testSort{
+    NSLog(@"begin sort == %@",self.showViewArr);
+    for (int i = 0; i < self.showViewArr.count; i++) {
+        id current = self.showViewArr[i];
+        if ([current isKindOfClass:[NSString class]]){
+            if (i+1 < self.showViewArr.count) {
+                [self searchLiveShowViewFrom:i+1];
+            }
+        }
+    }
+     NSLog(@"end Sort == %@",self.showViewArr);
+}
+- (void)searchLiveShowViewFrom:(int)i{
+    for (int j = i; j < self.showViewArr.count; j++) {
+        id  next = self.showViewArr[j];
+        if (![next isKindOfClass:[NSString class]]) {
+//            next.index = i-1;
+            [self.showViewArr exchangeObjectAtIndex:i-1 withObjectAtIndex:j];
+            NSLog(@"i-1 == %zi , j = %zi",i-1,j);
+            return;
+        }
+    }
 }
 
 

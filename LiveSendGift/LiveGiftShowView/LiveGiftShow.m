@@ -46,7 +46,7 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
                     if (i>0) {
                         LiveGiftShowView * viewAgo = self.giftViewArr[i-1];//前一个视图
                         if (viewAgo && [viewAgo isKindOfClass:[LiveGiftShowView class]]) {//安全判断
-                            NSInteger result = [viewNow.creatDate compare:viewAgo.creatDate];
+                            NSComparisonResult result = [viewNow.creatDate compare:viewAgo.creatDate];
                             if (result == 1) {
                                 //替换模型之后 字典的key要改变
                                 [self resetView:viewAgo nowModel:model];
