@@ -72,6 +72,97 @@
     
 }
 
+- (void)testV15{
+    
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    [app.buttons[@"Go TestVC = V1.5"] tap];
+    
+    XCUIElement *addoldmodelButton = app.buttons[@"addOldModel"];
+    [addoldmodelButton tap];
+    
+    XCUIElement *addnewmodelButton = app.buttons[@"addNewModel"];
+    [addnewmodelButton tap];
+    
+    XCUIElement *randommodelButton = app.buttons[@"randomModel"];
+    [randommodelButton tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    [addoldmodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    [randommodelButton tap];
+    [randommodelButton tap];
+    [randommodelButton tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    [addoldmodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    [addoldmodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [addoldmodelButton tap];
+    [addoldmodelButton tap];
+    [addoldmodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    [randommodelButton tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    [addoldmodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [randommodelButton tap];
+    [randommodelButton tap];
+    [addnewmodelButton tap];
+    [addoldmodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    [randommodelButton tap];
+    [randommodelButton tap];
+    [addoldmodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [randommodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [randommodelButton tap];
+    [addnewmodelButton tap];
+    [addoldmodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [addoldmodelButton tap];
+    [randommodelButton tap];
+    [addoldmodelButton tap];
+    [addoldmodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [[[[[app.otherElements containingType:XCUIElementTypeNavigationBar identifier:@"V1.5 Test"] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    [addoldmodelButton tap];
+    [addnewmodelButton tap];
+    [randommodelButton tap];
+    [addnewmodelButton tap];
+    [addnewmodelButton tap];
+    [addoldmodelButton tap];
+    [randommodelButton tap];
+    [randommodelButton tap];
+    [randommodelButton tap];
+    
+}
+
 - (void)testThirdVCClicked{
     
     XCUIApplication *app = [[XCUIApplication alloc] init];

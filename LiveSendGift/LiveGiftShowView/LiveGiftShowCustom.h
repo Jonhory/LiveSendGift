@@ -11,17 +11,30 @@
 #import "Masonry.h"
 #import "LiveGiftShowModel.h"
 
+// 项目打包上线都不会打印日志，因此可放心。
+#ifdef DEBUG
+#define RHCFLog(s, ... ) NSLog( @"[%@ in line %d] ===============>%@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+#else
+#define RHCFLog(s, ... )
+#endif
+
 @interface LiveGiftShowCustom : UIView
 
 + (instancetype)addToView:(UIView *)superView;
 
+/**
+ *  设置是否打印信息
+ *
+ *  @param isDebug 开发的时候最好打开，默认是NO
+ */
+- (void)enableInterfaceDebug:(BOOL)isDebug;
 
 /**
  设置最大礼物数量
 
  @param maxGiftCount 默认为3
  */
-+ (void)setMaxGiftCount:(NSInteger)maxGiftCount;
+- (void)setMaxGiftCount:(NSInteger)maxGiftCount;
 
 
 /**
