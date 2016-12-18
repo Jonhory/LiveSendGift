@@ -93,7 +93,7 @@
 
 - (UIButton *)btn1{
     if (!_btn1) {
-        UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(50, 600, 150, 50)];
+        UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(10, SCREEN.height - 60, 150, 50)];
         btn.backgroundColor = [UIColor redColor];
         [btn setTitle:@"Btn101" forState:UIControlStateNormal];
         [self.view addSubview:btn];
@@ -106,7 +106,7 @@
 
 - (UIButton *)btn2{
     if (!_btn2) {
-        UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(200, 600, 150, 50)];
+        UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN.width/2, SCREEN.height - 60, 150, 50)];
         btn.backgroundColor = [UIColor blueColor];
         [btn setTitle:@"Btn102" forState:UIControlStateNormal];
         [self.view addSubview:btn];
