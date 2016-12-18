@@ -194,8 +194,5 @@
     return iv;
 }
 
-- (void)dealloc{
-    NSLog(@"Delloc !!! %@",self);
-}
 
 @end

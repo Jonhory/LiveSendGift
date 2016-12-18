@@ -51,7 +51,7 @@
 		BB3BEBE41DF6350600C9DDFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB3BEBEE1DF63D1B00C9DDFF /* LiveSendGiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveSendGiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB3BEBF01DF63D1B00C9DDFF /* LiveSendGiftUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LiveSendGiftUITests.m; sourceTree = "<group>"; };
-		BB3BEBF21DF63D1B00C9DDFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB3BEBF21DF63D1B00C9DDFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = LiveSendGiftUITests/Info.plist; sourceTree = "<group>"; };
 		BB4BF1AB1DD6013E0017DA99 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
 		BB4BF1AC1DD6013E0017DA99 /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
 		BB4BF1B11DD606C90017DA99 /* LiveGiftShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShow.h; sourceTree = "<group>"; };
@@ -121,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				BB3BEBF01DF63D1B00C9DDFF /* LiveSendGiftUITests.m */,
-				BB3BEBF21DF63D1B00C9DDFF /* Info.plist */,
 			);
 			path = LiveSendGiftUITests;
 			sourceTree = "<group>";
@@ -133,6 +132,7 @@
 				BB3BEBE11DF6350600C9DDFF /* LiveSendGiftTests */,
 				BB3BEBEF1DF63D1B00C9DDFF /* LiveSendGiftUITests */,
 				BBD12B241DD59437007D31D6 /* Products */,
+				BB3BEBF21DF63D1B00C9DDFF /* Info.plist */,
 				E80023422568FECC1F86D560 /* Pods */,
 				C6E7558AED25B233D80BF99D /* Frameworks */,
 			);
@@ -626,6 +626,7 @@
 				BB3BEBE81DF6350600C9DDFF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BB3BEBF51DF63D1B00C9DDFF /* Build configuration list for PBXNativeTarget "LiveSendGiftUITests" */ = {
 			isa = XCConfigurationList;
@@ -634,6 +635,7 @@
 				BB3BEBF71DF63D1B00C9DDFF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BBD12B1E1DD59437007D31D6 /* Build configuration list for PBXProject "LiveSendGift" */ = {
 			isa = XCConfigurationList;

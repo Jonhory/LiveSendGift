@@ -52,7 +52,7 @@ static BOOL live_isEnableInterfaceDebug = NO;
         make.left.equalTo(superView.mas_left);//这个可以任意修改
         make.top.equalTo(superView.mas_top).offset(100);//这个可以任意修改
     }];
-    v.backgroundColor = [UIColor yellowColor];
+    v.backgroundColor = [UIColor clearColor];
     return v;
 }
 
@@ -132,8 +132,8 @@ static BOOL live_isEnableInterfaceDebug = NO;
                 make.height.equalTo(@((kViewHeight+kGiftViewMargin) * [weakSelf.showViewDict allKeys].count));
             }];
             
-            if ([self isDebug]) {
-                NSLog(@"移除了第%zi个,移除后数组 = %@ ,词典 = %@",willReMoveShowView.index,self.showViewArr,self.showViewDict);
+            if ([weakSelf isDebug]) {
+                NSLog(@"移除了第%zi个,移除后数组 = %@ ,词典 = %@",willReMoveShowView.index,weakSelf.showViewArr,weakSelf.showViewDict);
             }
         };
         
@@ -149,26 +149,26 @@ static BOOL live_isEnableInterfaceDebug = NO;
         }
         //加入字典
         [self.showViewDict setObject:newShowView forKey:[self getDictKey:showModel]];
-        //更新自身约束
-        [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@(showViewY+(kViewHeight+kGiftViewMargin)));
-        }];
+        //更新自身约束 不自动更新约束了，不然会挡住后面的点击事件
+//        [self mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.height.equalTo(@(showViewY+(kViewHeight+kGiftViewMargin)));
+//        }];
     }
     //如果存在旧模型
     else{
-        //首先修改数量
+        //修改数量大小
         if (isResetNumber) {
             [oldShowView resetTimeAndNumberFrom:showNumber];
         }else{
             [oldShowView addGiftNumberFrom:1];
         }
-        //然后 比较数量大小排序
+        //比较数量大小排序
         [self sortShowArr];
-        
+        //排序后调整Y值
         for (int i = 0; i < self.showViewArr.count; i++) {
             LiveGiftShowView * show = self.showViewArr[i];
             if ([show isKindOfClass:[LiveGiftShowView class]]) {
-                if (show.frame.origin.y != i * (kViewHeight+kGiftViewMargin)) {
+//                if (show.frame.origin.y != i * (kViewHeight+kGiftViewMargin) ) {
                     [UIView animateWithDuration:kExchangeAnimationTime animations:^{
                         CGRect showF = show.frame;
                         showF.origin.y = i * (kViewHeight+kGiftViewMargin);
@@ -177,7 +177,7 @@ static BOOL live_isEnableInterfaceDebug = NO;
                         
                     }];
                     show.isAnimation = YES;
-                }
+//                }
             }
         }
         
@@ -185,6 +185,16 @@ static BOOL live_isEnableInterfaceDebug = NO;
 }
 
 - (void)sortShowArr{
+    //如果当前数组包含kGiftViewRemoved 则将kGiftViewRemoved替换到LiveGiftShowView之后
+    for (int i = 0; i < self.showViewArr.count; i++) {
+        id current = self.showViewArr[i];
+        if ([current isKindOfClass:[NSString class]]){
+            if (i+1 < self.showViewArr.count) {
+                [self searchLiveShowViewFrom:i+1];
+            }
+        }
+    }
+    //以当前 数字大小 比较，降序
     for (int i = 0; i < self.showViewArr.count; i++) {
         for (int j = i; j < self.showViewArr.count; j++) {
             LiveGiftShowView * showViewI = self.showViewArr[i];
@@ -200,53 +210,19 @@ static BOOL live_isEnableInterfaceDebug = NO;
             }
         }
     }
-
-    for (int i = 0; i < self.showViewArr.count; i++) {
-        id current = self.showViewArr[i];
-        if ([current isKindOfClass:[NSString class]]){
-            if (i+1 < self.showViewArr.count) {
-                LiveGiftShowView * next = self.showViewArr[i+1];
-                if ([next isKindOfClass:[LiveGiftShowView class]] && next.isAnimation == NO) {
-                    next.index = i+1;
-                    [self.showViewArr exchangeObjectAtIndex:i withObjectAtIndex:i+1];
-                }
-            }
-        }
-    }
+    
 }
 
-- (void)quickSortFormLeft:(NSInteger)leftIndex toRight:(NSInteger)rightIndex{
-    if (leftIndex >= rightIndex) {
-        return;
-    }
-    NSInteger i = leftIndex;
-    NSInteger j = rightIndex;
-    LiveGiftShowView * base = self.showViewArr[leftIndex];
-    while (i != j) {
-        LiveGiftShowView * rightView = self.showViewArr[j];
-        while ([rightView.numberView getLastNumber] <= [base.numberView getLastNumber] && i < j) {
-            j --;
-        }
-        
-        LiveGiftShowView * leftView = self.showViewArr[i];
-        while ([leftView.numberView getLastNumber] >= [base.numberView getLastNumber] && i < j) {
-            i ++;
-        }
-        
-        if (i < j) {
-//            LiveGiftShowView * temp1 = self.showViewArr[j];
-//            self.showViewArr[j] = self.showViewArr[i];
-//            self.showViewArr[i] = temp1;
-            [self.showViewArr exchangeObjectAtIndex:i withObjectAtIndex:j];
+- (void)searchLiveShowViewFrom:(int)i{
+    for (int j = i; j < self.showViewArr.count; j++) {
+        LiveGiftShowView * next = self.showViewArr[j];
+        if ([next isKindOfClass:[LiveGiftShowView class]]) {
+            next.index = i-1;
+            [self.showViewArr exchangeObjectAtIndex:i-1 withObjectAtIndex:j];
+            NSLog(@"i-1 == %zi , j = %zi",i-1,j);
+            return;
         }
     }
-    [self.showViewArr exchangeObjectAtIndex:leftIndex withObjectAtIndex:j];
-//    LiveGiftShowView * temp2 = self.showViewArr[j];
-//    self.showViewArr[j] = base;
-//    self.showViewArr[leftIndex] = temp2;
-    
-    [self quickSortFormLeft:leftIndex toRight:i-1];
-    [self quickSortFormLeft:i+1 toRight:rightIndex];
 }
 
 #pragma mark - Private

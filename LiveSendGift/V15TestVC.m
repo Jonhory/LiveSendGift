@@ -51,6 +51,8 @@ static NSInteger kTag = 200;
 - (LiveGiftShowCustom *)customGiftShow{
     if (!_customGiftShow) {
         _customGiftShow = [LiveGiftShowCustom addToView:self.view];
+        [_customGiftShow setMaxGiftCount:5];
+        [_customGiftShow enableInterfaceDebug:NO];
     }
     return _customGiftShow;
 }
@@ -112,7 +114,7 @@ static NSInteger kTag = 200;
         }
         case 202:{
             LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[5] userModel:[UserModel random]];
-            [self.customGiftShow addLiveGiftShowModel:model];
+            [self.customGiftShow addLiveGiftShowModel:model showNumber:8888];
             break;
         }
         default:
