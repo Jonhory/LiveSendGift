@@ -45,6 +45,11 @@
 
 ![](http://ww2.sinaimg.cn/large/c6a1cfeagw1f9p7t0w9bng208g0fd0x3.gif)
 
+#### V1.5
+* 实现了自定义最大礼物数量的需求
+
+![](http://ww2.sinaimg.cn/large/c6a1cfeagw1favehbqaz9g20b50jrnbh.gif)
+
 ###<a id="快速使用"></a>快速使用
 * 使用的第三方库:
   * [Masonry](https://github.com/SnapKit/Masonry)
@@ -54,7 +59,9 @@
   * `ZYGiftListModel`是用来显示弹幕上右侧礼物图片`picUrl`和打赏的语句`rewardMsg`的，礼物有`type`字段
   * `UserModel`是用来显示送礼物的人的名称`name`和头像`iconUrl`
   
-* 只需要导入即可`#import "LiveGiftShow.h"`
+* V1.4只需要导入`#import "LiveGiftShow.h"`
+* V1.5只需要导入`#import "LiveGiftShowCustom.h"`,具体使用可参考`V15TestVC.m`
+
 * `@property (nonatomic ,weak) LiveGiftShow * giftShow;`
 
 ```
@@ -105,3 +112,4 @@ LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[3]
 
 ## <a id="关于我"></a>关于我
  * 如果在使用过程中遇到问题，或者想要与我分享／吐槽／建议／意见<jonhory@163.com>
+

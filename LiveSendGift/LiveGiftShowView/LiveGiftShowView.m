@@ -166,10 +166,12 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
             return;
         }
         self.isAnimation = YES;
+        self.isLeavingAnimation = YES;
         [UIView animateWithDuration:kRemoveAnimationTime delay:kNumberAnimationTime options:UIViewAnimationOptionCurveEaseIn animations:^{
             self.transform = CGAffineTransformTranslate(self.transform, [UIScreen mainScreen].bounds.size.width, 0);
         } completion:^(BOOL finished) {
             if (finished) {
+                self.isLeavingAnimation = NO;
                 if (self.liveGiftShowViewTimeOut) {
                     self.liveGiftShowViewTimeOut(self);
                 }

@@ -128,13 +128,17 @@ static BOOL live_isEnableInterfaceDebug = NO;
             [weakSelf.showViewDict removeObjectForKey:willReMoveShowViewKey];
             
             //移除之后更新自身约束
-            [weakSelf mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.height.equalTo(@((kViewHeight+kGiftViewMargin) * [weakSelf.showViewDict allKeys].count));
-            }];
+//            [weakSelf mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.height.equalTo(@((kViewHeight+kGiftViewMargin) * [weakSelf.showViewDict allKeys].count));
+//            }];
             
             if ([weakSelf isDebug]) {
                 NSLog(@"移除了第%zi个,移除后数组 = %@ ,词典 = %@",willReMoveShowView.index,weakSelf.showViewArr,weakSelf.showViewDict);
             }
+            
+            //比较数量大小排序
+            [weakSelf sortShowArr];
+            [weakSelf resetY];
         };
         
         [self addSubview:newShowView];
@@ -165,10 +169,17 @@ static BOOL live_isEnableInterfaceDebug = NO;
         //比较数量大小排序
         [self sortShowArr];
         //排序后调整Y值
-        for (int i = 0; i < self.showViewArr.count; i++) {
-            LiveGiftShowView * show = self.showViewArr[i];
-            if ([show isKindOfClass:[LiveGiftShowView class]]) {
-//                if (show.frame.origin.y != i * (kViewHeight+kGiftViewMargin) ) {
+        [self resetY];
+        
+    }
+}
+
+- (void)resetY{
+    for (int i = 0; i < self.showViewArr.count; i++) {
+        LiveGiftShowView * show = self.showViewArr[i];
+        if ([show isKindOfClass:[LiveGiftShowView class]]) {
+            if (show.frame.origin.y != i * (kViewHeight+kGiftViewMargin) ) {
+                if (!show.isLeavingAnimation) {
                     [UIView animateWithDuration:kExchangeAnimationTime animations:^{
                         CGRect showF = show.frame;
                         showF.origin.y = i * (kViewHeight+kGiftViewMargin);
@@ -177,10 +188,9 @@ static BOOL live_isEnableInterfaceDebug = NO;
                         
                     }];
                     show.isAnimation = YES;
-//                }
+                }
             }
         }
-        
     }
 }
 
@@ -219,7 +229,6 @@ static BOOL live_isEnableInterfaceDebug = NO;
         if ([next isKindOfClass:[LiveGiftShowView class]]) {
             next.index = i-1;
             [self.showViewArr exchangeObjectAtIndex:i-1 withObjectAtIndex:j];
-            NSLog(@"i-1 == %zi , j = %zi",i-1,j);
             return;
         }
     }
