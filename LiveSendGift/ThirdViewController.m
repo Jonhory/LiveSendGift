@@ -8,6 +8,7 @@
 
 #import "ThirdViewController.h"
 #import "LiveGiftShow.h"
+#define SCREEN [UIScreen mainScreen].bounds.size
 
 #import "MJExtension.h"
 
