@@ -74,7 +74,7 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
     [self.iconIV sd_setImageWithURL:[NSURL URLWithString:model.user.iconUrl] placeholderImage:nil];
     
     self.sendLabel.text = model.giftModel.rewardMsg;
-    [self.giftIV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@_live@2x.png",model.giftModel.picUrl]] placeholderImage:nil];
+    [self.giftIV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.giftModel.picUrl]] placeholderImage:nil];
     
 }
 

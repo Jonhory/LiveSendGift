@@ -103,27 +103,27 @@ static NSInteger kTag = 200;
 - (void)v15BtnClicked:(UIButton *)clickedBtn{
     switch (clickedBtn.tag) {
         case 200:{
-            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.oldUser];
+            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[0] userModel:self.oldUser];
             [self.customGiftShow addLiveGiftShowModel:model];
             break;
         }
         case 201:{
-            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[4] userModel:self.oldUser];
+            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[1] userModel:self.oldUser];
             [self.customGiftShow addLiveGiftShowModel:model];
             break;
         }
         case 202:{
-            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[5] userModel:self.oldUser];
+            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[2] userModel:self.oldUser];
             [self.customGiftShow addLiveGiftShowModel:model];
             break;
         }
         case 203:{
-            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[6] userModel:self.oldUser];
+            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.oldUser];
             [self.customGiftShow addLiveGiftShowModel:model];
             break;
         }
         case 204:{
-            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[7] userModel:self.oldUser];
+            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[4] userModel:self.oldUser];
             [self.customGiftShow addLiveGiftShowModel:model];
             break;
         }
@@ -141,7 +141,7 @@ static NSInteger kTag = 200;
                                 @"personSort": @"0",
                                 @"goldCount": @"3",
                                 @"type": @"0",
-                                @"picUrl": @"http://cache-img1.51songguo.com/image/gift/songguo"
+                                @"picUrl": @"http://ww3.sinaimg.cn/large/c6a1cfeagw1fbks9dl7ryj205k05kweo.jpg",
                                 },
                             @{
                                 @"name": @"花束",
@@ -149,7 +149,7 @@ static NSInteger kTag = 200;
                                 @"personSort": @"6",
                                 @"goldCount": @"66",
                                 @"type": @"1",
-                                @"picUrl": @"http://cache-img1.51songguo.com/image/gift/flower"
+                                @"picUrl": @"http://ww1.sinaimg.cn/large/c6a1cfeagw1fbksa4vf7uj205k05kaa0.jpg",
                                 },
                             @{
                                 @"name": @"果汁",
@@ -157,7 +157,7 @@ static NSInteger kTag = 200;
                                 @"personSort": @"3",
                                 @"goldCount": @"18",
                                 @"type": @"2",
-                                @"picUrl": @"http://cache-img1.51songguo.com/image/gift/juice"
+                                @"picUrl": @"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksajipb8j205k05kjri.jpg",
                                 },
                             @{
                                 @"name": @"棒棒糖",
@@ -165,72 +165,16 @@ static NSInteger kTag = 200;
                                 @"personSort": @"2",
                                 @"goldCount": @"8",
                                 @"type": @"3",
-                                @"picUrl": @"http://cache-img1.51songguo.com/image/gift/lollipop"
+                                @"picUrl": @"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksasl9qwj205k05kt8k.jpg",
                                 },
                             @{
-                                @"name": @"松鼠",
-                                @"rewardMsg": @"扔出一只松鼠",
-                                @"personSort": @"8",
-                                @"goldCount": @"88",
-                                @"type": @"10",
-                                @"picUrl": @"http://cache-img1.51songguo.com/image/gift/songsu"
-                                },
-                            @{
-                                @"name": @"跑车",
-                                @"rewardMsg": @"开豪车载走主播",
-                                @"personSort": @"10",
-                                @"goldCount": @"369",
-                                @"type": @"7",
-                                @"picUrl": @"http://cache-img1.51songguo.com/image/gift/roadster"
-                                },
-                            @{
-                                @"name": @"666",
-                                @"rewardMsg": @"抛出666",
-                                @"personSort": @"1",
-                                @"goldCount": @"6",
-                                @"type": @"6",
-                                @"picUrl": @"http://cache-img1.51songguo.com/image/gift/six"
-                                },
-                            @{
-                                @"name": @"草泥马",
-                                @"rewardMsg": @"扔出一只草泥马",
-                                @"personSort": @"9",
-                                @"goldCount": @"208",
+                                @"name": @"泡泡糖",
+                                @"rewardMsg": @"一起吃泡泡糖吧",
+                                @"personSort": @"2",
+                                @"goldCount": @"8",
                                 @"type": @"4",
-                                @"picUrl": @"http://cache-img1.51songguo.com/image/gift/caonima"
+                                @"picUrl": @"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksasl9qwj205k05kt8k.jpg",
                                 },
-                            @{
-                                @"name": @"游轮",
-                                @"rewardMsg": @"开游轮带走主播",
-                                @"personSort": @"11",
-                                @"goldCount": @"1888",
-                                @"type": @"8",
-                                @"picUrl": @"http://cache-img1.51songguo.com/image/gift/pulley"
-                                },
-                            @{
-                                @"name": @"奖章",
-                                @"rewardMsg": @"送上奖章",
-                                @"personSort": @"4",
-                                @"goldCount": @"36",
-                                @"type": @"9",
-                                @"picUrl": @"http://cache-img1.51songguo.com/image/gift/medal"
-                                },
-                            @{
-                                @"name": @"巧克力",
-                                @"rewardMsg": @"献上巧克力",
-                                @"personSort": @"7",
-                                @"goldCount": @"69",
-                                @"type": @"5",
-                                @"picUrl": @"http://cache-img1.51songguo.com/image/gift/chocolate"
-                                },
-                            @{
-                                @"name": @"盐袋",
-                                @"rewardMsg": @"喂主播盐袋",
-                                @"personSort": @"5",
-                                @"goldCount": @"48",
-                                @"type": @"11",
-                                @"picUrl": @"http://cache-img1.51songguo.com/image/gift/salt"
-                                }
                             ];
     }
     return _giftDataSource;
