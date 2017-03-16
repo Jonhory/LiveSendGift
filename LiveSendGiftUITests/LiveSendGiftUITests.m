@@ -163,6 +163,100 @@
     
 }
 
+- (void)testIn0316 {
+    
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    [app.buttons[@"Go TestVC = V1.5"] tap];
+    
+    XCUIElement *oneButton = app.buttons[@"one"];
+    [oneButton tap];
+    [oneButton tap];
+    [oneButton tap];
+    
+    XCUIElement *twoButton = app.buttons[@"two"];
+    [twoButton tap];
+    [twoButton tap];
+    
+    XCUIElement *threeButton = app.buttons[@"three"];
+    [threeButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    [twoButton tap];
+    [twoButton tap];
+    [twoButton tap];
+    [twoButton tap];
+    [twoButton tap];
+    [twoButton tap];
+    [twoButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    
+    XCUIElement *fourButton = app.buttons[@"four"];
+    [fourButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    [threeButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    [fourButton tap];
+    [threeButton tap];
+    [fourButton tap];
+    [threeButton tap];
+    [fourButton tap];
+    [threeButton tap];
+    [fourButton tap];
+    [threeButton tap];
+    [fourButton tap];
+    [threeButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    
+    XCUIElement *fiveButton = app.buttons[@"five"];
+    [fiveButton tap];
+    [fiveButton tap];
+    [threeButton tap];
+    [threeButton tap];
+    //以下是出bug 的范围
+    printf("以下是出bug 的范围");
+    [threeButton tap];
+    [threeButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    [fourButton tap];
+    //以上是出bug 的范围
+    printf("以⬆️是出bug 的范围");
+    [fourButton tap];
+    
+}
+
 - (void)testThirdVCClicked{
     
     XCUIApplication *app = [[XCUIApplication alloc] init];
