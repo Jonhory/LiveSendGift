@@ -3,6 +3,21 @@
 
 按照惯例，先贴[GitHub源码地址](https://github.com/JonHory/LiveSendGift)
 
+## 已知存在的BUG
+
+### 如下图（在某种情况下，旧视图移除时它下方的视图会向上移动，导致出现视图重叠的效果，这是我不想看到的。）:
+
+![](http://ww1.sinaimg.cn/large/c6a1cfeagy1fdp2kbbn1sj20af0hy407)
+
+### 以下是动图效果：
+
+![](http://ww1.sinaimg.cn/large/c6a1cfeagy1fdp2hb2mfpg20aa0ikdos)
+
+### BUG分析:
+
+* 当存储视图的数组`showViewArr`的第一个视图移除完毕后，触发`LiveGiftShowCustom.m L:123`的回调block`newShowView.liveGiftShowViewTimeOut`,执行`[weakSelf resetY];`产生下面的视图向上移动的效果。`resetY`的实现原理是`showF.origin.y = i * (kViewHeight+kGiftViewMargin);`，此时`i`是`1`,则第三个视图移动到第二个视图的位置，产生覆盖在移除中的第二个视图的重叠效果。这里贴出来，一个是希望使用该库的猿能了解到该情况，能否接受该BUG，第二个是有猿能帮助我解决这个问题，第三个是自己记下来，万一哪天想通了就解决了 :) 。
+
+
 ##导航
 * [目标](#目标)
 * [版本更新说明](#版本更新说明)
