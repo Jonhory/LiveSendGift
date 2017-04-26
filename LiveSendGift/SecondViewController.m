@@ -22,7 +22,7 @@
 
 - (UIButton *)btn1{
     if (!_btn1) {
-        _btn1 = [self createBtnWithFrame:CGRectMake(0, 300, 150, 50) tag:101 title:@"Go TestVC = V1.5"];
+        _btn1 = [self createBtnWithFrame:CGRectMake(0, 300, 150, 50) tag:101 title:@"Go TestVC = V1.6"];
         _btn1.backgroundColor = [UIColor blueColor];
     }
     return _btn1;
@@ -41,7 +41,7 @@
     self.view.backgroundColor = [UIColor lightGrayColor];
     
     UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 300, 100)];
-    label.text = @"V1.5 请看V15TestVC";
+    label.text = @"V1.6 请看V16TestVC";
     label.numberOfLines = 0;
     label.center = CGPointMake(self.view.center.x, self.btn1.center.y - 150);
     label.textColor = [UIColor redColor];
