@@ -65,6 +65,11 @@
 
 ![](http://ww2.sinaimg.cn/large/c6a1cfeagw1favehbqaz9g20b50jrnbh.gif)
 
+#### V1.6
+* 新增了自下而上的展现效果
+
+![](http://ww1.sinaimg.cn/large/c6a1cfeagy1ff0axbjpy4g20a30i8whh.gif)
+
 ###<a id="快速使用"></a>快速使用
 * 使用的第三方库:
   * [Masonry](https://github.com/SnapKit/Masonry)
@@ -75,7 +80,8 @@
   * `UserModel`是用来显示送礼物的人的名称`name`和头像`iconUrl`
   
 * V1.4只需要导入`#import "LiveGiftShow.h"`
-* V1.5只需要导入`#import "LiveGiftShowCustom.h"`,具体使用可参考`V15TestVC.m`
+* V1.5只需要导入`#import "LiveGiftShowCustom.h"`,具体使用可参考`V15TestVC.m`,不建议同时使用`LiveGiftShow.h`和`LiveGiftShowCustom.h`
+* V1.6只需要导入`#import "LiveGiftShowCustom.h"`,具体使用可参考`V15TestVC.m`,向V1.5兼容。如有需要更新，只需要将`LiveGiftShowCustom.h`和`LiveGiftShowCustom.m`替换为V1.6版本的文件即可。
 
 * `@property (nonatomic ,weak) LiveGiftShow * giftShow;`
 
@@ -105,8 +111,33 @@ LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[3]
 ```
 即可完成接入。每一次点击只需要`[self.giftShow addGiftListModel:listModel];`即可自动计数加一。最高支持显示9999。
 
+### 特别说明
+* 在V1.6版本中,`LiveGiftShowCustom.m`
+
+```
+#pragma mark - 初始化
++ (instancetype)addToView:(UIView *)superView{
+    LiveGiftShowCustom * v = [[LiveGiftShowCustom alloc]init];
+    [superView addSubview:v];
+    //布局
+    [v mas_makeConstraints:^(MASConstraintMaker *make) {
+        //这个改动之后要注意修改LiveGiftShowView.h的kViewWidth
+        make.width.equalTo(@244);
+        //将主视图的高度设置0.01，保证弹幕后面的视图能响应点击事件。
+        make.height.equalTo(@0.01);
+        //这个可以任意修改
+        make.left.equalTo(superView.mas_left);
+        //这个参数在的设定应该注意最大礼物数量时不要超出屏幕边界。
+        make.top.equalTo(superView.mas_top).offset(400);
+    }];
+    v.backgroundColor = [UIColor clearColor];
+    return v;
+}
+```
+
 ###<a id="自定义配置"></a>自定义配置
-* `LiveGiftShow` 管理所有弹幕的视图
+* `LiveGiftShow` V1.4管理所有弹幕的视图
+* `LiveGiftShowCustom` V1.5之后管理所有弹幕的视图
 
 |两个弹幕之间的高度差|两个交换动画时长|
 |:----------------:|:------------:|

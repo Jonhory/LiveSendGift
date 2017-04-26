@@ -50,9 +50,9 @@ static LiveGiftShowMode live_showModel = fromTopToBottom;
     //布局
     [v mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@244);//这个改动之后要注意修改LiveGiftShowView.h的kViewWidth
-        make.height.equalTo(@0.01);//这个改动之后要注意修改LiveGiftShowView.h的kViewHeight
+        make.height.equalTo(@0.01);
         make.left.equalTo(superView.mas_left);//这个可以任意修改
-        make.top.equalTo(superView.mas_top).offset(400);//这个可以任意修改
+        make.top.equalTo(superView.mas_top).offset(400);//这个参数在的设定应该注意最大礼物数量时不要超出屏幕边界
     }];
     v.backgroundColor = [UIColor clearColor];
     return v;
