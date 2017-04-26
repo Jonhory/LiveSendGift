@@ -16,6 +16,8 @@ static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
 static NSInteger live_maxGiftShowCount = 3;
 static BOOL live_isEnableInterfaceDebug = NO;
 
+static LiveGiftShowMode live_showModel = fromTopToBottom;
+
 @interface LiveGiftShowCustom ()
 
 @property (nonatomic ,strong) NSMutableDictionary * showViewDict;/**< key([self getDictKey]):value(LiveGiftShowView*) */
@@ -48,9 +50,9 @@ static BOOL live_isEnableInterfaceDebug = NO;
     //布局
     [v mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@244);//这个改动之后要注意修改LiveGiftShowView.h的kViewWidth
-        make.height.equalTo(@44);//这个改动之后要注意修改LiveGiftShowView.h的kViewHeight
+        make.height.equalTo(@0.01);//这个改动之后要注意修改LiveGiftShowView.h的kViewHeight
         make.left.equalTo(superView.mas_left);//这个可以任意修改
-        make.top.equalTo(superView.mas_top).offset(100);//这个可以任意修改
+        make.top.equalTo(superView.mas_top).offset(400);//这个可以任意修改
     }];
     v.backgroundColor = [UIColor clearColor];
     return v;
@@ -63,6 +65,10 @@ static BOOL live_isEnableInterfaceDebug = NO;
 //设置是否打印信息
 - (void)enableInterfaceDebug:(BOOL)isDebug {
     live_isEnableInterfaceDebug = isDebug;
+}
+
+- (void)setShowMode:(LiveGiftShowMode)model{
+    live_showModel = model;
 }
 
 - (BOOL)isDebug {
@@ -102,11 +108,20 @@ static BOOL live_isEnableInterfaceDebug = NO;
         }
         
         //计算视图Y值
-        CGFloat   showViewY = (kViewHeight + kGiftViewMargin) * [self.showViewDict allKeys].count;
+        CGFloat   showViewY = 0;
+        if (live_showModel == fromTopToBottom) {
+            showViewY = (kViewHeight + kGiftViewMargin) * [self.showViewDict allKeys].count;
+        } else if (live_showModel == fromBottomToTop) {
+            showViewY = - ((kViewHeight + kGiftViewMargin) * [self.showViewDict allKeys].count);
+        }
         //获取已移除的key的index
         NSInteger kRemovedViewIndex = [self.showViewArr indexOfObject:kGiftViewRemoved];
         if ([self.showViewArr containsObject:kGiftViewRemoved]) {
-            showViewY = kRemovedViewIndex * (kViewHeight+kGiftViewMargin);
+            if (live_showModel == fromTopToBottom) {
+                showViewY = kRemovedViewIndex * (kViewHeight+kGiftViewMargin);
+            } else if (live_showModel == fromBottomToTop) {
+                showViewY = - (kRemovedViewIndex * (kViewHeight+kGiftViewMargin));
+            }
         }
         //创建新模型
         LiveGiftShowView * newShowView = [[LiveGiftShowView alloc]initWithFrame:CGRectMake(0, showViewY, 0, 0)];
@@ -127,13 +142,8 @@ static BOOL live_isEnableInterfaceDebug = NO;
             NSString * willReMoveShowViewKey = [NSString stringWithFormat:@"%@%@",willReMoveShowView.model.user.name,willReMoveShowView.model.giftModel.type];
             [weakSelf.showViewDict removeObjectForKey:willReMoveShowViewKey];
             
-            //移除之后更新自身约束
-//            [weakSelf mas_updateConstraints:^(MASConstraintMaker *make) {
-//                make.height.equalTo(@((kViewHeight+kGiftViewMargin) * [weakSelf.showViewDict allKeys].count));
-//            }];
-            
             if ([weakSelf isDebug]) {
-                NSLog(@"移除了第%zi个,移除后数组 = %@ ,词典 = %@",willReMoveShowView.index,weakSelf.showViewArr,weakSelf.showViewDict);
+                WLog(@"移除了第%zi个,移除后数组 = %@ ,词典 = %@",willReMoveShowView.index,weakSelf.showViewArr,weakSelf.showViewDict);
             }
             
             //比较数量大小排序
@@ -182,7 +192,11 @@ static BOOL live_isEnableInterfaceDebug = NO;
                 if (!show.isLeavingAnimation) {
                     [UIView animateWithDuration:kExchangeAnimationTime animations:^{
                         CGRect showF = show.frame;
-                        showF.origin.y = i * (kViewHeight+kGiftViewMargin);
+                        if (live_showModel == fromTopToBottom) {
+                            showF.origin.y = i * (kViewHeight+kGiftViewMargin);
+                        } else if (live_showModel == fromBottomToTop) {
+                            showF.origin.y = - i * (kViewHeight+kGiftViewMargin);
+                        }
                         show.frame = showF;
                     } completion:^(BOOL finished) {
                         
@@ -220,7 +234,9 @@ static BOOL live_isEnableInterfaceDebug = NO;
             }
         }
     }
-    
+    if ([self isDebug]) {
+        WLog(@"排序后数组==>>> %@",self.showViewArr);
+    }
 }
 
 - (void)searchLiveShowViewFrom:(int)i{
@@ -258,7 +274,7 @@ static BOOL live_isEnableInterfaceDebug = NO;
 
 - (void)dealloc{
     if ([self isDebug]) {
-        NSLog(@"Delloc LiveGiftShowCustom !!  %@",self);
+        WLog(@"Delloc LiveGiftShowCustom !!  %@",self);
     }
 }
 
