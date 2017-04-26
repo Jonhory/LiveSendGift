@@ -51,7 +51,7 @@ static NSInteger kTag = 200;
 - (LiveGiftShowCustom *)customGiftShow{
     if (!_customGiftShow) {
         _customGiftShow = [LiveGiftShowCustom addToView:self.view];
-        [_customGiftShow setMaxGiftCount:5];
+        [_customGiftShow setMaxGiftCount:3];
         [_customGiftShow setShowMode:fromBottomToTop];
         [_customGiftShow enableInterfaceDebug:YES];
     }

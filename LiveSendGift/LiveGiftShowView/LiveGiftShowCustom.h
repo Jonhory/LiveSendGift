@@ -13,7 +13,7 @@
 
 // 项目打包上线都不会打印日志，因此可放心。
 #ifdef DEBUG
-#define WLog(s, ... ) NSLog( @"[%@ in line %d] ===============>%@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+#define WLog(s, ... ) NSLog( @"[%@ in line %d] %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
 #else
 #define WLog(s, ... )
 #endif
