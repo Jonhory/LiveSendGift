@@ -188,20 +188,23 @@ static LiveGiftShowMode live_showModel = fromTopToBottom;
     for (int i = 0; i < self.showViewArr.count; i++) {
         LiveGiftShowView * show = self.showViewArr[i];
         if ([show isKindOfClass:[LiveGiftShowView class]]) {
-            if (show.frame.origin.y != i * (kViewHeight+kGiftViewMargin) ) {
+            CGFloat showY = i * (kViewHeight+kGiftViewMargin);
+            if (live_showModel == fromBottomToTop) {
+                showY = -showY;
+            }
+            if (show.frame.origin.y != showY) {
                 if (!show.isLeavingAnimation) {
                     [UIView animateWithDuration:kExchangeAnimationTime animations:^{
                         CGRect showF = show.frame;
-                        if (live_showModel == fromTopToBottom) {
-                            showF.origin.y = i * (kViewHeight+kGiftViewMargin);
-                        } else if (live_showModel == fromBottomToTop) {
-                            showF.origin.y = - i * (kViewHeight+kGiftViewMargin);
-                        }
+                        showF.origin.y = showY;
                         show.frame = showF;
                     } completion:^(BOOL finished) {
                         
                     }];
                     show.isAnimation = YES;
+                    if ([self isDebug]) {
+                        WLog(@"%@ 重置动画",show);
+                    }
                 }
             }
         }
