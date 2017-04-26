@@ -4,7 +4,7 @@
 //
 //  Created by Jonhory on 2016/12/4.
 //  Copyright © 2016年 com.wujh. All rights reserved.
-//
+//  Update on 2017/4/26
 
 #import <UIKit/UIKit.h>
 
@@ -13,10 +13,22 @@
 
 // 项目打包上线都不会打印日志，因此可放心。
 #ifdef DEBUG
-#define RHCFLog(s, ... ) NSLog( @"[%@ in line %d] ===============>%@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+#define WLog(s, ... ) NSLog( @"[%@ in line %d] %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
 #else
-#define RHCFLog(s, ... )
+#define WLog(s, ... )
 #endif
+
+
+/**
+ 弹幕展现模式
+
+ - fromTopToBottom: 自上而下
+ - fromBottomToTop: 自下而上
+ */
+typedef NS_ENUM(NSUInteger, LiveGiftShowMode) {
+    fromTopToBottom = 0,
+    fromBottomToTop = 1,
+};
 
 @interface LiveGiftShowCustom : UIView
 
@@ -36,6 +48,12 @@
  */
 - (void)setMaxGiftCount:(NSInteger)maxGiftCount;
 
+/**
+ 设置弹幕展现模式
+
+ @param model 弹幕展现模式
+ */
+- (void)setShowMode:(LiveGiftShowMode)model;
 
 /**
  增加或者更新一个礼物视图

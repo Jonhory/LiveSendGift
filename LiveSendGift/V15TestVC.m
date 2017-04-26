@@ -51,8 +51,9 @@ static NSInteger kTag = 200;
 - (LiveGiftShowCustom *)customGiftShow{
     if (!_customGiftShow) {
         _customGiftShow = [LiveGiftShowCustom addToView:self.view];
-        [_customGiftShow setMaxGiftCount:5];
-        [_customGiftShow enableInterfaceDebug:NO];
+        [_customGiftShow setMaxGiftCount:3];
+        [_customGiftShow setShowMode:fromBottomToTop];
+        [_customGiftShow enableInterfaceDebug:YES];
     }
     return _customGiftShow;
 }
@@ -79,7 +80,7 @@ static NSInteger kTag = 200;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"V1.5 Test";
+    self.title = @"V1.6 Test";
     self.view.backgroundColor = RGB(237, 237, 237);
     
     //初始化按钮
