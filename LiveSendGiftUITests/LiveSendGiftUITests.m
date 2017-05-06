@@ -40,285 +40,65 @@
     // Use XCTAssert and related functions to verify your tests produce the correct results.
 }
 
-- (void)testV15VCClicked{
-    
-    
-    XCUIApplication *app = [[XCUIApplication alloc] init];
-    [app.buttons[@"Go TestVC = V1.5"] tap];
-    
-    XCUIElement *addoldmodelButton = app.buttons[@"addOldModel"];
-    [addoldmodelButton tap];
-    
-    XCUIElement *addnewmodelButton = app.buttons[@"addNewModel"];
-    [addnewmodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    
-    
-}
-
-- (void)testSecondVCClicked{
+- (void)testV17 {
     
     XCUIApplication *app = [[XCUIApplication alloc] init];
-    [app.buttons[@"Go TestVC = V1.5"] tap];
-    [[[[app.navigationBars[@"V1.5 Test"] childrenMatchingType:XCUIElementTypeButton] matchingIdentifier:@"Back"] elementBoundByIndex:0] tap];
-    [app.buttons[@"Go TestVC = V1.4"] tap];
-    [[[[app.navigationBars[@"ThirdView"] childrenMatchingType:XCUIElementTypeButton] matchingIdentifier:@"Back"] elementBoundByIndex:0] tap];
+    [app.buttons[@"Go TestVC = V1.7"] tap];
+    
+    XCUIElement *secondButton = app.buttons[@"second"];
+    [secondButton tap];
+    
+    XCUIElement *thirdButton = app.buttons[@"third"];
+    [thirdButton tap];
+    
+    XCUIElement *firstButton = app.buttons[@"first"];
+    [firstButton tap];
+    [secondButton tap];
+    [thirdButton tap];
+    
+    XCUIElement *fourthButton = app.buttons[@"fourth"];
+    [fourthButton tap];
+    
+    XCUIElement *fifthButton = app.buttons[@"fifth"];
+    [fifthButton tap];
+    [fourthButton tap];
+    [thirdButton tap];
+    [secondButton tap];
+    [firstButton tap];
+    [secondButton tap];
+    [thirdButton tap];
+    [secondButton tap];
+    [firstButton tap];
+    [secondButton tap];
+    [secondButton tap];
+    [thirdButton tap];
+    [thirdButton tap];
+    [secondButton tap];
+    [secondButton tap];
+    [secondButton tap];
+    [secondButton tap];
+    [secondButton tap];
+    [secondButton tap];
+    [secondButton tap];
+    [secondButton tap];
+    [secondButton tap];
+    [secondButton tap];
+    [fourthButton tap];
+    [fifthButton tap];
+    [fourthButton tap];
+    [fifthButton tap];
+    [fourthButton tap];
+    [fifthButton tap];
+    [fourthButton tap];
+    [fifthButton tap];
+    [fourthButton tap];
+    [fifthButton tap];
+    [fifthButton tap];
+    [fifthButton tap];
+    [fifthButton tap];
+    [thirdButton tap];
+    [thirdButton tap];
+    [thirdButton tap];
     
 }
-
-- (void)testV15{
-    
-    XCUIApplication *app = [[XCUIApplication alloc] init];
-    [app.buttons[@"Go TestVC = V1.5"] tap];
-    
-    XCUIElement *addoldmodelButton = app.buttons[@"addOldModel"];
-    [addoldmodelButton tap];
-    
-    XCUIElement *addnewmodelButton = app.buttons[@"addNewModel"];
-    [addnewmodelButton tap];
-    
-    XCUIElement *randommodelButton = app.buttons[@"randomModel"];
-    [randommodelButton tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    [addoldmodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    [randommodelButton tap];
-    [randommodelButton tap];
-    [randommodelButton tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    [addoldmodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    [addoldmodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [addoldmodelButton tap];
-    [addoldmodelButton tap];
-    [addoldmodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    [randommodelButton tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    [addoldmodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [randommodelButton tap];
-    [randommodelButton tap];
-    [addnewmodelButton tap];
-    [addoldmodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    [randommodelButton tap];
-    [randommodelButton tap];
-    [addoldmodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [randommodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [randommodelButton tap];
-    [addnewmodelButton tap];
-    [addoldmodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [addoldmodelButton tap];
-    [randommodelButton tap];
-    [addoldmodelButton tap];
-    [addoldmodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [[[[[app.otherElements containingType:XCUIElementTypeNavigationBar identifier:@"V1.5 Test"] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    [addoldmodelButton tap];
-    [addnewmodelButton tap];
-    [randommodelButton tap];
-    [addnewmodelButton tap];
-    [addnewmodelButton tap];
-    [addoldmodelButton tap];
-    [randommodelButton tap];
-    [randommodelButton tap];
-    [randommodelButton tap];
-    
-}
-
-- (void)testIn0316 {
-    
-    XCUIApplication *app = [[XCUIApplication alloc] init];
-    [app.buttons[@"Go TestVC = V1.5"] tap];
-    
-    XCUIElement *oneButton = app.buttons[@"one"];
-    [oneButton tap];
-    [oneButton tap];
-    [oneButton tap];
-    
-    XCUIElement *twoButton = app.buttons[@"two"];
-    [twoButton tap];
-    [twoButton tap];
-    
-    XCUIElement *threeButton = app.buttons[@"three"];
-    [threeButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    [twoButton tap];
-    [twoButton tap];
-    [twoButton tap];
-    [twoButton tap];
-    [twoButton tap];
-    [twoButton tap];
-    [twoButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    
-    XCUIElement *fourButton = app.buttons[@"four"];
-    [fourButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    [threeButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    [fourButton tap];
-    [threeButton tap];
-    [fourButton tap];
-    [threeButton tap];
-    [fourButton tap];
-    [threeButton tap];
-    [fourButton tap];
-    [threeButton tap];
-    [fourButton tap];
-    [threeButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    
-    XCUIElement *fiveButton = app.buttons[@"five"];
-    [fiveButton tap];
-    [fiveButton tap];
-    [threeButton tap];
-    [threeButton tap];
-    //以下是出bug 的范围
-    printf("以下是出bug 的范围");
-    [threeButton tap];
-    [threeButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    [fourButton tap];
-    //以上是出bug 的范围
-    printf("以⬆️是出bug 的范围");
-    [fourButton tap];
-    
-}
-
-- (void)testThirdVCClicked{
-    
-    XCUIApplication *app = [[XCUIApplication alloc] init];
-    [app.buttons[@"Go TestVC = V1.4"] tap];
-    
-    XCUIElement *btn101Button = app.buttons[@"Btn101"];
-    [btn101Button tap];
-    [btn101Button tap];
-    [btn101Button tap];
-    [btn101Button tap];
-    [btn101Button tap];
-    [btn101Button tap];
-    [btn101Button tap];
-    [btn101Button tap];
-    [btn101Button tap];
-    [btn101Button tap];
-    [btn101Button tap];
-    
-    XCUIElement *btn102Button = app.buttons[@"Btn102"];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn101Button tap];
-    [btn102Button tap];
-    [btn101Button tap];
-    [btn102Button tap];
-    [btn101Button tap];
-    [btn101Button tap];
-    [btn102Button tap];
-    [btn101Button tap];
-    [btn102Button tap];
-    [btn101Button tap];
-    [btn102Button tap];
-    [btn101Button tap];
-    [btn102Button tap];
-    [btn101Button tap];
-    [btn102Button pressForDuration:0.5];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    [btn102Button tap];
-    
-}
-
 @end

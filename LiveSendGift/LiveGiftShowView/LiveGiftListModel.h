@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ZYGiftListModel : NSObject
+@interface LiveGiftListModel : NSObject
 
 
 @property(nonatomic, strong) NSString *personSort;

@@ -8,12 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface UserModel : NSObject
+@interface LiveUserModel : NSObject
 
 @property (nonatomic ,copy) NSString * name;
 @property (nonatomic ,copy) NSString * iconUrl;
-
-+ (instancetype)random;
-
 
 @end

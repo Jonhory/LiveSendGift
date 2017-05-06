@@ -8,20 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		8995D2E5755A4D6C53754E36 /* libPods-LiveSendGift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CB2247965468A4CEE9A5783 /* libPods-LiveSendGift.a */; };
+		BB2E00941EBD6D9000580E33 /* LiveUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2E00931EBD6D9000580E33 /* LiveUserModel.m */; };
+		BB2E00971EBD6E2D00580E33 /* LiveGiftListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2E00961EBD6E2D00580E33 /* LiveGiftListModel.m */; };
+		BB2E00991EBD730400580E33 /* LiveDefaultIcon.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = BB2E00981EBD730400580E33 /* LiveDefaultIcon.jpeg */; };
 		BB3BEBE31DF6350600C9DDFF /* LiveSendGiftTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BEBE21DF6350600C9DDFF /* LiveSendGiftTests.m */; };
 		BB3BEBF11DF63D1B00C9DDFF /* LiveSendGiftUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BEBF01DF63D1B00C9DDFF /* LiveSendGiftUITests.m */; };
-		BB4BF1AD1DD6013E0017DA99 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1AC1DD6013E0017DA99 /* ThirdViewController.m */; };
-		BB4BF1B31DD606C90017DA99 /* LiveGiftShow.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1B21DD606C90017DA99 /* LiveGiftShow.m */; };
 		BB4BF1B61DD60ECF0017DA99 /* LiveGiftShowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1B51DD60ECF0017DA99 /* LiveGiftShowModel.m */; };
-		BB4BF1B91DD60F030017DA99 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1B81DD60F030017DA99 /* UserModel.m */; };
 		BB5E4F201DD5E77C005CBFC5 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5E4F1F1DD5E77C005CBFC5 /* SecondViewController.m */; };
 		BB6CC2BE1DD6C642003F58BC /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */; };
 		BB91CB4F1DF42AD0002A76EB /* LiveGiftShowCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = BB91CB4E1DF42AD0002A76EB /* LiveGiftShowCustom.m */; };
-		BB91CB521DF42D32002A76EB /* V15TestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB91CB511DF42D32002A76EB /* V15TestVC.m */; };
+		BB91CB521DF42D32002A76EB /* TestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB91CB511DF42D32002A76EB /* TestVC.m */; };
 		BBD12B281DD59437007D31D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B271DD59437007D31D6 /* main.m */; };
 		BBD12B2B1DD59437007D31D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B2A1DD59437007D31D6 /* AppDelegate.m */; };
 		BBD12B331DD59437007D31D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBD12B321DD59437007D31D6 /* Assets.xcassets */; };
-		BBD12B401DD59839007D31D6 /* ZYGiftListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B3F1DD59839007D31D6 /* ZYGiftListModel.m */; };
 		BBD12B751DD59C1B007D31D6 /* LiveGiftShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B741DD59C1B007D31D6 /* LiveGiftShowView.m */; };
 		BBD12B781DD59EFF007D31D6 /* LiveGiftShowNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B771DD59EFF007D31D6 /* LiveGiftShowNumberView.m */; };
 /* End PBXBuildFile section */
@@ -46,35 +45,32 @@
 /* Begin PBXFileReference section */
 		5CB2247965468A4CEE9A5783 /* libPods-LiveSendGift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LiveSendGift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7729173E74450786A74B18B1 /* Pods-LiveSendGift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveSendGift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LiveSendGift/Pods-LiveSendGift.debug.xcconfig"; sourceTree = "<group>"; };
+		BB2E00921EBD6D9000580E33 /* LiveUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveUserModel.h; sourceTree = "<group>"; };
+		BB2E00931EBD6D9000580E33 /* LiveUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveUserModel.m; sourceTree = "<group>"; };
+		BB2E00951EBD6E2D00580E33 /* LiveGiftListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftListModel.h; sourceTree = "<group>"; };
+		BB2E00961EBD6E2D00580E33 /* LiveGiftListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftListModel.m; sourceTree = "<group>"; };
+		BB2E00981EBD730400580E33 /* LiveDefaultIcon.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = LiveDefaultIcon.jpeg; sourceTree = "<group>"; };
 		BB3BEBE01DF6350600C9DDFF /* LiveSendGiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveSendGiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB3BEBE21DF6350600C9DDFF /* LiveSendGiftTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LiveSendGiftTests.m; sourceTree = "<group>"; };
 		BB3BEBE41DF6350600C9DDFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB3BEBEE1DF63D1B00C9DDFF /* LiveSendGiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveSendGiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB3BEBF01DF63D1B00C9DDFF /* LiveSendGiftUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LiveSendGiftUITests.m; sourceTree = "<group>"; };
 		BB3BEBF21DF63D1B00C9DDFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = LiveSendGiftUITests/Info.plist; sourceTree = "<group>"; };
-		BB4BF1AB1DD6013E0017DA99 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
-		BB4BF1AC1DD6013E0017DA99 /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
-		BB4BF1B11DD606C90017DA99 /* LiveGiftShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShow.h; sourceTree = "<group>"; };
-		BB4BF1B21DD606C90017DA99 /* LiveGiftShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftShow.m; sourceTree = "<group>"; };
 		BB4BF1B41DD60ECF0017DA99 /* LiveGiftShowModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShowModel.h; sourceTree = "<group>"; };
 		BB4BF1B51DD60ECF0017DA99 /* LiveGiftShowModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftShowModel.m; sourceTree = "<group>"; };
-		BB4BF1B71DD60F030017DA99 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
-		BB4BF1B81DD60F030017DA99 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 		BB5E4F1E1DD5E77C005CBFC5 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		BB5E4F1F1DD5E77C005CBFC5 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+Log.m"; sourceTree = "<group>"; };
 		BB91CB4D1DF42AD0002A76EB /* LiveGiftShowCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShowCustom.h; sourceTree = "<group>"; };
 		BB91CB4E1DF42AD0002A76EB /* LiveGiftShowCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftShowCustom.m; sourceTree = "<group>"; };
-		BB91CB501DF42D32002A76EB /* V15TestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V15TestVC.h; sourceTree = "<group>"; };
-		BB91CB511DF42D32002A76EB /* V15TestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = V15TestVC.m; sourceTree = "<group>"; };
+		BB91CB501DF42D32002A76EB /* TestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestVC.h; sourceTree = "<group>"; };
+		BB91CB511DF42D32002A76EB /* TestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestVC.m; sourceTree = "<group>"; };
 		BBD12B231DD59437007D31D6 /* LiveSendGift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveSendGift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBD12B271DD59437007D31D6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BBD12B291DD59437007D31D6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BBD12B2A1DD59437007D31D6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		BBD12B321DD59437007D31D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BBD12B371DD59437007D31D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BBD12B3E1DD59839007D31D6 /* ZYGiftListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYGiftListModel.h; sourceTree = "<group>"; };
-		BBD12B3F1DD59839007D31D6 /* ZYGiftListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYGiftListModel.m; sourceTree = "<group>"; };
 		BBD12B731DD59C1B007D31D6 /* LiveGiftShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShowView.h; sourceTree = "<group>"; };
 		BBD12B741DD59C1B007D31D6 /* LiveGiftShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftShowView.m; sourceTree = "<group>"; };
 		BBD12B761DD59EFF007D31D6 /* LiveGiftShowNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShowNumberView.h; sourceTree = "<group>"; };
@@ -151,18 +147,13 @@
 		BBD12B251DD59437007D31D6 /* LiveSendGift */ = {
 			isa = PBXGroup;
 			children = (
-				BBD12B3D1DD5982E007D31D6 /* ZYGiftListModel */,
 				BBD12B721DD59C09007D31D6 /* LiveGiftShowView */,
 				BBD12B291DD59437007D31D6 /* AppDelegate.h */,
 				BBD12B2A1DD59437007D31D6 /* AppDelegate.m */,
 				BB5E4F1E1DD5E77C005CBFC5 /* SecondViewController.h */,
 				BB5E4F1F1DD5E77C005CBFC5 /* SecondViewController.m */,
-				BB4BF1AB1DD6013E0017DA99 /* ThirdViewController.h */,
-				BB4BF1AC1DD6013E0017DA99 /* ThirdViewController.m */,
-				BB91CB501DF42D32002A76EB /* V15TestVC.h */,
-				BB91CB511DF42D32002A76EB /* V15TestVC.m */,
-				BB4BF1B71DD60F030017DA99 /* UserModel.h */,
-				BB4BF1B81DD60F030017DA99 /* UserModel.m */,
+				BB91CB501DF42D32002A76EB /* TestVC.h */,
+				BB91CB511DF42D32002A76EB /* TestVC.m */,
 				BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */,
 				BBD12B321DD59437007D31D6 /* Assets.xcassets */,
 				BBD12B371DD59437007D31D6 /* Info.plist */,
@@ -179,20 +170,10 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		BBD12B3D1DD5982E007D31D6 /* ZYGiftListModel */ = {
-			isa = PBXGroup;
-			children = (
-				BBD12B3E1DD59839007D31D6 /* ZYGiftListModel.h */,
-				BBD12B3F1DD59839007D31D6 /* ZYGiftListModel.m */,
-			);
-			path = ZYGiftListModel;
-			sourceTree = "<group>";
-		};
 		BBD12B721DD59C09007D31D6 /* LiveGiftShowView */ = {
 			isa = PBXGroup;
 			children = (
-				BB4BF1B11DD606C90017DA99 /* LiveGiftShow.h */,
-				BB4BF1B21DD606C90017DA99 /* LiveGiftShow.m */,
+				BB2E00981EBD730400580E33 /* LiveDefaultIcon.jpeg */,
 				BB91CB4D1DF42AD0002A76EB /* LiveGiftShowCustom.h */,
 				BB91CB4E1DF42AD0002A76EB /* LiveGiftShowCustom.m */,
 				BBD12B731DD59C1B007D31D6 /* LiveGiftShowView.h */,
@@ -201,6 +182,10 @@
 				BBD12B771DD59EFF007D31D6 /* LiveGiftShowNumberView.m */,
 				BB4BF1B41DD60ECF0017DA99 /* LiveGiftShowModel.h */,
 				BB4BF1B51DD60ECF0017DA99 /* LiveGiftShowModel.m */,
+				BB2E00921EBD6D9000580E33 /* LiveUserModel.h */,
+				BB2E00931EBD6D9000580E33 /* LiveUserModel.m */,
+				BB2E00951EBD6E2D00580E33 /* LiveGiftListModel.h */,
+				BB2E00961EBD6E2D00580E33 /* LiveGiftListModel.m */,
 			);
 			path = LiveGiftShowView;
 			sourceTree = "<group>";
@@ -346,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBD12B331DD59437007D31D6 /* Assets.xcassets in Resources */,
+				BB2E00991EBD730400580E33 /* LiveDefaultIcon.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,15 +408,13 @@
 			files = (
 				BBD12B2B1DD59437007D31D6 /* AppDelegate.m in Sources */,
 				BB4BF1B61DD60ECF0017DA99 /* LiveGiftShowModel.m in Sources */,
-				BB4BF1B91DD60F030017DA99 /* UserModel.m in Sources */,
-				BB4BF1AD1DD6013E0017DA99 /* ThirdViewController.m in Sources */,
+				BB2E00941EBD6D9000580E33 /* LiveUserModel.m in Sources */,
 				BBD12B781DD59EFF007D31D6 /* LiveGiftShowNumberView.m in Sources */,
-				BB91CB521DF42D32002A76EB /* V15TestVC.m in Sources */,
+				BB91CB521DF42D32002A76EB /* TestVC.m in Sources */,
 				BB91CB4F1DF42AD0002A76EB /* LiveGiftShowCustom.m in Sources */,
 				BB5E4F201DD5E77C005CBFC5 /* SecondViewController.m in Sources */,
-				BB4BF1B31DD606C90017DA99 /* LiveGiftShow.m in Sources */,
-				BBD12B401DD59839007D31D6 /* ZYGiftListModel.m in Sources */,
 				BBD12B751DD59C1B007D31D6 /* LiveGiftShowView.m in Sources */,
+				BB2E00971EBD6E2D00580E33 /* LiveGiftListModel.m in Sources */,
 				BBD12B281DD59437007D31D6 /* main.m in Sources */,
 				BB6CC2BE1DD6C642003F58BC /* Foundation+Log.m in Sources */,
 			);

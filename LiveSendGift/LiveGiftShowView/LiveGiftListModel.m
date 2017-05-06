@@ -6,8 +6,8 @@
 //  Copyright © 2016年 com.wujh. All rights reserved.
 //
 
-#import "ZYGiftListModel.h"
+#import "LiveGiftListModel.h"
 
-@implementation ZYGiftListModel
+@implementation LiveGiftListModel
 
 @end

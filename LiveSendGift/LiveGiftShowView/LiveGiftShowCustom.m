@@ -139,7 +139,7 @@ static LiveGiftShowMode live_showModel = fromTopToBottom;
             //从数组移除
             [weakSelf.showViewArr replaceObjectAtIndex:willReMoveShowView.index withObject:kGiftViewRemoved];
             //从字典移除
-            NSString * willReMoveShowViewKey = [NSString stringWithFormat:@"%@%@",willReMoveShowView.model.user.name,willReMoveShowView.model.giftModel.type];
+            NSString * willReMoveShowViewKey = [self getDictKey:willReMoveShowView.model];
             [weakSelf.showViewDict removeObjectForKey:willReMoveShowViewKey];
             
             if ([weakSelf isDebug]) {
@@ -246,6 +246,9 @@ static LiveGiftShowMode live_showModel = fromTopToBottom;
     for (int j = i; j < self.showViewArr.count; j++) {
         LiveGiftShowView * next = self.showViewArr[j];
         if ([next isKindOfClass:[LiveGiftShowView class]]) {
+            if (next.frame.origin.x == [UIScreen mainScreen].bounds.size.width) {
+                continue;
+            }
             next.index = i-1;
             [self.showViewArr exchangeObjectAtIndex:i-1 withObjectAtIndex:j];
             return;
@@ -255,8 +258,8 @@ static LiveGiftShowMode live_showModel = fromTopToBottom;
 
 #pragma mark - Private
 - (void)resetView:(LiveGiftShowView *)view nowModel:(LiveGiftShowModel *)model isChangeNum:(BOOL)isChange number:(NSInteger)number{
-    NSString * oldKey = [NSString stringWithFormat:@"%@%@",view.model.user.name,view.model.giftModel.type];
-    NSString * dictKey = [NSString stringWithFormat:@"%@%@",model.user.name,model.giftModel.type];
+    NSString * oldKey = [self getDictKey:view.model];
+    NSString * dictKey = [self getDictKey:model];
     //找到时间早的那个视图 替换模型 重置数字
     view.model = model;
     if (isChange) {

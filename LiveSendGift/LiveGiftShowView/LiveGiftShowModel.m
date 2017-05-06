@@ -10,7 +10,7 @@
 
 @implementation LiveGiftShowModel
 
-+ (instancetype)giftModel:(ZYGiftListModel *)giftModel userModel:(UserModel *)userModel{
++ (instancetype)giftModel:(LiveGiftListModel *)giftModel userModel:(LiveUserModel *)userModel{
     LiveGiftShowModel * model = [[LiveGiftShowModel alloc]init];
     model.giftModel = giftModel;
     model.user = userModel;

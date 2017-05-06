@@ -3,21 +3,6 @@
 
 按照惯例，先贴[GitHub源码地址](https://github.com/JonHory/LiveSendGift)
 
-## 已知存在的BUG
-
-### 如下图（在某种情况下，旧视图移除时它下方的视图会向上移动，导致出现视图重叠的效果，这是我不想看到的。）:
-
-![](http://ww1.sinaimg.cn/large/c6a1cfeagy1fdp2kbbn1sj20af0hy407)
-
-### 以下是动图效果：
-
-![](http://ww1.sinaimg.cn/large/c6a1cfeagy1fdp2hb2mfpg20aa0ikdos)
-
-### BUG分析:
-
-* 当存储视图的数组`showViewArr`的第一个视图移除完毕后，触发`LiveGiftShowCustom.m L:123`的回调block`newShowView.liveGiftShowViewTimeOut`,执行`[weakSelf resetY];`产生下面的视图向上移动的效果。`resetY`的实现原理是`showF.origin.y = i * (kViewHeight+kGiftViewMargin);`，此时`i`是`1`,则第三个视图移动到第二个视图的位置，产生覆盖在移除中的第二个视图的重叠效果。这里贴出来，一个是希望使用该库的猿能了解到该情况，能否接受该BUG，第二个是有猿能帮助我解决这个问题，第三个是自己记下来，万一哪天想通了就解决了 :) 。
-
-
 ##导航
 * [目标](#目标)
 * [版本更新说明](#版本更新说明)
@@ -70,14 +55,19 @@
 
 ![](http://ww1.sinaimg.cn/large/c6a1cfeagy1ff0axbjpy4g20a30i8whh.gif)
 
+### V1.7
+* 解决了一个视图显示BUG，现在几乎不会出现该BUG。
+
+![](http://ww1.sinaimg.cn/large/c6a1cfeagy1fdp2kbbn1sj20af0hy407)
+
 ###<a id="快速使用"></a>快速使用
 * 使用的第三方库:
   * [Masonry](https://github.com/SnapKit/Masonry)
   * [SDWebImage](https://github.com/rs/SDWebImage)
 
-* 两个模型:`ZYGiftListModel`和`UserModel`
-  * `ZYGiftListModel`是用来显示弹幕上右侧礼物图片`picUrl`和打赏的语句`rewardMsg`的，礼物有`type`字段
-  * `UserModel`是用来显示送礼物的人的名称`name`和头像`iconUrl`
+* 两个模型:`LiveGiftListModel`和`LiveUserModel`
+  * `LiveGiftListModel `是用来显示弹幕上右侧礼物图片`picUrl`和打赏的语句`rewardMsg`的，礼物有`type`字段
+  * `LiveUserModel `是用来显示送礼物的人的名称`name`和头像`iconUrl`
   
 * V1.4只需要导入`#import "LiveGiftShow.h"`
 * V1.5只需要导入`#import "LiveGiftShowCustom.h"`,具体使用可参考`V15TestVC.m`,不建议同时使用`LiveGiftShow.h`和`LiveGiftShowCustom.h`
@@ -106,13 +96,14 @@
 
 ```
 LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[3] 
-                                                   userModel:[UserModel random]];
+                                                   userModel:self.firstUser];
 [self.giftShow addGiftListModel:listModel];
 ```
 即可完成接入。每一次点击只需要`[self.giftShow addGiftListModel:listModel];`即可自动计数加一。最高支持显示9999。
 
 ### 特别说明
-* 在V1.6版本中,`LiveGiftShowCustom.m`
+* 在1.5+版本之后，只需要替换`LiveGiftShowCustom.h`、`LiveGiftShowCustom.m`基本上即可完成版本更新。
+* 在V1.6+版本中,`LiveGiftShowCustom.m`
 
 ```
 #pragma mark - 初始化
@@ -136,7 +127,7 @@ LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[3]
 ```
 
 ###<a id="自定义配置"></a>自定义配置
-* `LiveGiftShow` V1.4管理所有弹幕的视图
+* `LiveGiftShow` V1.4管理所有弹幕的视图，在V1.7之后移除。
 * `LiveGiftShowCustom` V1.5之后管理所有弹幕的视图
 
 |两个弹幕之间的高度差|两个交换动画时长|

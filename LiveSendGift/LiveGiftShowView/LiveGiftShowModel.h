@@ -7,16 +7,16 @@
 //  包含用户信息和礼物信息
 
 #import <Foundation/Foundation.h>
-#import "ZYGiftListModel.h"
-#import "UserModel.h"
+#import "LiveGiftListModel.h"
+#import "LiveUserModel.h"
 
 
 @interface LiveGiftShowModel : NSObject
 
-@property (nonatomic ,strong) ZYGiftListModel * giftModel;
+@property (nonatomic ,strong) LiveGiftListModel * giftModel;
 
-@property (nonatomic ,strong) UserModel * user;
+@property (nonatomic ,strong) LiveUserModel * user;
 
-+ (instancetype)giftModel:(ZYGiftListModel *)giftModel userModel:(UserModel *)userModel;
++ (instancetype)giftModel:(LiveGiftListModel *)giftModel userModel:(LiveUserModel *)userModel;
 
 @end

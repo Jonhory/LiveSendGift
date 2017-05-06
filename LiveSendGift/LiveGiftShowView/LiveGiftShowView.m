@@ -7,11 +7,10 @@
 //
 
 #import "LiveGiftShowView.h"
-#import "ZYGiftListModel.h"
+#import "LiveGiftListModel.h"
 
 #import "UIImageView+WebCache.h"
 #import "Masonry.h"
-//#import "HexColor.h"
 
 static CGFloat const kNameLabelFont = 12.0;//送礼者
 #define kNameLabelTextColor [UIColor whiteColor]//送礼者颜色
@@ -71,7 +70,7 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
     
     self.nameLabel.text = model.user.name;
     
-    [self.iconIV sd_setImageWithURL:[NSURL URLWithString:model.user.iconUrl] placeholderImage:nil];
+    [self.iconIV sd_setImageWithURL:[NSURL URLWithString:model.user.iconUrl] placeholderImage:[UIImage imageNamed:@"LiveDefaultIcon"]];
     
     self.sendLabel.text = model.giftModel.rewardMsg;
     [self.giftIV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.giftModel.picUrl]] placeholderImage:nil];
@@ -152,7 +151,9 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
     [UIView animateWithDuration:kNumberAnimationTime animations:^{
         self.numberView.transform = CGAffineTransformMakeScale(1.5,1.5);
     } completion:^(BOOL finished) {
-        self.numberView.transform = CGAffineTransformIdentity;
+        if (finished) {
+            self.numberView.transform = CGAffineTransformIdentity;
+        }
     }];
     
     [self.liveTimer setFireDate:[NSDate date]];
@@ -231,6 +232,7 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
 - (UIImageView *)iconIV{
     if (!_iconIV) {
         _iconIV = [self creatIV];
+        _iconIV.image = [UIImage imageNamed:@"LiveDefaultIcon"];
         _iconIV.layer.cornerRadius = 15;
         _iconIV.layer.masksToBounds = YES;
     }
@@ -298,11 +300,6 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
         [_liveTimer invalidate];
         _liveTimer = nil;
     }
-}
-
-
-- (void)dealloc{
-//    NSLog(@"已然释放了我 %@",self);
 }
 
 @end
