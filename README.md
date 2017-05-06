@@ -1,4 +1,4 @@
-![](http://ww4.sinaimg.cn/large/c6a1cfeagw1f9ptsozcu5j20b206rt92.jpg)
+![](http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbh46t93nj20ky0dsq3x.jpg)
 
 
 按照惯例，先贴[GitHub源码地址](https://github.com/JonHory/LiveSendGift)
