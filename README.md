@@ -1,8 +1,6 @@
 ![](http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbh46t93nj20ky0dsq3x.jpg)
 
 
-按照惯例，先贴[GitHub源码地址](https://github.com/JonHory/LiveSendGift)
-
 ## 导航
 * [目标](#目标)
 * [版本更新说明](#版本更新说明)
