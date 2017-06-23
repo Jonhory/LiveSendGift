@@ -3,20 +3,20 @@
 
 按照惯例，先贴[GitHub源码地址](https://github.com/JonHory/LiveSendGift)
 
-##导航
+## 导航
 * [目标](#目标)
 * [版本更新说明](#版本更新说明)
 * [快速使用](#快速使用)
 * [自定义配置](#自定义配置)
 
-##<a id="目标"></a>目标:
+## <a id="目标"></a>目标:
 
 * 弹幕过几秒自动消失
 * 实现A用户弹幕出现时，B用户发送礼物，B用户弹幕在A用户弹幕下方,A/B用户弹幕存在时，A/B用户连续发送礼物，弹幕显示的礼物数量增加，谁的礼物数量较大，谁的弹幕在上方。
 * A/B用户弹幕存在时，C用户发送礼物，A/B用户中较早出现的弹幕被替换成C用户的弹幕数据，并且C用户的弹幕处于下方
 
 
-###<a id="版本更新说明"></a>版本更新:
+### <a id="版本更新说明"></a>版本更新:
 
 #### V1.0
 * 大致实现了不同用户增加弹幕的效果
@@ -60,7 +60,7 @@
 
 ![](http://ww1.sinaimg.cn/large/c6a1cfeagy1fdp2kbbn1sj20af0hy407)
 
-###<a id="快速使用"></a>快速使用
+### <a id="快速使用"></a>快速使用
 * 使用的第三方库:
   * [Masonry](https://github.com/SnapKit/Masonry)
   * [SDWebImage](https://github.com/rs/SDWebImage)
@@ -126,7 +126,7 @@ LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[3]
 }
 ```
 
-###<a id="自定义配置"></a>自定义配置
+### <a id="自定义配置"></a>自定义配置
 * `LiveGiftShow` V1.4管理所有弹幕的视图，在V1.7之后移除。
 * `LiveGiftShowCustom` V1.5之后管理所有弹幕的视图
 
