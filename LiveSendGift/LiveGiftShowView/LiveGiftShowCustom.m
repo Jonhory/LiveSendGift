@@ -139,7 +139,7 @@ static LiveGiftShowMode live_showModel = fromTopToBottom;
             //从数组移除
             [weakSelf.showViewArr replaceObjectAtIndex:willReMoveShowView.index withObject:kGiftViewRemoved];
             //从字典移除
-            NSString * willReMoveShowViewKey = [self getDictKey:willReMoveShowView.model];
+            NSString * willReMoveShowViewKey = [weakSelf getDictKey:willReMoveShowView.model];
             [weakSelf.showViewDict removeObjectForKey:willReMoveShowViewKey];
             
             if ([weakSelf isDebug]) {
