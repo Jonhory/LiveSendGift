@@ -124,7 +124,7 @@ static NSInteger kTag = 200;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"V1.7 Test";
+    self.title = @"V1.8 Test";
     self.view.backgroundColor = RGB(237, 237, 237);
     
     //初始化按钮
