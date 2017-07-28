@@ -41,9 +41,18 @@ typedef NS_ENUM(NSUInteger, LiveGiftHiddenMode) {
     left = 1,
 };
 
+@protocol LiveGiftShowCustomDelegate <NSObject>
+
+@optional
+- (void)giftDidRemove:(LiveGiftShowModel *)showModel;
+
+@end
+
 @interface LiveGiftShowCustom : UIView
 
 + (instancetype)addToView:(UIView *)superView;
+
+@property(nonatomic, weak) id<LiveGiftShowCustomDelegate> delegate;
 
 /**
  *  设置是否打印信息

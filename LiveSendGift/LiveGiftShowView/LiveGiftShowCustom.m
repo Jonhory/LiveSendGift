@@ -142,6 +142,9 @@ static LiveGiftHiddenMode live_hiddenModel = right;
         //超时移除
         __weak __typeof(self)weakSelf = self;
         newShowView.liveGiftShowViewTimeOut = ^(LiveGiftShowView * willReMoveShowView){
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(giftDidRemove:)]) {
+                [weakSelf.delegate giftDidRemove:willReMoveShowView.model];
+            }
             //从数组移除
             [weakSelf.showViewArr replaceObjectAtIndex:willReMoveShowView.index withObject:kGiftViewRemoved];
             //从字典移除

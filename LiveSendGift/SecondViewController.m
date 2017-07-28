@@ -20,7 +20,7 @@
 
 - (UIButton *)btn1{
     if (!_btn1) {
-        _btn1 = [self createBtnWithFrame:CGRectMake(0, 300, 150, 50) tag:101 title:@"Go TestVC = V1.7"];
+        _btn1 = [self createBtnWithFrame:CGRectMake(0, 300, 150, 50) tag:101 title:@"Go TestVC = V1.8"];
         _btn1.backgroundColor = [UIColor blueColor];
     }
     return _btn1;
