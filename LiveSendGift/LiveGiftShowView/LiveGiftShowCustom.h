@@ -30,6 +30,17 @@ typedef NS_ENUM(NSUInteger, LiveGiftShowMode) {
     fromBottomToTop = 1,
 };
 
+/**
+ 弹幕消失模式
+
+ - right: 向右移出
+ - left: 向左移出
+ */
+typedef NS_ENUM(NSUInteger, LiveGiftHiddenMode) {
+    right = 0,
+    left = 1,
+};
+
 @interface LiveGiftShowCustom : UIView
 
 + (instancetype)addToView:(UIView *)superView;
@@ -54,6 +65,13 @@ typedef NS_ENUM(NSUInteger, LiveGiftShowMode) {
  @param model 弹幕展现模式
  */
 - (void)setShowMode:(LiveGiftShowMode)model;
+
+/**
+ 设置弹幕消失模式
+
+ @param model 弹幕消失模式
+ */
+- (void)setHiddenModel:(LiveGiftHiddenMode)model;
 
 /**
  增加或者更新一个礼物视图

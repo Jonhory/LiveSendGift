@@ -168,8 +168,18 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
         }
         self.isAnimation = YES;
         self.isLeavingAnimation = YES;
+        CGFloat xChanged = [UIScreen mainScreen].bounds.size.width;
+        
+        switch (self.hiddenModel) {
+            case left:
+                xChanged = -xChanged;
+                break;
+            default:
+                break;
+        }
+        
         [UIView animateWithDuration:kRemoveAnimationTime delay:kNumberAnimationTime options:UIViewAnimationOptionCurveEaseIn animations:^{
-            self.transform = CGAffineTransformTranslate(self.transform, [UIScreen mainScreen].bounds.size.width, 0);
+            self.transform = CGAffineTransformTranslate(self.transform, xChanged, 0);
         } completion:^(BOOL finished) {
             if (finished) {
                 self.isLeavingAnimation = NO;

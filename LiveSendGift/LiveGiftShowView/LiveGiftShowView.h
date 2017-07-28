@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LiveGiftShowModel.h"
 #import "LiveGiftShowNumberView.h"
-
+#import "LiveGiftShowCustom.h"
 
 static CGFloat const kViewWidth = 240.0;//背景宽
 static CGFloat const kViewHeight = 44.0;//背景高
@@ -19,7 +19,9 @@ static CGFloat const kViewHeight = 44.0;//背景高
 @property (nonatomic ,copy) NSDate * creatDate;/**< 视图创建时间，用于LiveGiftShow替换旧的视图 V1.5在内部创建*/
 @property (nonatomic ,assign) NSInteger index;/**< 用于LiveGiftShow判断是第几个视图 */
 
-@property (nonatomic ,strong) LiveGiftShowModel * model;
+@property (nonatomic ,strong) LiveGiftShowModel * model;/**< 数据源*/
+
+@property(nonatomic, assign) LiveGiftHiddenMode hiddenModel;/**< 消失模式*/
 
 @property (nonatomic ,weak) LiveGiftShowNumberView * numberView;
 
