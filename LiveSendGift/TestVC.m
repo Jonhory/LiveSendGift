@@ -95,8 +95,9 @@ static NSInteger kTag = 200;
         _customGiftShow = [LiveGiftShowCustom addToView:self.view];
         [_customGiftShow setMaxGiftCount:3];
         [_customGiftShow setShowMode:fromBottomToTop];
+        [_customGiftShow setAppearModel:leftAppear];
         [_customGiftShow setHiddenModel:left];
-        [_customGiftShow enableInterfaceDebug:YES];
+        [_customGiftShow enableInterfaceDebug:NO];
         _customGiftShow.delegate = self;
     }
     return _customGiftShow;
@@ -120,6 +121,11 @@ static NSInteger kTag = 200;
     return btn;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.firstUser];
+    [self.customGiftShow addLiveGiftShowModel:model];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -139,10 +145,6 @@ static NSInteger kTag = 200;
 
     //初始化弹幕视图
     [self customGiftShow];
-    
-    LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.firstUser];
-    [self.customGiftShow addLiveGiftShowModel:model];
-    // Do any additional setup after loading the view.
 }
 
 - (void)v15BtnClicked:(UIButton *)clickedBtn{

@@ -12,12 +12,14 @@
 static CGFloat const kGiftViewMargin = 50.0;/**< 两个弹幕之间的高度差 */
 static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移除的key */
 static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
+static CGFloat const kAppearAnimationTime = 0.5;/**< 出现时动画时长 */
 
 static NSInteger live_maxGiftShowCount = 3;
 static BOOL live_isEnableInterfaceDebug = NO;
 
 static LiveGiftShowMode live_showModel = fromTopToBottom;
 static LiveGiftHiddenMode live_hiddenModel = right;
+static LiveGiftAppearMode live_appearModel = none;
 
 @interface LiveGiftShowCustom ()
 
@@ -76,6 +78,10 @@ static LiveGiftHiddenMode live_hiddenModel = right;
     live_hiddenModel = model;
 }
 
+- (void)setAppearModel:(LiveGiftAppearMode)model {
+    live_appearModel = model;
+}
+
 - (BOOL)isDebug {
     return live_isEnableInterfaceDebug;
 }
@@ -129,7 +135,11 @@ static LiveGiftHiddenMode live_hiddenModel = right;
             }
         }
         //创建新模型
-        LiveGiftShowView * newShowView = [[LiveGiftShowView alloc]initWithFrame:CGRectMake(0, showViewY, 0, 0)];
+        CGRect frame = CGRectMake(0, showViewY, 0, 0);
+        if (live_appearModel == leftAppear) {
+            frame = CGRectMake(-[UIScreen mainScreen].bounds.size.width, showViewY, 0, 0);
+        }
+        LiveGiftShowView * newShowView = [[LiveGiftShowView alloc]initWithFrame:frame];
         //赋值
         newShowView.model = showModel;
         newShowView.hiddenModel = live_hiddenModel;
@@ -138,6 +148,19 @@ static LiveGiftHiddenMode live_hiddenModel = right;
             [newShowView resetTimeAndNumberFrom:showNumber];
         }else{
             [newShowView addGiftNumberFrom:1];
+        }
+        // 出现的动画
+        if (live_appearModel == leftAppear) {
+            newShowView.isAppearAnimation = YES;
+            [UIView animateWithDuration:kAppearAnimationTime animations:^{
+                CGRect f = newShowView.frame;
+                f.origin.x = 0;
+                newShowView.frame = f;
+            } completion:^(BOOL finished) {
+                if (finished) {
+                    newShowView.isAppearAnimation = NO;
+                }
+            }];
         }
         //超时移除
         __weak __typeof(self)weakSelf = self;
@@ -203,6 +226,10 @@ static LiveGiftHiddenMode live_hiddenModel = right;
             }
             if (show.frame.origin.y != showY) {
                 if (!show.isLeavingAnimation) {
+                    // 避免出现动画和交换动画冲突
+                    if (show.isAppearAnimation) {
+                        [show.layer removeAllAnimations];
+                    }
                     [UIView animateWithDuration:kExchangeAnimationTime animations:^{
                         CGRect showF = show.frame;
                         showF.origin.y = showY;
