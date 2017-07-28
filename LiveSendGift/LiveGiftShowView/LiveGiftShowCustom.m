@@ -17,6 +17,7 @@ static NSInteger live_maxGiftShowCount = 3;
 static BOOL live_isEnableInterfaceDebug = NO;
 
 static LiveGiftShowMode live_showModel = fromTopToBottom;
+static LiveGiftHiddenMode live_hiddenModel = right;
 
 @interface LiveGiftShowCustom ()
 
@@ -69,6 +70,10 @@ static LiveGiftShowMode live_showModel = fromTopToBottom;
 
 - (void)setShowMode:(LiveGiftShowMode)model{
     live_showModel = model;
+}
+
+- (void)setHiddenModel:(LiveGiftHiddenMode)model {
+    live_hiddenModel = model;
 }
 
 - (BOOL)isDebug {
@@ -127,6 +132,7 @@ static LiveGiftShowMode live_showModel = fromTopToBottom;
         LiveGiftShowView * newShowView = [[LiveGiftShowView alloc]initWithFrame:CGRectMake(0, showViewY, 0, 0)];
         //赋值
         newShowView.model = showModel;
+        newShowView.hiddenModel = live_hiddenModel;
         //改变礼物数量
         if (isResetNumber) {
             [newShowView resetTimeAndNumberFrom:showNumber];
@@ -136,6 +142,9 @@ static LiveGiftShowMode live_showModel = fromTopToBottom;
         //超时移除
         __weak __typeof(self)weakSelf = self;
         newShowView.liveGiftShowViewTimeOut = ^(LiveGiftShowView * willReMoveShowView){
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(giftDidRemove:)]) {
+                [weakSelf.delegate giftDidRemove:willReMoveShowView.model];
+            }
             //从数组移除
             [weakSelf.showViewArr replaceObjectAtIndex:willReMoveShowView.index withObject:kGiftViewRemoved];
             //从字典移除

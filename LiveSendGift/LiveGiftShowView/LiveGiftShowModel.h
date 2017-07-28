@@ -17,6 +17,8 @@
 
 @property (nonatomic ,strong) LiveUserModel * user;
 
+@property (nonatomic, assign) NSUInteger currentNumber;/** 当前送礼数量 */
+
 + (instancetype)giftModel:(LiveGiftListModel *)giftModel userModel:(LiveUserModel *)userModel;
 
 @end

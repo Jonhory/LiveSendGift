@@ -28,7 +28,7 @@ static NSInteger kTag = 200;
 }
 @end
 
-@interface TestVC ()
+@interface TestVC ()<LiveGiftShowCustomDelegate>
 
 @property (nonatomic ,weak) LiveGiftShowCustom * customGiftShow;
 
@@ -95,7 +95,9 @@ static NSInteger kTag = 200;
         _customGiftShow = [LiveGiftShowCustom addToView:self.view];
         [_customGiftShow setMaxGiftCount:3];
         [_customGiftShow setShowMode:fromBottomToTop];
+        [_customGiftShow setHiddenModel:left];
         [_customGiftShow enableInterfaceDebug:YES];
+        _customGiftShow.delegate = self;
     }
     return _customGiftShow;
 }
@@ -122,7 +124,7 @@ static NSInteger kTag = 200;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"V1.7 Test";
+    self.title = @"V1.8 Test";
     self.view.backgroundColor = RGB(237, 237, 237);
     
     //初始化按钮
@@ -173,6 +175,16 @@ static NSInteger kTag = 200;
         default:
             break;
     }
+}
+
+
+/**
+ 弹幕移除回调代理
+
+ @param showModel 数据模型
+ */
+- (void)giftDidRemove:(LiveGiftShowModel *)showModel {
+    WLog(@"用户：%@ 送出了 %li 个 %@", showModel.user.name, showModel.currentNumber, showModel.giftModel.name);
 }
 
 - (NSArray *)giftDataSource{

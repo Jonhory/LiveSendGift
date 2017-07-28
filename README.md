@@ -58,6 +58,11 @@
 
 ![](http://ww1.sinaimg.cn/large/c6a1cfeagy1fdp2kbbn1sj20af0hy407)
 
+### V1.8
+* 支持向左移除弹幕，增加弹幕移除后的回调代理。
+
+![](https://ws1.sinaimg.cn/large/c6a1cfeagy1fhzczgrghig20a30idmzv.gif)
+
 ### <a id="快速使用"></a>快速使用
 * 使用的第三方库:
   * [Masonry](https://github.com/SnapKit/Masonry)
