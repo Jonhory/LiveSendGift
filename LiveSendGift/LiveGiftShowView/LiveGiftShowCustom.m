@@ -25,26 +25,11 @@ static LiveGiftAppearMode live_appearModel = none;
 
 @property (nonatomic ,strong) NSMutableDictionary * showViewDict;/**< key([self getDictKey]):value(LiveGiftShowView*) */
 //用来记录模型的顺序
-@property (nonatomic ,strong) NSMutableArray * showViewArr;/**< [LiveGiftShowView] */
+@property (nonatomic ,strong) NSMutableArray * showViewArr;/**< [LiveGiftShowView, @"kGiftViewRemoved"] */
 
 @end
 
 @implementation LiveGiftShowCustom
-
-#pragma mark - Lazy
-- (NSMutableDictionary *)showViewDict{
-    if (!_showViewDict) {
-        _showViewDict = [[NSMutableDictionary alloc]init];
-    }
-    return _showViewDict;
-}
-
--(NSMutableArray *)showViewArr{
-    if (!_showViewArr) {
-        _showViewArr = [[NSMutableArray alloc]init];
-    }
-    return _showViewArr;
-}
 
 #pragma mark - 初始化
 + (instancetype)addToView:(UIView *)superView{
@@ -60,32 +45,6 @@ static LiveGiftAppearMode live_appearModel = none;
     v.backgroundColor = [UIColor clearColor];
     return v;
 }
-
-- (void)setMaxGiftCount:(NSInteger)maxGiftCount{
-    live_maxGiftShowCount = maxGiftCount;
-}
-
-//设置是否打印信息
-- (void)enableInterfaceDebug:(BOOL)isDebug {
-    live_isEnableInterfaceDebug = isDebug;
-}
-
-- (void)setShowMode:(LiveGiftShowMode)model{
-    live_showModel = model;
-}
-
-- (void)setHiddenModel:(LiveGiftHiddenMode)model {
-    live_hiddenModel = model;
-}
-
-- (void)setAppearModel:(LiveGiftAppearMode)model {
-    live_appearModel = model;
-}
-
-- (BOOL)isDebug {
-    return live_isEnableInterfaceDebug;
-}
-
 
 - (void)addLiveGiftShowModel:(LiveGiftShowModel *)showModel{
     [self addLiveGiftShowModel:showModel showNumber:0];
@@ -149,19 +108,8 @@ static LiveGiftAppearMode live_appearModel = none;
         }else{
             [newShowView addGiftNumberFrom:1];
         }
-        // 出现的动画
-        if (live_appearModel == leftAppear) {
-            newShowView.isAppearAnimation = YES;
-            [UIView animateWithDuration:kAppearAnimationTime animations:^{
-                CGRect f = newShowView.frame;
-                f.origin.x = 0;
-                newShowView.frame = f;
-            } completion:^(BOOL finished) {
-                if (finished) {
-                    newShowView.isAppearAnimation = NO;
-                }
-            }];
-        }
+        [self appearWith:newShowView];
+        
         //超时移除
         __weak __typeof(self)weakSelf = self;
         newShowView.liveGiftShowViewTimeOut = ^(LiveGiftShowView * willReMoveShowView){
@@ -216,7 +164,23 @@ static LiveGiftAppearMode live_appearModel = none;
     }
 }
 
-- (void)resetY{
+- (void)appearWith:(LiveGiftShowView *)showView {
+    // 出现的动画
+    if (live_appearModel == leftAppear) {
+        showView.isAppearAnimation = YES;
+        [UIView animateWithDuration:kAppearAnimationTime animations:^{
+            CGRect f = showView.frame;
+            f.origin.x = 0;
+            showView.frame = f;
+        } completion:^(BOOL finished) {
+            if (finished) {
+                showView.isAppearAnimation = NO;
+            }
+        }];
+    }
+}
+
+- (void)resetY {
     for (int i = 0; i < self.showViewArr.count; i++) {
         LiveGiftShowView * show = self.showViewArr[i];
         if ([show isKindOfClass:[LiveGiftShowView class]]) {
@@ -292,6 +256,31 @@ static LiveGiftAppearMode live_appearModel = none;
     }
 }
 
+- (void)setMaxGiftCount:(NSInteger)maxGiftCount{
+    live_maxGiftShowCount = maxGiftCount;
+}
+
+//设置是否打印信息
+- (void)enableInterfaceDebug:(BOOL)isDebug {
+    live_isEnableInterfaceDebug = isDebug;
+}
+
+- (void)setShowMode:(LiveGiftShowMode)model{
+    live_showModel = model;
+}
+
+- (void)setHiddenModel:(LiveGiftHiddenMode)model {
+    live_hiddenModel = model;
+}
+
+- (void)setAppearModel:(LiveGiftAppearMode)model {
+    live_appearModel = model;
+}
+
+- (BOOL)isDebug {
+    return live_isEnableInterfaceDebug;
+}
+
 #pragma mark - Private
 - (void)resetView:(LiveGiftShowView *)view nowModel:(LiveGiftShowModel *)model isChangeNum:(BOOL)isChange number:(NSInteger)number{
     NSString * oldKey = [self getDictKey:view.model];
@@ -313,6 +302,20 @@ static LiveGiftAppearMode live_appearModel = none;
     return key;
 }
 
+#pragma mark - Lazy
+- (NSMutableDictionary *)showViewDict{
+    if (!_showViewDict) {
+        _showViewDict = [[NSMutableDictionary alloc]init];
+    }
+    return _showViewDict;
+}
+
+-(NSMutableArray *)showViewArr{
+    if (!_showViewArr) {
+        _showViewArr = [[NSMutableArray alloc]init];
+    }
+    return _showViewArr;
+}
 
 - (void)dealloc{
     if ([self isDebug]) {

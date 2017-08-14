@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "SecondViewController.h"
+#import "HomeVC.h"
 
 @interface AppDelegate ()
 
@@ -20,11 +20,11 @@
     // Override point for customization after application launch.
     
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    SecondViewController * v = [[SecondViewController alloc]init];
     
-    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:v];
+    HomeVC * homeVC = [[HomeVC alloc]init];
+    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:homeVC];
+    
     [self.window makeKeyAndVisible];
-    
     
     return YES;
 }

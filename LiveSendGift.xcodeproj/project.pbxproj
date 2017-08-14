@@ -14,7 +14,7 @@
 		BB3BEBE31DF6350600C9DDFF /* LiveSendGiftTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BEBE21DF6350600C9DDFF /* LiveSendGiftTests.m */; };
 		BB3BEBF11DF63D1B00C9DDFF /* LiveSendGiftUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BEBF01DF63D1B00C9DDFF /* LiveSendGiftUITests.m */; };
 		BB4BF1B61DD60ECF0017DA99 /* LiveGiftShowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1B51DD60ECF0017DA99 /* LiveGiftShowModel.m */; };
-		BB5E4F201DD5E77C005CBFC5 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5E4F1F1DD5E77C005CBFC5 /* SecondViewController.m */; };
+		BB5E4F201DD5E77C005CBFC5 /* HomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5E4F1F1DD5E77C005CBFC5 /* HomeVC.m */; };
 		BB6CC2BE1DD6C642003F58BC /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */; };
 		BB91CB4F1DF42AD0002A76EB /* LiveGiftShowCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = BB91CB4E1DF42AD0002A76EB /* LiveGiftShowCustom.m */; };
 		BB91CB521DF42D32002A76EB /* TestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB91CB511DF42D32002A76EB /* TestVC.m */; };
@@ -58,8 +58,8 @@
 		BB3BEBF21DF63D1B00C9DDFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = LiveSendGiftUITests/Info.plist; sourceTree = "<group>"; };
 		BB4BF1B41DD60ECF0017DA99 /* LiveGiftShowModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShowModel.h; sourceTree = "<group>"; };
 		BB4BF1B51DD60ECF0017DA99 /* LiveGiftShowModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftShowModel.m; sourceTree = "<group>"; };
-		BB5E4F1E1DD5E77C005CBFC5 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		BB5E4F1F1DD5E77C005CBFC5 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		BB5E4F1E1DD5E77C005CBFC5 /* HomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeVC.h; sourceTree = "<group>"; };
+		BB5E4F1F1DD5E77C005CBFC5 /* HomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeVC.m; sourceTree = "<group>"; };
 		BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+Log.m"; sourceTree = "<group>"; };
 		BB91CB4D1DF42AD0002A76EB /* LiveGiftShowCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShowCustom.h; sourceTree = "<group>"; };
 		BB91CB4E1DF42AD0002A76EB /* LiveGiftShowCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftShowCustom.m; sourceTree = "<group>"; };
@@ -150,8 +150,8 @@
 				BBD12B721DD59C09007D31D6 /* LiveGiftShowView */,
 				BBD12B291DD59437007D31D6 /* AppDelegate.h */,
 				BBD12B2A1DD59437007D31D6 /* AppDelegate.m */,
-				BB5E4F1E1DD5E77C005CBFC5 /* SecondViewController.h */,
-				BB5E4F1F1DD5E77C005CBFC5 /* SecondViewController.m */,
+				BB5E4F1E1DD5E77C005CBFC5 /* HomeVC.h */,
+				BB5E4F1F1DD5E77C005CBFC5 /* HomeVC.m */,
 				BB91CB501DF42D32002A76EB /* TestVC.h */,
 				BB91CB511DF42D32002A76EB /* TestVC.m */,
 				BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */,
@@ -412,7 +412,7 @@
 				BBD12B781DD59EFF007D31D6 /* LiveGiftShowNumberView.m in Sources */,
 				BB91CB521DF42D32002A76EB /* TestVC.m in Sources */,
 				BB91CB4F1DF42AD0002A76EB /* LiveGiftShowCustom.m in Sources */,
-				BB5E4F201DD5E77C005CBFC5 /* SecondViewController.m in Sources */,
+				BB5E4F201DD5E77C005CBFC5 /* HomeVC.m in Sources */,
 				BBD12B751DD59C1B007D31D6 /* LiveGiftShowView.m in Sources */,
 				BB2E00971EBD6E2D00580E33 /* LiveGiftListModel.m in Sources */,
 				BBD12B281DD59437007D31D6 /* main.m in Sources */,

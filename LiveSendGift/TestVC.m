@@ -9,9 +9,7 @@
 
 #import "TestVC.h"
 #import "LiveGiftShowCustom.h"
-
 #import "MJExtension.h"
-
 
 #define RGB(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]
 #define SCREEN [UIScreen mainScreen].bounds.size
@@ -35,91 +33,15 @@ static NSInteger kTag = 200;
 @property (nonatomic ,strong) NSArray <LiveGiftListModel *>* giftArr;
 @property (nonatomic ,strong) NSArray * giftDataSource;
 
-@property(nonatomic, strong) LiveUserModel *firstUser;
-@property(nonatomic, strong) LiveUserModel *secondUser;
-@property(nonatomic, strong) LiveUserModel *thirdUser;
-@property(nonatomic, strong) LiveUserModel *fourthUser;
-@property(nonatomic, strong) LiveUserModel *fifthUser;
+@property (nonatomic, strong) LiveUserModel *firstUser;
+@property (nonatomic, strong) LiveUserModel *secondUser;
+@property (nonatomic, strong) LiveUserModel *thirdUser;
+@property (nonatomic, strong) LiveUserModel *fourthUser;
+@property (nonatomic, strong) LiveUserModel *fifthUser;
 
 @end
 
 @implementation TestVC
-
-- (LiveUserModel *)firstUser {
-    if (!_firstUser) {
-        _firstUser = [[LiveUserModel alloc]init];
-        _firstUser.name = @"first";
-        _firstUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbg8tb6wqj20gl0qogni.jpg";
-    }
-    return _firstUser;
-}
-
-- (LiveUserModel *)secondUser {
-    if (!_secondUser) {
-        _secondUser = [[LiveUserModel alloc]init];
-        _secondUser.name = @"second";
-        _secondUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgd5cr5nj209s0akgly.jpg";
-    }
-    return _secondUser;
-}
-
-- (LiveUserModel *)thirdUser {
-    if (!_thirdUser) {
-        _thirdUser = [[LiveUserModel alloc]init];
-        _thirdUser.name = @"third";
-        _thirdUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgeuwk21j205k05kq2w.jpg";
-    }
-    return _thirdUser;
-}
-
-- (LiveUserModel *)fourthUser {
-    if (!_fourthUser) {
-        _fourthUser = [[LiveUserModel alloc]init];
-        _fourthUser.name = @"fourth";
-        _fourthUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgfpf5bgj205k07v3yk.jpg";
-    }
-    return _fourthUser;
-}
-
-- (LiveUserModel *)fifthUser {
-    if (!_fifthUser) {
-        _fifthUser = [[LiveUserModel alloc]init];
-        _fifthUser.name = @"fifth";
-        _fifthUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgg5427qj205k05k748.jpg";
-    }
-    return _fifthUser;
-}
-
-- (LiveGiftShowCustom *)customGiftShow{
-    if (!_customGiftShow) {
-        _customGiftShow = [LiveGiftShowCustom addToView:self.view];
-        [_customGiftShow setMaxGiftCount:3];
-        [_customGiftShow setShowMode:fromBottomToTop];
-        [_customGiftShow setAppearModel:leftAppear];
-        [_customGiftShow setHiddenModel:left];
-        [_customGiftShow enableInterfaceDebug:NO];
-        _customGiftShow.delegate = self;
-    }
-    return _customGiftShow;
-}
-
-- (UIButton *)createBtnWithTag:(NSInteger)tag title:(NSString *)title maxCount:(NSInteger)maxCount{
-    CGFloat btnWidth = (SCREEN.width - 40)/maxCount;
-    
-    NSInteger number = tag - kTag;
-    
-    UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(20+number * btnWidth, 400, btnWidth, 40)];
-    btn.backgroundColor = [UIColor randomColor];
-    btn.tag = tag;
-    
-    [btn setTitle:title forState:UIControlStateNormal];
-    [btn setTitle:title forState:UIControlStateHighlighted];
-    
-    [btn addTarget:self action:@selector(v15BtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:btn];
-    return btn;
-}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -179,7 +101,6 @@ static NSInteger kTag = 200;
     }
 }
 
-
 /**
  弹幕移除回调代理
 
@@ -187,6 +108,82 @@ static NSInteger kTag = 200;
  */
 - (void)giftDidRemove:(LiveGiftShowModel *)showModel {
     WLog(@"用户：%@ 送出了 %li 个 %@", showModel.user.name, showModel.currentNumber, showModel.giftModel.name);
+}
+
+- (LiveGiftShowCustom *)customGiftShow{
+    if (!_customGiftShow) {
+        _customGiftShow = [LiveGiftShowCustom addToView:self.view];
+        [_customGiftShow setMaxGiftCount:3];
+        [_customGiftShow setShowMode:fromBottomToTop];
+        [_customGiftShow setAppearModel:leftAppear];
+        [_customGiftShow setHiddenModel:left];
+        [_customGiftShow enableInterfaceDebug:YES];
+        _customGiftShow.delegate = self;
+    }
+    return _customGiftShow;
+}
+
+- (LiveUserModel *)firstUser {
+    if (!_firstUser) {
+        _firstUser = [[LiveUserModel alloc]init];
+        _firstUser.name = @"first";
+        _firstUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbg8tb6wqj20gl0qogni.jpg";
+    }
+    return _firstUser;
+}
+
+- (LiveUserModel *)secondUser {
+    if (!_secondUser) {
+        _secondUser = [[LiveUserModel alloc]init];
+        _secondUser.name = @"second";
+        _secondUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgd5cr5nj209s0akgly.jpg";
+    }
+    return _secondUser;
+}
+
+- (LiveUserModel *)thirdUser {
+    if (!_thirdUser) {
+        _thirdUser = [[LiveUserModel alloc]init];
+        _thirdUser.name = @"third";
+        _thirdUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgeuwk21j205k05kq2w.jpg";
+    }
+    return _thirdUser;
+}
+
+- (LiveUserModel *)fourthUser {
+    if (!_fourthUser) {
+        _fourthUser = [[LiveUserModel alloc]init];
+        _fourthUser.name = @"fourth";
+        _fourthUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgfpf5bgj205k07v3yk.jpg";
+    }
+    return _fourthUser;
+}
+
+- (LiveUserModel *)fifthUser {
+    if (!_fifthUser) {
+        _fifthUser = [[LiveUserModel alloc]init];
+        _fifthUser.name = @"fifth";
+        _fifthUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgg5427qj205k05k748.jpg";
+    }
+    return _fifthUser;
+}
+
+- (UIButton *)createBtnWithTag:(NSInteger)tag title:(NSString *)title maxCount:(NSInteger)maxCount{
+    CGFloat btnWidth = (SCREEN.width - 40)/maxCount;
+    
+    NSInteger number = tag - kTag;
+    
+    UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(20+number * btnWidth, 400, btnWidth, 40)];
+    btn.backgroundColor = [UIColor randomColor];
+    btn.tag = tag;
+    
+    [btn setTitle:title forState:UIControlStateNormal];
+    [btn setTitle:title forState:UIControlStateHighlighted];
+    
+    [btn addTarget:self action:@selector(v15BtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:btn];
+    return btn;
 }
 
 - (NSArray *)giftDataSource{
@@ -243,17 +240,6 @@ static NSInteger kTag = 200;
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

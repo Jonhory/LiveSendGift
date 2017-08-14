@@ -18,7 +18,6 @@
 #define WLog(s, ... )
 #endif
 
-
 /**
  弹幕展现模式
 
@@ -40,7 +39,6 @@ typedef NS_ENUM(NSUInteger, LiveGiftHiddenMode) {
     right = 0,
     left = 1,
 };
-
 
 /**
  弹幕出现模式
