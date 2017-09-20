@@ -14,6 +14,8 @@
     LiveGiftShowModel * model = [[LiveGiftShowModel alloc]init];
     model.giftModel = giftModel;
     model.user = userModel;
+    model.interval = 0.35;
+    model.toNumber = 1;
     return model;
 }
 

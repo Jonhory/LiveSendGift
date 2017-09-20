@@ -20,10 +20,6 @@ static CGFloat const kGiftLabelFont = 10.0;//送出礼物寄语  字体大小
 
 static CGFloat const kGiftNumberWidth = 15.0;
 
-static NSInteger const kTimeOut = 3;/**< 超时移除时长 */
-static CGFloat const kRemoveAnimationTime = 0.5;/**< 移除动画时长 */
-static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 */
-
 @interface LiveGiftShowView ()
 
 @property (nonatomic ,weak) UIImageView * backIV;/**< 背景图 */
@@ -49,6 +45,9 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
         self.liveTimerForSecond = 0;
         [self setupContentContraints];
         self.creatDate = [NSDate date];
+        self.kTimeOut = 3;
+        self.kRemoveAnimationTime = 0.5;
+        self.kNumberAnimationTime = 0.25;
     }
     return self;
 }
@@ -148,9 +147,13 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
             make.right.equalTo(self.mas_right).offset(-kGiftNumberWidth * 6);
         }];
     }
+    if (!CGAffineTransformIsIdentity(self.numberView.transform)) {
+        [self.numberView.layer removeAllAnimations];
+    }
+    self.numberView.transform = CGAffineTransformIdentity;
     
-    [UIView animateWithDuration:kNumberAnimationTime animations:^{
-        self.numberView.transform = CGAffineTransformMakeScale(1.5,1.5);
+    [UIView animateWithDuration:self.kNumberAnimationTime animations:^{
+        self.numberView.transform = CGAffineTransformMakeScale(1.5, 1.5);
     } completion:^(BOOL finished) {
         if (finished) {
             self.numberView.transform = CGAffineTransformIdentity;
@@ -162,7 +165,7 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
 
 - (void)liveTimerRunning{
     self.liveTimerForSecond += 1;
-    if (self.liveTimerForSecond > kTimeOut) {
+    if (self.liveTimerForSecond > self.kTimeOut) {
         if (self.isAnimation == YES) {
             self.isAnimation = NO;
             return;
@@ -172,24 +175,31 @@ static CGFloat const kNumberAnimationTime = 0.25;/**< 数字改变动画时长 *
         CGFloat xChanged = [UIScreen mainScreen].bounds.size.width;
         
         switch (self.hiddenModel) {
-            case left:
+            case LiveGiftHiddenModeLeft:
                 xChanged = -xChanged;
                 break;
             default:
                 break;
         }
-        
-        [UIView animateWithDuration:kRemoveAnimationTime delay:kNumberAnimationTime options:UIViewAnimationOptionCurveEaseIn animations:^{
-            self.transform = CGAffineTransformTranslate(self.transform, xChanged, 0);
-        } completion:^(BOOL finished) {
-            if (finished) {
-                self.isLeavingAnimation = NO;
-                if (self.liveGiftShowViewTimeOut) {
-                    self.liveGiftShowViewTimeOut(self);
-                }
-                [self removeFromSuperview];
+        if (self.hiddenModel == LiveGiftHiddenModeNone) {
+            self.isLeavingAnimation = NO;
+            if (self.liveGiftShowViewTimeOut) {
+                self.liveGiftShowViewTimeOut(self);
             }
-        }];
+            [self removeFromSuperview];
+        } else {
+            [UIView animateWithDuration:self.kRemoveAnimationTime delay:self.kNumberAnimationTime options:UIViewAnimationOptionCurveEaseIn animations:^{
+                self.transform = CGAffineTransformTranslate(self.transform, xChanged, 0);
+            } completion:^(BOOL finished) {
+                if (finished) {
+                    self.isLeavingAnimation = NO;
+                    if (self.liveGiftShowViewTimeOut) {
+                        self.liveGiftShowViewTimeOut(self);
+                    }
+                    [self removeFromSuperview];
+                }
+            }];
+        }
         
         [self stopTimer];
     }

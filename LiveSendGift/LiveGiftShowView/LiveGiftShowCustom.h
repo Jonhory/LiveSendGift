@@ -25,8 +25,8 @@
  - fromBottomToTop: 自下而上
  */
 typedef NS_ENUM(NSUInteger, LiveGiftShowMode) {
-    fromTopToBottom = 0,
-    fromBottomToTop = 1,
+    LiveGiftShowModeFromTopToBottom = 0,
+    LiveGiftShowModeFromBottomToTop = 1,
 };
 
 /**
@@ -36,8 +36,9 @@ typedef NS_ENUM(NSUInteger, LiveGiftShowMode) {
  - left: 向左移出
  */
 typedef NS_ENUM(NSUInteger, LiveGiftHiddenMode) {
-    right = 0,
-    left = 1,
+    LiveGiftHiddenModeRight = 0,
+    LiveGiftHiddenModeLeft = 1,
+    LiveGiftHiddenModeNone = 2,
 };
 
 /**
@@ -47,8 +48,20 @@ typedef NS_ENUM(NSUInteger, LiveGiftHiddenMode) {
  - left: 从左到右出现（左进）
  */
 typedef NS_ENUM(NSUInteger, LiveGiftAppearMode) {
-    none = 0,
-    leftAppear = 1,
+    LiveGiftAppearModeNone = 0,
+    LiveGiftAppearModeLeft = 1,
+};
+
+
+/**
+ 弹幕添加模式（当弹幕达到最大数量后新增弹幕时）,默认替换
+
+ - LiveGiftAddModeReplace: 当有新弹幕时会替换
+ - LiveGiftAddModeAdd: 当有新弹幕时会进入队列
+ */
+typedef NS_ENUM(NSUInteger, LiveGiftAddMode) {
+    LiveGiftAddModeReplace = 0,
+    LiveGiftAddModeAdd     = 1,
 };
 
 @protocol LiveGiftShowCustomDelegate <NSObject>
@@ -61,6 +74,10 @@ typedef NS_ENUM(NSUInteger, LiveGiftAppearMode) {
 @interface LiveGiftShowCustom : UIView
 
 + (instancetype)addToView:(UIView *)superView;
+
+@property(nonatomic, assign) CGFloat kExchangeAnimationTime;/**< 交换动画时长 */
+@property(nonatomic, assign) CGFloat kAppearAnimationTime;/**< 出现时动画时长 */
+@property(nonatomic, assign) LiveGiftAddMode addMode;/** 弹幕添加模式,默认替换 */
 
 @property(nonatomic, weak) id<LiveGiftShowCustomDelegate> delegate;
 
@@ -113,5 +130,12 @@ typedef NS_ENUM(NSUInteger, LiveGiftAppearMode) {
  @param showNumber 如果传值，则显示改值，否则从1开始自增1
  */
 - (void)addLiveGiftShowModel:(LiveGiftShowModel *)showModel showNumber:(NSInteger)showNumber;
+
+/**
+ 添加一个礼物视图，若该礼物不在视图上则从数字1显示到指定数字的效果，否则继续增加指定数字
+
+ @param showModel 礼物模型
+ */
+- (void)animatedWithGiftModel:(LiveGiftShowModel *)showModel;
 
 @end

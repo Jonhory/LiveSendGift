@@ -52,7 +52,7 @@ static NSInteger kTag = 200;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"V1.8 Test";
+    self.title = @"V1.9 Test";
     self.view.backgroundColor = RGB(237, 237, 237);
     
     //初始化按钮
@@ -67,33 +67,51 @@ static NSInteger kTag = 200;
 
     //初始化弹幕视图
     [self customGiftShow];
+    
+    [self animateBtn];
+}
+
+- (void)animateBtn{
+    UIButton * animateBtn = [self createBtnWithTag:205 title:@"sixth" maxCount:3];
+    animateBtn.center = CGPointMake(SCREEN.width/2, SCREEN.height - 80);
 }
 
 - (void)v15BtnClicked:(UIButton *)clickedBtn{
     switch (clickedBtn.tag) {
         case 200:{
             LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[0] userModel:self.firstUser];
-            [self.customGiftShow addLiveGiftShowModel:model];
+            model.toNumber = 88;
+            model.interval = 0.15;
+            [self.customGiftShow animatedWithGiftModel:model];
             break;
         }
         case 201:{
             LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[1] userModel:self.secondUser];
-            [self.customGiftShow addLiveGiftShowModel:model];
+            model.toNumber = 10;
+            [self.customGiftShow animatedWithGiftModel:model];
             break;
         }
         case 202:{
             LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[2] userModel:self.thirdUser];
-            [self.customGiftShow addLiveGiftShowModel:model];
+            model.toNumber = 22;
+            [self.customGiftShow animatedWithGiftModel:model];
             break;
         }
         case 203:{
             LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.fourthUser];
-            [self.customGiftShow addLiveGiftShowModel:model];
+            model.toNumber = 33;
+            [self.customGiftShow animatedWithGiftModel:model];
             break;
         }
         case 204:{
             LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[4] userModel:self.fifthUser];
-            [self.customGiftShow addLiveGiftShowModel:model];
+            model.toNumber = 2;
+            [self.customGiftShow animatedWithGiftModel:model];
+            break;
+        }
+        case 205:{
+            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[4] userModel:self.fifthUser];
+            [self.customGiftShow animatedWithGiftModel:model];
             break;
         }
         default:
@@ -113,11 +131,12 @@ static NSInteger kTag = 200;
 - (LiveGiftShowCustom *)customGiftShow{
     if (!_customGiftShow) {
         _customGiftShow = [LiveGiftShowCustom addToView:self.view];
+        _customGiftShow.addMode = LiveGiftAddModeAdd;
         [_customGiftShow setMaxGiftCount:3];
-        [_customGiftShow setShowMode:fromBottomToTop];
-        [_customGiftShow setAppearModel:leftAppear];
-        [_customGiftShow setHiddenModel:left];
-        [_customGiftShow enableInterfaceDebug:YES];
+        [_customGiftShow setShowMode:LiveGiftShowModeFromTopToBottom];
+        [_customGiftShow setAppearModel:LiveGiftAppearModeLeft];
+        [_customGiftShow setHiddenModel:LiveGiftHiddenModeNone];
+        [_customGiftShow enableInterfaceDebug:NO];
         _customGiftShow.delegate = self;
     }
     return _customGiftShow;

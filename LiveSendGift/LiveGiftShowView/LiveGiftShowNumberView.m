@@ -151,6 +151,7 @@
     }];
     
     [self layoutIfNeeded];
+    
 }
 
 - (UIImageView *)xIV{

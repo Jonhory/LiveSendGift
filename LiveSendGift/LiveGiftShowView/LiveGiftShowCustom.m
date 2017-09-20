@@ -11,21 +11,20 @@
 
 static CGFloat const kGiftViewMargin = 50.0;/**< 两个弹幕之间的高度差 */
 static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移除的key */
-static CGFloat const kExchangeAnimationTime = 0.25;/**< 交换动画时长 */
-static CGFloat const kAppearAnimationTime = 0.5;/**< 出现时动画时长 */
 
 static NSInteger live_maxGiftShowCount = 3;
 static BOOL live_isEnableInterfaceDebug = NO;
 
-static LiveGiftShowMode live_showModel = fromTopToBottom;
-static LiveGiftHiddenMode live_hiddenModel = right;
-static LiveGiftAppearMode live_appearModel = none;
+static LiveGiftShowMode live_showModel = LiveGiftShowModeFromTopToBottom;
+static LiveGiftHiddenMode live_hiddenModel = LiveGiftHiddenModeRight;
+static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
 
 @interface LiveGiftShowCustom ()
 
 @property (nonatomic ,strong) NSMutableDictionary * showViewDict;/**< key([self getDictKey]):value(LiveGiftShowView*) */
 //用来记录模型的顺序
 @property (nonatomic ,strong) NSMutableArray * showViewArr;/**< [LiveGiftShowView, @"kGiftViewRemoved"] */
+@property (nonatomic, strong) NSMutableArray <LiveGiftShowModel *> * waitQueueArr;// 待展示礼物队列
 
 @end
 
@@ -34,13 +33,16 @@ static LiveGiftAppearMode live_appearModel = none;
 #pragma mark - 初始化
 + (instancetype)addToView:(UIView *)superView{
     LiveGiftShowCustom * v = [[LiveGiftShowCustom alloc]init];
+    v.kExchangeAnimationTime = 0.25;
+    v.kAppearAnimationTime = 0.5;
+    v.addMode = LiveGiftAddModeReplace;
     [superView addSubview:v];
     //布局
     [v mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@244);//这个改动之后要注意修改LiveGiftShowView.h的kViewWidth
         make.height.equalTo(@0.01);
         make.left.equalTo(superView.mas_left);//这个可以任意修改
-        make.top.equalTo(superView.mas_top).offset(400);//这个参数在的设定应该注意最大礼物数量时不要超出屏幕边界
+        make.top.equalTo(superView.mas_top).offset(100);//这个参数在的设定应该注意最大礼物数量时不要超出屏幕边界
     }];
     v.backgroundColor = [UIColor clearColor];
     return v;
@@ -66,36 +68,38 @@ static LiveGiftAppearMode live_appearModel = none;
         if (self.showViewArr.count >= live_maxGiftShowCount) {
             //判断数组是否包含kGiftViewRemoved , 不包含的时候进行排序
             if (![self.showViewArr containsObject:kGiftViewRemoved]) {
-                //排序 最小的时间在第一个
-                NSArray * sortArr = [self.showViewArr sortedArrayUsingComparator:^NSComparisonResult(LiveGiftShowView * obj1, LiveGiftShowView * obj2) {
-                    return [obj1.creatDate compare:obj2.creatDate];
-                }];
-                LiveGiftShowView * oldestView = sortArr.firstObject;
-                //重置模型
-                [self resetView:oldestView nowModel:showModel isChangeNum:isResetNumber number:showNumber];
+                if (self.addMode == LiveGiftAddModeReplace) {
+                    //排序 最小的时间在第一个
+                    NSArray * sortArr = [self.showViewArr sortedArrayUsingComparator:^NSComparisonResult(LiveGiftShowView * obj1, LiveGiftShowView * obj2) {
+                        return [obj1.creatDate compare:obj2.creatDate];
+                    }];
+                    LiveGiftShowView * oldestView = sortArr.firstObject;
+                    //重置模型
+                    [self resetView:oldestView nowModel:showModel isChangeNum:isResetNumber number:showNumber];
+                }
                 return;
             }
         }
         
         //计算视图Y值
         CGFloat   showViewY = 0;
-        if (live_showModel == fromTopToBottom) {
+        if (live_showModel == LiveGiftShowModeFromTopToBottom) {
             showViewY = (kViewHeight + kGiftViewMargin) * [self.showViewDict allKeys].count;
-        } else if (live_showModel == fromBottomToTop) {
+        } else if (live_showModel == LiveGiftShowModeFromBottomToTop) {
             showViewY = - ((kViewHeight + kGiftViewMargin) * [self.showViewDict allKeys].count);
         }
         //获取已移除的key的index
         NSInteger kRemovedViewIndex = [self.showViewArr indexOfObject:kGiftViewRemoved];
         if ([self.showViewArr containsObject:kGiftViewRemoved]) {
-            if (live_showModel == fromTopToBottom) {
+            if (live_showModel == LiveGiftShowModeFromTopToBottom) {
                 showViewY = kRemovedViewIndex * (kViewHeight+kGiftViewMargin);
-            } else if (live_showModel == fromBottomToTop) {
+            } else if (live_showModel == LiveGiftShowModeFromBottomToTop) {
                 showViewY = - (kRemovedViewIndex * (kViewHeight+kGiftViewMargin));
             }
         }
         //创建新模型
         CGRect frame = CGRectMake(0, showViewY, 0, 0);
-        if (live_appearModel == leftAppear) {
+        if (live_appearModel == LiveGiftAppearModeLeft) {
             frame = CGRectMake(-[UIScreen mainScreen].bounds.size.width, showViewY, 0, 0);
         }
         LiveGiftShowView * newShowView = [[LiveGiftShowView alloc]initWithFrame:frame];
@@ -129,6 +133,15 @@ static LiveGiftAppearMode live_appearModel = none;
             //比较数量大小排序
             [weakSelf sortShowArr];
             [weakSelf resetY];
+            if (weakSelf.addMode == LiveGiftAddModeAdd) {
+                [weakSelf showWaitView];
+            } else if (weakSelf.addMode == LiveGiftAddModeReplace) {
+                if (willReMoveShowView.model.animatedTimer) {
+                    dispatch_suspend(willReMoveShowView.model.animatedTimer);
+                    dispatch_cancel(willReMoveShowView.model.animatedTimer);
+                    willReMoveShowView.model.animatedTimer = nil;
+                }
+            }
         };
         
         [self addSubview:newShowView];
@@ -143,10 +156,7 @@ static LiveGiftAppearMode live_appearModel = none;
         }
         //加入字典
         [self.showViewDict setObject:newShowView forKey:[self getDictKey:showModel]];
-        //更新自身约束 不自动更新约束了，不然会挡住后面的点击事件
-//        [self mas_updateConstraints:^(MASConstraintMaker *make) {
-//            make.height.equalTo(@(showViewY+(kViewHeight+kGiftViewMargin)));
-//        }];
+        
     }
     //如果存在旧模型
     else{
@@ -164,11 +174,45 @@ static LiveGiftAppearMode live_appearModel = none;
     }
 }
 
+- (void)animatedWithGiftModel:(LiveGiftShowModel *)showModel {
+    if (self.addMode == LiveGiftAddModeAdd) {
+        LiveGiftShowView * oldShowView = [self.showViewDict objectForKey:[self getDictKey:showModel]];
+        if (!oldShowView) {// 不存在旧视图
+            NSUInteger showCount = 0;
+            for (id object in self.showViewArr) {
+                if ([object isKindOfClass:[LiveGiftShowView class]]) {
+                    showCount ++;
+                }
+            }
+            if (showCount >= live_maxGiftShowCount) {//弹幕数量大于最大数量
+                [self addToQueue:showModel];
+                return;
+            }
+        }
+    }
+    
+    dispatch_source_t tt = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+    dispatch_source_set_timer(tt, dispatch_walltime(NULL, 0), showModel.interval*NSEC_PER_SEC, 0);
+    __block NSInteger i = 0;
+    __weak __typeof(self)weakSelf = self;
+    dispatch_source_set_event_handler(tt, ^{
+        if (i < showModel.toNumber) {
+            i ++;
+            showModel.animatedTimer = tt;
+            [weakSelf addLiveGiftShowModel:showModel];
+        } else {
+            dispatch_suspend(tt);
+            dispatch_cancel(tt);
+        }
+    });
+    dispatch_resume(tt);
+}
+
 - (void)appearWith:(LiveGiftShowView *)showView {
     // 出现的动画
-    if (live_appearModel == leftAppear) {
+    if (live_appearModel == LiveGiftAppearModeLeft) {
         showView.isAppearAnimation = YES;
-        [UIView animateWithDuration:kAppearAnimationTime animations:^{
+        [UIView animateWithDuration:self.kAppearAnimationTime animations:^{
             CGRect f = showView.frame;
             f.origin.x = 0;
             showView.frame = f;
@@ -185,7 +229,7 @@ static LiveGiftAppearMode live_appearModel = none;
         LiveGiftShowView * show = self.showViewArr[i];
         if ([show isKindOfClass:[LiveGiftShowView class]]) {
             CGFloat showY = i * (kViewHeight+kGiftViewMargin);
-            if (live_showModel == fromBottomToTop) {
+            if (live_showModel == LiveGiftShowModeFromBottomToTop) {
                 showY = -showY;
             }
             if (show.frame.origin.y != showY) {
@@ -194,7 +238,7 @@ static LiveGiftAppearMode live_appearModel = none;
                     if (show.isAppearAnimation) {
                         [show.layer removeAllAnimations];
                     }
-                    [UIView animateWithDuration:kExchangeAnimationTime animations:^{
+                    [UIView animateWithDuration:self.kExchangeAnimationTime animations:^{
                         CGRect showF = show.frame;
                         showF.origin.y = showY;
                         show.frame = showF;
@@ -282,6 +326,39 @@ static LiveGiftAppearMode live_appearModel = none;
 }
 
 #pragma mark - Private
+- (void)addToQueue:(LiveGiftShowModel *)showModel {
+    if (!showModel) {
+        return;
+    }
+    NSString * key = [self getDictKey:showModel];
+    NSUInteger oldNumber = 0;
+    for (NSUInteger i = 0; i<self.waitQueueArr.count; i++) {
+        LiveGiftShowModel * oldModel = self.waitQueueArr[i];
+        NSString * oldKey = [self getDictKey:oldModel];
+        if ([oldKey isEqualToString:key]) {
+            oldNumber = oldModel.toNumber;
+            showModel.toNumber += oldNumber;
+            [self.waitQueueArr removeObject:oldModel];
+            break;
+        }
+    }
+    [self.waitQueueArr addObject:showModel];
+}
+
+- (void)showWaitView {
+    NSUInteger showCount = 0;
+    for (id object in self.showViewArr) {
+        if ([object isKindOfClass:[LiveGiftShowView class]]) {
+            showCount ++;
+        }
+    }
+    if (showCount < live_maxGiftShowCount) {
+        LiveGiftShowModel * model = self.waitQueueArr.firstObject;
+        [self animatedWithGiftModel:model];
+        [self.waitQueueArr removeObject:model];
+    }
+}
+
 - (void)resetView:(LiveGiftShowView *)view nowModel:(LiveGiftShowModel *)model isChangeNum:(BOOL)isChange number:(NSInteger)number{
     NSString * oldKey = [self getDictKey:view.model];
     NSString * dictKey = [self getDictKey:model];
@@ -303,6 +380,13 @@ static LiveGiftAppearMode live_appearModel = none;
 }
 
 #pragma mark - Lazy
+- (NSMutableArray<LiveGiftShowModel *> *)waitQueueArr {
+    if (!_waitQueueArr) {
+        _waitQueueArr = [[NSMutableArray alloc]init];
+    }
+    return _waitQueueArr;
+}
+
 - (NSMutableDictionary *)showViewDict{
     if (!_showViewDict) {
         _showViewDict = [[NSMutableDictionary alloc]init];
