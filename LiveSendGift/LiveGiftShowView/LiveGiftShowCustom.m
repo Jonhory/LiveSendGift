@@ -175,6 +175,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
 }
 
 - (void)animatedWithGiftModel:(LiveGiftShowModel *)showModel {
+    if (!showModel) { return ;}
     if (self.addMode == LiveGiftAddModeAdd) {
         LiveGiftShowView * oldShowView = [self.showViewDict objectForKey:[self getDictKey:showModel]];
         if (!oldShowView) {// 不存在旧视图
