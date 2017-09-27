@@ -15,7 +15,6 @@
 		BB3BEBF11DF63D1B00C9DDFF /* LiveSendGiftUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB3BEBF01DF63D1B00C9DDFF /* LiveSendGiftUITests.m */; };
 		BB4BF1B61DD60ECF0017DA99 /* LiveGiftShowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB4BF1B51DD60ECF0017DA99 /* LiveGiftShowModel.m */; };
 		BB5E4F201DD5E77C005CBFC5 /* HomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5E4F1F1DD5E77C005CBFC5 /* HomeVC.m */; };
-		BB6CC2BE1DD6C642003F58BC /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */; };
 		BB91CB4F1DF42AD0002A76EB /* LiveGiftShowCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = BB91CB4E1DF42AD0002A76EB /* LiveGiftShowCustom.m */; };
 		BB91CB521DF42D32002A76EB /* TestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB91CB511DF42D32002A76EB /* TestVC.m */; };
 		BBD12B281DD59437007D31D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B271DD59437007D31D6 /* main.m */; };
@@ -60,7 +59,6 @@
 		BB4BF1B51DD60ECF0017DA99 /* LiveGiftShowModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftShowModel.m; sourceTree = "<group>"; };
 		BB5E4F1E1DD5E77C005CBFC5 /* HomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeVC.h; sourceTree = "<group>"; };
 		BB5E4F1F1DD5E77C005CBFC5 /* HomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeVC.m; sourceTree = "<group>"; };
-		BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+Log.m"; sourceTree = "<group>"; };
 		BB91CB4D1DF42AD0002A76EB /* LiveGiftShowCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveGiftShowCustom.h; sourceTree = "<group>"; };
 		BB91CB4E1DF42AD0002A76EB /* LiveGiftShowCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftShowCustom.m; sourceTree = "<group>"; };
 		BB91CB501DF42D32002A76EB /* TestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestVC.h; sourceTree = "<group>"; };
@@ -154,7 +152,6 @@
 				BB5E4F1F1DD5E77C005CBFC5 /* HomeVC.m */,
 				BB91CB501DF42D32002A76EB /* TestVC.h */,
 				BB91CB511DF42D32002A76EB /* TestVC.m */,
-				BB6CC2BD1DD6C642003F58BC /* Foundation+Log.m */,
 				BBD12B321DD59437007D31D6 /* Assets.xcassets */,
 				BBD12B371DD59437007D31D6 /* Info.plist */,
 				BBD12B261DD59437007D31D6 /* Supporting Files */,
@@ -416,7 +413,6 @@
 				BBD12B751DD59C1B007D31D6 /* LiveGiftShowView.m in Sources */,
 				BB2E00971EBD6E2D00580E33 /* LiveGiftListModel.m in Sources */,
 				BBD12B281DD59437007D31D6 /* main.m in Sources */,
-				BB6CC2BE1DD6C642003F58BC /* Foundation+Log.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

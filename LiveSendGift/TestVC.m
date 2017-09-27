@@ -76,30 +76,36 @@ static NSInteger kTag = 200;
     animateBtn.center = CGPointMake(SCREEN.width/2, SCREEN.height - 80);
 }
 
+/*
+ 以下是测试方法：
+ 分别是三种添加视图的方法
+ animatedWithGiftModel:   从1开始动画展示到 model.toNumber 的效果，会累加；
+ addLiveGiftShowModel:   普通的从1显示礼物视图，会+=1；
+ addLiveGiftShowModel: showNumber: 普通的礼物显示视图，指定显示特定数字。
+ */
+
 - (void)v15BtnClicked:(UIButton *)clickedBtn{
     switch (clickedBtn.tag) {
         case 200:{
             LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[0] userModel:self.firstUser];
-            model.toNumber = 88;
+            model.toNumber = 8;
             model.interval = 0.15;
             [self.customGiftShow animatedWithGiftModel:model];
             break;
         }
         case 201:{
             LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[1] userModel:self.secondUser];
-            model.toNumber = 10;
-            [self.customGiftShow animatedWithGiftModel:model];
+            [self.customGiftShow addLiveGiftShowModel:model];
             break;
         }
         case 202:{
             LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[2] userModel:self.thirdUser];
-            model.toNumber = 22;
-            [self.customGiftShow animatedWithGiftModel:model];
+            [self.customGiftShow addLiveGiftShowModel:model showNumber:99];
             break;
         }
         case 203:{
             LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.fourthUser];
-            model.toNumber = 33;
+            model.toNumber = 3;
             [self.customGiftShow animatedWithGiftModel:model];
             break;
         }
@@ -128,6 +134,9 @@ static NSInteger kTag = 200;
     WLog(@"用户：%@ 送出了 %li 个 %@", showModel.user.name, showModel.currentNumber, showModel.giftModel.name);
 }
 
+/*
+ 礼物视图支持很多配置属性，开发者按需选择。
+ */
 - (LiveGiftShowCustom *)customGiftShow{
     if (!_customGiftShow) {
         _customGiftShow = [LiveGiftShowCustom addToView:self.view];
@@ -136,7 +145,7 @@ static NSInteger kTag = 200;
         [_customGiftShow setShowMode:LiveGiftShowModeFromTopToBottom];
         [_customGiftShow setAppearModel:LiveGiftAppearModeLeft];
         [_customGiftShow setHiddenModel:LiveGiftHiddenModeNone];
-        [_customGiftShow enableInterfaceDebug:NO];
+        [_customGiftShow enableInterfaceDebug:YES];
         _customGiftShow.delegate = self;
     }
     return _customGiftShow;
