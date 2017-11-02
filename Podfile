@@ -5,8 +5,8 @@ target 'LiveSendGift' do
   # Uncomment this line if you're using Swift or would like to use dynamic frameworks
   # use_frameworks!
 pod 'MJExtension'
-pod 'Masonry', '~> 1.0.2'
-pod 'SDWebImage', '~> 4.0.0-beta2'
+pod 'Masonry'
+pod 'SDWebImage'
 
   # Pods for LiveSendGift
 
