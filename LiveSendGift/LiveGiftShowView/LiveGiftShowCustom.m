@@ -137,9 +137,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
                 [weakSelf showWaitView];
             } else if (weakSelf.addMode == LiveGiftAddModeReplace) {
                 if (willReMoveShowView.model.animatedTimer) {
-                    dispatch_suspend(willReMoveShowView.model.animatedTimer);
                     dispatch_cancel(willReMoveShowView.model.animatedTimer);
-                    willReMoveShowView.model.animatedTimer = nil;
                 }
             }
         };
@@ -202,7 +200,6 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
             showModel.animatedTimer = tt;
             [weakSelf addLiveGiftShowModel:showModel];
         } else {
-            dispatch_suspend(tt);
             dispatch_cancel(tt);
         }
     });

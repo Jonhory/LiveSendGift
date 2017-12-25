@@ -6,6 +6,7 @@
 ## 重要信息
 * 2017年09月25日18:42:00 修复了在iOS11下必现`EXC_BAD_INSTRUCTION (code=EXC_I386_INVOP, subcode=0x0)`的崩溃BUG。
 * 已知bug提示：在替换模式`LiveGiftAddModeReplace`下使用`animatedWithGiftModel`方法将导致UI效果不理想的bug。建议是`animatedWithGiftModel`方法使用于`LiveGiftAddModeAdd`模式。
+* 2017年12月25日11:39:39 修复在iOS11下可能出现的`.cxx destruct`崩溃问题。
 
 ## 导航
 * [目标](#目标)

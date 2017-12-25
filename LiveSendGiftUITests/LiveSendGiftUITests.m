@@ -35,7 +35,73 @@
 
 - (void)testExample {
     
-   
+    
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    [app.buttons[@"Go TestVC = V1.9"] tap];
+    
+    XCUIElement *firstButton = app.buttons[@"first"];
+    [firstButton tap];
+    
+    XCUIElement *secondButton = app.buttons[@"second"];
+    [secondButton tap];
+    
+    XCUIElement *thirdButton = app.buttons[@"third"];
+    [thirdButton tap];
+    
+    XCUIElement *fifthButton = app.buttons[@"fifth"];
+    [fifthButton tap];
+    [fifthButton tap];
+    [fifthButton tap];
+    [secondButton tap];
+    [firstButton tap];
+    [secondButton tap];
+    [thirdButton tap];
+    
+    XCUIElement *fourthButton = app.buttons[@"fourth"];
+    [fourthButton tap];
+    [fourthButton swipeLeft];
+    [secondButton tap];
+    [firstButton tap];
+    [firstButton tap];
+    [firstButton tap];
+    [secondButton tap];
+    [thirdButton tap];
+    [fourthButton tap];
+    [fourthButton tap];
+    [fifthButton tap];
+    [fifthButton tap];
+    [firstButton tap];
+    [firstButton tap];
+    [firstButton tap];
+    [secondButton tap];
+    [thirdButton tap];
+    [fourthButton tap];
+    [fourthButton tap];
+    [fourthButton tap];
+    [thirdButton tap];
+    [secondButton tap];
+    [secondButton tap];
+    [firstButton tap];
+    [firstButton tap];
+    [firstButton tap];
+    [firstButton tap];
+    [secondButton tap];
+    [secondButton tap];
+    [thirdButton tap];
+    [fourthButton tap];
+    [fourthButton tap];
+    [fifthButton tap];
+    [fifthButton tap];
+    [fifthButton tap];
+    [thirdButton tap];
+    [secondButton tap];
+    [firstButton tap];
+    
+//    XCUIElement *element = [[[app.otherElements containingType:XCUIElementTypeNavigationBar identifier:@"Home VC"] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element;
+//    [[[element childrenMatchingType:XCUIElementTypeOther] elementBoundByIndex:0] tap];
+//    [[element childrenMatchingType:XCUIElementTypeOther].element tap];
+//    [app.navigationBars[@"Home VC"] tap];
+    
     // Use recording to get started writing UI tests.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
 }
