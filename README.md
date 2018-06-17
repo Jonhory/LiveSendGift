@@ -26,51 +26,32 @@
 #### V1.0
 * 大致实现了不同用户增加弹幕的效果
 
-![](http://ww4.sinaimg.cn/large/c6a1cfeagw1f9p4246hkgg208g0fdmyy.gif)
-
-
 #### V1.1
 * 实现了用户连续发送数字增加效果
 * 实现了新增弹幕从空位出现的效果
 
-![](http://ww4.sinaimg.cn/large/c6a1cfeagw1f9p48oumbkg208g0fd0wo.gif)
-
 #### V1.2
 * 实现了第二个用户之后送礼物替换较早的弹幕效果(完善)
-
-![](http://ww3.sinaimg.cn/large/c6a1cfeagw1f9p51eh3ltg208g0fdwif.gif)
 
 #### V1.3
 * 实现了上面的视图移除后，正在连击的下面的视图移动到上面的效果
 
-![](http://ww3.sinaimg.cn/large/c6a1cfeagw1f9p6jibv9gg208g0fdq3i.gif)
-
 #### V1.4
 * 实现了目标效果😊😊😊
-
-![](http://ww2.sinaimg.cn/large/c6a1cfeagw1f9p7t0w9bng208g0fd0x3.gif)
 
 #### V1.5
 * 实现了自定义最大礼物数量的需求
 
-![](http://ww2.sinaimg.cn/large/c6a1cfeagw1favehbqaz9g20b50jrnbh.gif)
-
 #### V1.6
 * 新增了自下而上的展现效果
 
-![](http://ww1.sinaimg.cn/large/c6a1cfeagy1ff0axbjpy4g20a30i8whh.gif)
-
-### V1.7
+#### V1.7
 * 解决了一个视图显示BUG，现在几乎不会出现该BUG。
 
-![](http://ww1.sinaimg.cn/large/c6a1cfeagy1fdp2kbbn1sj20af0hy407)
-
-### V1.8
+#### V1.8
 * 支持向左移除弹幕，支持左边出现动画效果，增加弹幕移除后的回调代理。
 
-![](https://ws1.sinaimg.cn/large/c6a1cfeagy1fhzeyujcrsg20a30idad9.gif)
-
-### <a id="最新版本"></a> V1.901测试版
+#### <a id="最新版本"></a> V1.901测试版
 * 支持从1增加到某个数字的动画（在替换模式`LiveGiftAddModeReplace`下存在小bug，如果有某猿能提供帮助将不胜感激）
 * 支持队列模式（如下GIF图，注意看鼠标～）
 * 移除的模式增加无动画移除
@@ -88,26 +69,27 @@
   * `LiveGiftListModel `是用来显示弹幕上右侧礼物图片`picUrl`和打赏的语句`rewardMsg`的，礼物有`type`字段
   * `LiveUserModel `是用来显示送礼物的人的名称`name`和头像`iconUrl`
   
-* V1.4只需要导入`#import "LiveGiftShow.h"`
-* V1.5只需要导入`#import "LiveGiftShowCustom.h"`,具体使用可参考`V15TestVC.m`,不建议同时使用`LiveGiftShow.h`和`LiveGiftShowCustom.h`
-* V1.6只需要导入`#import "LiveGiftShowCustom.h"`,具体使用可参考`V15TestVC.m`,向V1.5兼容。如有需要更新，只需要将`LiveGiftShowCustom.h`和`LiveGiftShowCustom.m`替换为V1.6版本的文件即可。
+* 导入`#import "LiveGiftShowCustom.h"`
 
-* `@property (nonatomic ,weak) LiveGiftShow * giftShow;`
+* `@property (nonatomic ,weak) LiveGiftShowCustom * customGiftShow;
+`
 
 ```
- - (LiveGiftShow *)giftShow{
-    if (!_giftShow) {
-        LiveGiftShow * giftShow = [[LiveGiftShow alloc]init];
-        [self.view addSubview:giftShow];
-        _giftShow = giftShow;
-        [giftShow mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(@244);
-            make.height.equalTo(@50);
-            make.left.equalTo(self.view.mas_left);
-            make.top.equalTo(self.view.mas_top).offset(100);
-        }];
+/*
+ 礼物视图支持很多配置属性，开发者按需选择。
+ */
+- (LiveGiftShowCustom *)customGiftShow{
+    if (!_customGiftShow) {
+        _customGiftShow = [LiveGiftShowCustom addToView:self.view];
+        _customGiftShow.addMode = LiveGiftAddModeAdd;
+        [_customGiftShow setMaxGiftCount:3];
+        [_customGiftShow setShowMode:LiveGiftShowModeFromTopToBottom];
+        [_customGiftShow setAppearModel:LiveGiftAppearModeLeft];
+        [_customGiftShow setHiddenModel:LiveGiftHiddenModeNone];
+        [_customGiftShow enableInterfaceDebug:YES];
+        _customGiftShow.delegate = self;
     }
-    return _giftShow;
+    return _customGiftShow;
 }
 ```  
 
@@ -121,8 +103,7 @@ LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[3]
 即可完成接入。每一次点击只需要`[self.giftShow addGiftListModel:listModel];`即可自动计数加一。最高支持显示9999。
 
 ### 特别说明
-* 在1.5+版本之后，只需要替换`LiveGiftShowCustom.h`、`LiveGiftShowCustom.m`基本上即可完成版本更新。
-* 在V1.6+版本中,`LiveGiftShowCustom.m`
+* `LiveGiftShowCustom.m`中
 
 ```
 #pragma mark - 初始化
@@ -146,8 +127,7 @@ LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[3]
 ```
 
 ### <a id="自定义配置"></a>自定义配置
-* `LiveGiftShow` V1.4管理所有弹幕的视图，在V1.7之后移除。
-* `LiveGiftShowCustom` V1.5之后管理所有弹幕的视图
+* `LiveGiftShowCustom` 管理所有弹幕的视图
 
 |两个弹幕之间的高度差|两个交换动画时长|
 |:----------------:|:------------:|
