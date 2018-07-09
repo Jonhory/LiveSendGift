@@ -103,6 +103,11 @@ LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[3]
 即可完成接入。每一次点击只需要`[self.giftShow addGiftListModel:listModel];`即可自动计数加一。最高支持显示9999。
 
 ### 特别说明
+
+* 层次结构说明,如下图:
+
+![](https://ws1.sinaimg.cn/large/c6a1cfeagy1ft3d4bi9cwj20zd0alwi2.jpg)
+
 * `LiveGiftShowCustom.m`中
 
 ```
