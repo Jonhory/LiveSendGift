@@ -360,6 +360,8 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
 - (void)resetView:(LiveGiftShowView *)view nowModel:(LiveGiftShowModel *)model isChangeNum:(BOOL)isChange number:(NSInteger)number{
     NSString * oldKey = [self getDictKey:view.model];
     NSString * dictKey = [self getDictKey:model];
+    
+    dispatch_cancel(view.model.animatedTimer);
     //找到时间早的那个视图 替换模型 重置数字
     view.model = model;
     if (isChange) {
