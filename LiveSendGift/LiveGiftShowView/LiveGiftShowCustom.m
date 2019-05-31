@@ -76,6 +76,8 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
                     LiveGiftShowView * oldestView = sortArr.firstObject;
                     //重置模型
                     [self resetView:oldestView nowModel:showModel isChangeNum:isResetNumber number:showNumber];
+                } else {
+                    [self addToQueue:showModel];
                 }
                 return;
             }
