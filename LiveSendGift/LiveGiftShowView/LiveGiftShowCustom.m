@@ -199,7 +199,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
             i ++;
             showModel.animatedTimer = tt;
             [weakSelf addLiveGiftShowModel:showModel];
-        } else {
+        } else if (tt) {
             dispatch_cancel(tt);
         }
     });
@@ -361,7 +361,9 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
     NSString * oldKey = [self getDictKey:view.model];
     NSString * dictKey = [self getDictKey:model];
     
-    dispatch_cancel(view.model.animatedTimer);
+    if (view.model.animatedTimer) {
+        dispatch_cancel(view.model.animatedTimer);
+    }
     //找到时间早的那个视图 替换模型 重置数字
     view.model = model;
     if (isChange) {
