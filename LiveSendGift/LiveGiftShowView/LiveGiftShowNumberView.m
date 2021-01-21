@@ -71,7 +71,6 @@
         ge = 9;
     }
     
-    
     [self addSubview:self.digitIV];
     
     [self.digitIV mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -194,6 +193,5 @@
     UIImageView * iv = [[UIImageView alloc]init];
     return iv;
 }
-
 
 @end

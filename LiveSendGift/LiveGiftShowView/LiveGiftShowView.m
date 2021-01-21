@@ -88,7 +88,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
 
 /**
  获取用户名
-
+ 
  @return 获取用户名
  */
 - (NSString *)getUserName{
@@ -97,7 +97,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
 
 /**
  礼物数量自增1使用该方法
-
+ 
  @param number 从多少开始计数
  */
 - (void)addGiftNumberFrom:(NSInteger)number{
@@ -116,7 +116,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
 
 /**
  设置任意数字时使用该方法
-
+ 
  @param number 任意数字 >9999 则显示9999
  */
 - (void)changeGiftNumber:(NSInteger)number{
@@ -129,7 +129,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
 #pragma mark - Private
 /**
  处理显示数字 开启定时器
-
+ 
  @param number 显示数字的值
  */
 - (void)handleNumber:(NSInteger )number{

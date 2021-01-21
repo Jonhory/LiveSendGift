@@ -15,5 +15,4 @@
 @property(nonatomic, strong) NSString *picUrl;/**< 右侧礼物图片url */
 @property(nonatomic, strong) NSString *rewardMsg;/**< 礼物配置的语句 */
 
-
 @end

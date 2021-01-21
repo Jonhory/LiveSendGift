@@ -38,7 +38,7 @@ static CGFloat const kViewHeight = 44.0;//背景高
 
 /**
  重置定时器和计数
-
+ 
  @param number 计数
  */
 - (void)resetTimeAndNumberFrom:(NSInteger)number;

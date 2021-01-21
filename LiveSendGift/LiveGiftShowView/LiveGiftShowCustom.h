@@ -11,7 +11,7 @@
 #import "Masonry.h"
 #import "LiveGiftShowModel.h"
 
-// 项目打包上线都不会打印日志，因此可放心。
+// 项目打包上线都不会打印日志
 #ifdef DEBUG
 #define WLog(s, ... ) NSLog( @"[%@ in line %d] %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
 #else
@@ -20,7 +20,7 @@
 
 /**
  弹幕展现模式
-
+ 
  - fromTopToBottom: 自上而下
  - fromBottomToTop: 自下而上
  */
@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, LiveGiftShowMode) {
 
 /**
  弹幕消失模式
-
+ 
  - right: 向右移出
  - left: 向左移出
  */
@@ -43,7 +43,7 @@ typedef NS_ENUM(NSUInteger, LiveGiftHiddenMode) {
 
 /**
  弹幕出现模式
-
+ 
  - none: 无效果
  - left: 从左到右出现（左进）
  */
@@ -55,7 +55,7 @@ typedef NS_ENUM(NSUInteger, LiveGiftAppearMode) {
 
 /**
  弹幕添加模式（当弹幕达到最大数量后新增弹幕时）,默认替换
-
+ 
  - LiveGiftAddModeReplace: 当有新弹幕时会替换
  - LiveGiftAddModeAdd: 当有新弹幕时会进入队列
  */
@@ -90,42 +90,42 @@ typedef NS_ENUM(NSUInteger, LiveGiftAddMode) {
 
 /**
  设置最大礼物数量
-
+ 
  @param maxGiftCount 默认为3
  */
 - (void)setMaxGiftCount:(NSInteger)maxGiftCount;
 
 /**
  设置弹幕展现模式
-
- @param model 弹幕展现模式
+ 
+ @param mode 弹幕展现模式
  */
-- (void)setShowMode:(LiveGiftShowMode)model;
+- (void)setShowMode:(LiveGiftShowMode)mode;
 
 /**
  设置弹幕消失模式
-
+ 
  @param model 弹幕消失模式
  */
 - (void)setHiddenModel:(LiveGiftHiddenMode)model;
 
 /**
  设置弹幕出现模式
-
+ 
  @param model 弹幕出现模式
  */
 - (void)setAppearModel:(LiveGiftAppearMode)model;
 
 /**
  增加或者更新一个礼物视图
-
+ 
  @param showModel 礼物模型
  */
 - (void)addLiveGiftShowModel:(LiveGiftShowModel *)showModel;
 
 /**
  增加或者更新一个礼物视图
-
+ 
  @param showModel 礼物模型
  @param showNumber 如果传值，则显示改值，否则从1开始自增1
  */
@@ -133,7 +133,7 @@ typedef NS_ENUM(NSUInteger, LiveGiftAddMode) {
 
 /**
  添加一个礼物视图，若该礼物不在视图上则从数字1显示到指定数字的效果，否则继续增加指定数字
-
+ 
  @param showModel 礼物模型
  */
 - (void)animatedWithGiftModel:(LiveGiftShowModel *)showModel;
