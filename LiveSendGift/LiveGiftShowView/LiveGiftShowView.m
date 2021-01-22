@@ -181,6 +181,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
             default:
                 break;
         }
+        
         if (self.hiddenModel == LiveGiftHiddenModeNone) {
             self.isLeavingAnimation = NO;
             if (self.liveGiftShowViewTimeOut) {
@@ -188,7 +189,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
             }
             [self removeFromSuperview];
         } else {
-            [UIView animateWithDuration:self.kRemoveAnimationTime delay:self.kNumberAnimationTime options:UIViewAnimationOptionCurveEaseIn animations:^{
+            [UIView animateWithDuration:self.kRemoveAnimationTime delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 self.transform = CGAffineTransformTranslate(self.transform, xChanged, 0);
             } completion:^(BOOL finished) {
                 if (finished) {
