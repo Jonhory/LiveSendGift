@@ -74,6 +74,7 @@ typedef NS_ENUM(NSUInteger, LiveGiftAddMode) {
 @interface LiveGiftShowCustom : UIView
 
 + (instancetype)addToView:(UIView *)superView;
++ (instancetype)addToView:(UIView *)superView y:(CGFloat)y;
 
 @property(nonatomic, assign) CGFloat kExchangeAnimationTime;/**< 交换动画时长 */
 @property(nonatomic, assign) CGFloat kAppearAnimationTime;/**< 出现时动画时长 */

@@ -8,7 +8,6 @@
 
 
 #import "TestVC.h"
-#import "LiveGiftShowCustom.h"
 #import "MJExtension.h"
 
 #define RGB(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]
@@ -17,8 +16,7 @@ static NSInteger kTag = 200;
 
 @implementation UIColor (RandomColor)
 
-+(UIColor *) randomColor
-{
++ (UIColor *)randomColor{
     CGFloat hue = ( arc4random() % 256 / 256.0 );  //0.0 to 1.0
     CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  // 0.5 to 1.0,away from white
     CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //0.5 to 1.0,away from black
@@ -39,9 +37,28 @@ static NSInteger kTag = 200;
 @property (nonatomic, strong) LiveUserModel *fourthUser;
 @property (nonatomic, strong) LiveUserModel *fifthUser;
 
+// 弹幕展现模式
+@property(nonatomic, assign) LiveGiftShowMode showMode;
+// 弹幕消失模式
+@property(nonatomic, assign) LiveGiftHiddenMode hiddenMode;
+// 弹幕出现模式
+@property(nonatomic, assign) LiveGiftAppearMode appearMode;
+// 弹幕添加模式（当弹幕达到最大数量后新增弹幕时）
+@property(nonatomic, assign) LiveGiftAddMode addMode;
+
 @end
 
 @implementation TestVC
+
++ (instancetype)initWithShowMode:(LiveGiftShowMode)showMode hiddenMode:(LiveGiftHiddenMode)hiddenMode appearMode:(LiveGiftAppearMode)appearMode addMode:(LiveGiftAddMode)addMode title:(NSString *)title{
+    TestVC * vc = [[TestVC alloc]init];
+    vc.showMode = showMode;
+    vc.hiddenMode = hiddenMode;
+    vc.appearMode = appearMode;
+    vc.addMode = addMode;
+    vc.title = title;
+    return vc;
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -52,7 +69,6 @@ static NSInteger kTag = 200;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"V1.9 Test";
     self.view.backgroundColor = RGB(237, 237, 237);
     
     //初始化按钮
@@ -64,7 +80,7 @@ static NSInteger kTag = 200;
     
     //初始化数据源
     self.giftArr = [LiveGiftListModel mj_objectArrayWithKeyValuesArray:self.giftDataSource];
-
+    
     //初始化弹幕视图
     [self customGiftShow];
     
@@ -127,11 +143,12 @@ static NSInteger kTag = 200;
 
 /**
  弹幕移除回调代理
-
+ 
  @param showModel 数据模型
  */
 - (void)giftDidRemove:(LiveGiftShowModel *)showModel {
-    WLog(@"用户：%@ 送出了 %li 个 %@", showModel.user.name, showModel.currentNumber, showModel.giftModel.name);
+    WLog(@"用户：%@ 送出了 %@ 个 %@，每次送%@个", showModel.user.name, @(showModel.currentNumber).stringValue, showModel.giftModel.name, @(showModel.toNumber).stringValue);
+    WLog(@"点击了%@次，有没有微整除%d", @(showModel.currentNumber / showModel.toNumber).stringValue, (showModel.currentNumber % showModel.toNumber) > 0);
 }
 
 /*
@@ -139,12 +156,17 @@ static NSInteger kTag = 200;
  */
 - (LiveGiftShowCustom *)customGiftShow{
     if (!_customGiftShow) {
-        _customGiftShow = [LiveGiftShowCustom addToView:self.view];
-        _customGiftShow.addMode = LiveGiftAddModeAdd;
+        if (self.showMode == LiveGiftShowModeFromBottomToTop) {
+            _customGiftShow = [LiveGiftShowCustom addToView:self.view y: (44.0 + 50.0) * 3];
+        } else {
+            _customGiftShow = [LiveGiftShowCustom addToView:self.view];
+        }
+        
+        _customGiftShow.addMode = self.addMode;
         [_customGiftShow setMaxGiftCount:3];
-        [_customGiftShow setShowMode:LiveGiftShowModeFromTopToBottom];
-        [_customGiftShow setAppearModel:LiveGiftAppearModeLeft];
-        [_customGiftShow setHiddenModel:LiveGiftHiddenModeNone];
+        [_customGiftShow setShowMode:self.showMode];
+        [_customGiftShow setAppearModel:self.appearMode];
+        [_customGiftShow setHiddenModel:self.hiddenMode];
         [_customGiftShow enableInterfaceDebug:YES];
         _customGiftShow.delegate = self;
     }
@@ -217,47 +239,47 @@ static NSInteger kTag = 200;
 - (NSArray *)giftDataSource{
     if (!_giftDataSource) {
         _giftDataSource = @[
-                            @{
-                                @"name": @"松果",
-                                @"rewardMsg": @"扔出一颗松果",
-                                @"personSort": @"0",
-                                @"goldCount": @"3",
-                                @"type": @"0",
-                                @"picUrl": @"http://ww3.sinaimg.cn/large/c6a1cfeagw1fbks9dl7ryj205k05kweo.jpg",
-                                },
-                            @{
-                                @"name": @"花束",
-                                @"rewardMsg": @"献上一束花",
-                                @"personSort": @"6",
-                                @"goldCount": @"66",
-                                @"type": @"1",
-                                @"picUrl": @"http://ww1.sinaimg.cn/large/c6a1cfeagw1fbksa4vf7uj205k05kaa0.jpg",
-                                },
-                            @{
-                                @"name": @"果汁",
-                                @"rewardMsg": @"递上果汁",
-                                @"personSort": @"3",
-                                @"goldCount": @"18",
-                                @"type": @"2",
-                                @"picUrl": @"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksajipb8j205k05kjri.jpg",
-                                },
-                            @{
-                                @"name": @"棒棒糖",
-                                @"rewardMsg": @"递上棒棒糖",
-                                @"personSort": @"2",
-                                @"goldCount": @"8",
-                                @"type": @"3",
-                                @"picUrl": @"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksasl9qwj205k05kt8k.jpg",
-                                },
-                            @{
-                                @"name": @"泡泡糖",
-                                @"rewardMsg": @"一起吃泡泡糖吧",
-                                @"personSort": @"2",
-                                @"goldCount": @"8",
-                                @"type": @"4",
-                                @"picUrl": @"http://a3.qpic.cn/psb?/V12A6SP10iIW9i/AL.CfLAFH*W.Ge1n*.LwpXSImK.Hm1eCMtt4rm5WvCA!/b/dFOyjUpCBwAA&bo=yADIAAAAAAABACc!&rf=viewer_4"
-                                },
-                            ];
+            @{
+                @"name": @"松果",
+                @"rewardMsg": @"扔出一颗松果",
+                @"personSort": @"0",
+                @"goldCount": @"3",
+                @"type": @"0",
+                @"picUrl": @"http://ww3.sinaimg.cn/large/c6a1cfeagw1fbks9dl7ryj205k05kweo.jpg",
+            },
+            @{
+                @"name": @"花束",
+                @"rewardMsg": @"献上一束花",
+                @"personSort": @"6",
+                @"goldCount": @"66",
+                @"type": @"1",
+                @"picUrl": @"http://ww1.sinaimg.cn/large/c6a1cfeagw1fbksa4vf7uj205k05kaa0.jpg",
+            },
+            @{
+                @"name": @"果汁",
+                @"rewardMsg": @"递上果汁",
+                @"personSort": @"3",
+                @"goldCount": @"18",
+                @"type": @"2",
+                @"picUrl": @"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksajipb8j205k05kjri.jpg",
+            },
+            @{
+                @"name": @"棒棒糖",
+                @"rewardMsg": @"递上棒棒糖",
+                @"personSort": @"2",
+                @"goldCount": @"8",
+                @"type": @"3",
+                @"picUrl": @"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksasl9qwj205k05kt8k.jpg",
+            },
+            @{
+                @"name": @"泡泡糖",
+                @"rewardMsg": @"一起吃泡泡糖吧",
+                @"personSort": @"2",
+                @"goldCount": @"8",
+                @"type": @"4",
+                @"picUrl": @"http://a3.qpic.cn/psb?/V12A6SP10iIW9i/AL.CfLAFH*W.Ge1n*.LwpXSImK.Hm1eCMtt4rm5WvCA!/b/dFOyjUpCBwAA&bo=yADIAAAAAAABACc!&rf=viewer_4"
+            },
+        ];
     }
     return _giftDataSource;
 }

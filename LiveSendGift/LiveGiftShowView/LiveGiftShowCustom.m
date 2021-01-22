@@ -32,7 +32,11 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
 @implementation LiveGiftShowCustom
 
 #pragma mark - 初始化
-+ (instancetype)addToView:(UIView *)superView{
++ (instancetype)addToView:(UIView *)superView {
+    return [self addToView:superView y:100];
+}
+
++ (instancetype)addToView:(UIView *)superView y:(CGFloat)y {
     LiveGiftShowCustom * v = [[LiveGiftShowCustom alloc]init];
     v.kExchangeAnimationTime = 0.25;
     v.kAppearAnimationTime = 0.5;
@@ -46,7 +50,8 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
         // 这个可以任意修改
         make.left.equalTo(superView.mas_left);
         // 这个参数在的设定应该注意最大礼物数量时不要超出屏幕边界
-        make.top.equalTo(superView.mas_top).offset(100);
+        // 计算方法是：(kViewHeight+kGiftViewMargin)*live_maxGiftShowCount
+        make.top.equalTo(superView.mas_top).offset(y);
     }];
     v.backgroundColor = [UIColor clearColor];
     return v;
