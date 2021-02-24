@@ -78,7 +78,7 @@ static NSInteger kTag = 300;
     
     NSInteger number = tag;
     
-    UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 88 + number * 50, btnWidth, 40)];
+    UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 88 + 20 + number * 50, btnWidth, 40)];
     btn.backgroundColor = [UIColor randomColor];
     btn.tag = kTag + tag;
     

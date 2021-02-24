@@ -41,12 +41,15 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
     v.kExchangeAnimationTime = 0.25;
     v.kAppearAnimationTime = 0.5;
     v.addMode = LiveGiftAddModeReplace;
+    v.userInteractionEnabled = NO;
     [superView addSubview:v];
     // 布局
     [v mas_makeConstraints:^(MASConstraintMaker *make) {
         // 这个改动之后要注意修改LiveGiftShowView.h的kViewWidth
         make.width.equalTo(@244);
-        make.height.equalTo(@0.01);
+        // 计算方法是：(kViewHeight+kGiftViewMargin)*(live_maxGiftShowCount-1)+kViewHeight
+        // (44+50)*(3-1)+44 = 232
+        make.height.equalTo(@232);
         // 这个可以任意修改
         make.left.equalTo(superView.mas_left);
         // 这个参数在的设定应该注意最大礼物数量时不要超出屏幕边界
