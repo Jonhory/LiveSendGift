@@ -62,8 +62,18 @@ static NSInteger kTag = 200;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.firstUser];
-    [self.customGiftShow addLiveGiftShowModel:model];
+//    LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.firstUser];
+//    [self.customGiftShow addLiveGiftShowModel:model];
+    [self sendMultipleLiveGift];
+}
+
+- (void)sendMultipleLiveGift {
+    for (int i = 0; i<5; i++) {
+        LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[i] userModel:self.firstUser];
+        model.toNumber = 10;
+        model.interval = 0.15;
+        [self.customGiftShow animatedWithGiftModel:model];
+    }
 }
 
 - (void)viewDidLoad {
@@ -88,7 +98,7 @@ static NSInteger kTag = 200;
 }
 
 - (void)animateBtn{
-    UIButton * animateBtn = [self createBtnWithTag:205 title:@"sixth" maxCount:3];
+    UIButton * animateBtn = [self createBtnWithTag:205 title:@"同时添加多条" maxCount:3];
     animateBtn.center = CGPointMake(SCREEN.width/2, SCREEN.height - 80);
 }
 
@@ -132,8 +142,9 @@ static NSInteger kTag = 200;
             break;
         }
         case 205:{
-            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[4] userModel:self.fifthUser];
-            [self.customGiftShow animatedWithGiftModel:model];
+//            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[4] userModel:self.fifthUser];
+//            [self.customGiftShow animatedWithGiftModel:model];
+            [self sendMultipleLiveGift];
             break;
         }
         default:

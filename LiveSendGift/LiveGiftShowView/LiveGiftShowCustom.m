@@ -359,7 +359,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
     for (NSUInteger i = 0; i<self.waitQueueArr.count; i++) {
         LiveGiftShowModel * oldModel = self.waitQueueArr[i];
         NSString * oldKey = [self getDictKey:oldModel];
-        if ([oldKey isEqualToString:key]) {
+        if ([oldKey isEqualToString:key] && oldModel.animatedTimer == nil) {
             oldNumber = oldModel.toNumber;
             showModel.toNumber += oldNumber;
             [self.waitQueueArr removeObject:oldModel];

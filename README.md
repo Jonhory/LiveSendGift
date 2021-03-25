@@ -7,6 +7,31 @@
 * 2017年09月25日18:42:00 修复了在iOS11下必现`EXC_BAD_INSTRUCTION (code=EXC_I386_INVOP, subcode=0x0)`的崩溃BUG。
 * 已知bug提示：在替换模式`LiveGiftAddModeReplace`下使用`animatedWithGiftModel`方法将导致UI效果不理想的bug。建议是`animatedWithGiftModel`方法使用于`LiveGiftAddModeAdd`模式。
 * 2017年12月25日11:39:39 修复在iOS11下可能出现的`.cxx destruct`崩溃问题。
+* 2021年3月23日确认了`for`循环添加礼物时会出现后续[礼物`toNumber`变大](https://github.com/Jonhory/LiveSendGift/issues/19)的问题。已提交修复代码，待开发者确认是否完全修复。
+	
+	### 请使用2021/03/25之前的代码的开发者注意
+
+	以下代码需调整
+	
+	```
+	if ([oldKey isEqualToString:key]) {
+		oldNumber = oldModel.toNumber;
+		showModel.toNumber += oldNumber;
+		[self.waitQueueArr removeObject:oldModel];
+		break;
+	}
+	```
+
+	修改为：
+	
+	```
+	if ([oldKey isEqualToString:key] && oldModel.animatedTimer == nil) {
+		oldNumber = oldModel.toNumber;
+		showModel.toNumber += oldNumber;
+		[self.waitQueueArr removeObject:oldModel];
+		break;
+	}
+	```
 
 ## 导航
 * [目标](#目标)
