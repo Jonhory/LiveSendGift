@@ -164,6 +164,11 @@ static CGFloat const kGiftNumberWidth = 15.0;
 }
 
 - (void)liveTimerRunning{
+    if (!self.superview) {
+        [self stopTimer];
+        return;
+    }
+    
     self.liveTimerForSecond += 1;
     if (self.liveTimerForSecond > self.kTimeOut) {
         if (self.isAnimation == YES) {

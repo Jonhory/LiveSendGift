@@ -2,12 +2,14 @@
 
 ## 感谢
 * 得益于某位不愿留名的同学的帮助，队列模式已经较好的实现了。
+* 感谢[gxtai](https://github.com/gxtai)发现并解决[内存释放](https://github.com/Jonhory/LiveSendGift/issues/20)问题
 
 ## 重要信息
 * 2017年09月25日18:42:00 修复了在iOS11下必现`EXC_BAD_INSTRUCTION (code=EXC_I386_INVOP, subcode=0x0)`的崩溃BUG。
 * 已知bug提示：在替换模式`LiveGiftAddModeReplace`下使用`animatedWithGiftModel`方法将导致UI效果不理想的bug。建议是`animatedWithGiftModel`方法使用于`LiveGiftAddModeAdd`模式。
 * 2017年12月25日11:39:39 修复在iOS11下可能出现的`.cxx destruct`崩溃问题。
-* 2021年3月23日确认了`for`循环添加礼物时会出现后续[礼物`toNumber`变大](https://github.com/Jonhory/LiveSendGift/issues/19)的问题。已提交修复代码，待开发者确认是否完全修复。
+* 2021年3月23日确认了`for`循环添加礼物时会出现后续[礼物`toNumber`变大](https://github.com/Jonhory/LiveSendGift/issues/19)的问题。<del>已提交修复代码，待开发者确认是否完全修复。</del>
+* 2021年7月12日确认并解决了[内存释放](https://github.com/Jonhory/LiveSendGift/issues/20)问题。
 	
 	### 请使用2021/03/25之前的代码的开发者注意
 

@@ -219,6 +219,12 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
     __weak __typeof(self)weakSelf = self;
     // 给定时器源绑定任务
     dispatch_source_set_event_handler(tt, ^{
+        if (!self.superview) {
+            if (tt) {
+                dispatch_cancel(tt);
+            }
+            return;
+        }
         if (i < showModel.toNumber) {
             i ++;
             showModel.animatedTimer = tt;

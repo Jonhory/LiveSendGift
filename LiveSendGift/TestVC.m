@@ -178,7 +178,7 @@ static NSInteger kTag = 200;
         [_customGiftShow setShowMode:self.showMode];
         [_customGiftShow setAppearModel:self.appearMode];
         [_customGiftShow setHiddenModel:self.hiddenMode];
-        [_customGiftShow enableInterfaceDebug:YES];
+        [_customGiftShow enableInterfaceDebug:NO];
         _customGiftShow.delegate = self;
     }
     return _customGiftShow;
