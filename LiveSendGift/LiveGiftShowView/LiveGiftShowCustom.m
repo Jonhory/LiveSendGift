@@ -247,9 +247,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
             f.origin.x = 0;
             showView.frame = f;
         } completion:^(BOOL finished) {
-            if (finished) {
-                showView.isAppearAnimation = NO;
-            }
+            showView.isAppearAnimation = NO;
         }];
     }
 }

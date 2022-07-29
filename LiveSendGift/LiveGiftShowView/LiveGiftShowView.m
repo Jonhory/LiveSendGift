@@ -155,9 +155,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
     [UIView animateWithDuration:self.kNumberAnimationTime animations:^{
         self.numberView.transform = CGAffineTransformMakeScale(1.5, 1.5);
     } completion:^(BOOL finished) {
-        if (finished) {
-            self.numberView.transform = CGAffineTransformIdentity;
-        }
+        self.numberView.transform = CGAffineTransformIdentity;
     }];
     
     [self.liveTimer setFireDate:[NSDate date]];
@@ -197,13 +195,11 @@ static CGFloat const kGiftNumberWidth = 15.0;
             [UIView animateWithDuration:self.kRemoveAnimationTime delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
                 self.transform = CGAffineTransformTranslate(self.transform, xChanged, 0);
             } completion:^(BOOL finished) {
-                if (finished) {
-                    self.isLeavingAnimation = NO;
-                    if (self.liveGiftShowViewTimeOut) {
-                        self.liveGiftShowViewTimeOut(self);
-                    }
-                    [self removeFromSuperview];
+                self.isLeavingAnimation = NO;
+                if (self.liveGiftShowViewTimeOut) {
+                    self.liveGiftShowViewTimeOut(self);
                 }
+                [self removeFromSuperview];
             }];
         }
         
