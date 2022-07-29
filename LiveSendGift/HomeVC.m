@@ -18,6 +18,7 @@ static NSInteger kTag = 300;
 @property (nonatomic ,weak) UIButton * btn1;
 @property (nonatomic ,weak) UIButton * btn2;
 @property (nonatomic ,weak) UIButton * btn3;
+@property (nonatomic ,weak) UIButton * btn4;
 
 @end
 
@@ -32,19 +33,23 @@ static NSInteger kTag = 300;
     [self btn1];
     [self btn2];
     [self btn3];
+    [self btn4];
 }
 
 - (void)goTestVC:(UIButton *)btn {
     NSLog(@"%@", btn.titleLabel.text);
     
     if (btn.tag == kTag + 0) {
-        TestVC * testVC = [TestVC initWithShowMode:LiveGiftShowModeFromTopToBottom hiddenMode:LiveGiftHiddenModeLeft appearMode:LiveGiftAppearModeLeft addMode:LiveGiftAddModeAdd title:btn.titleLabel.text];
+        TestVC * testVC = [TestVC initWithShowMode:LiveGiftShowModeFromTopToBottom hiddenMode:LiveGiftHiddenModeLeft appearMode:LiveGiftAppearModeLeft addMode:LiveGiftAddModeQueue title:btn.titleLabel.text];
         [self.navigationController pushViewController:testVC animated:YES];
     } else if (btn.tag == kTag + 1) {
-        TestVC * testVC = [TestVC initWithShowMode:LiveGiftShowModeFromBottomToTop hiddenMode:LiveGiftHiddenModeRight appearMode:LiveGiftAppearModeLeft addMode:LiveGiftAddModeAdd title:btn.titleLabel.text];
+        TestVC * testVC = [TestVC initWithShowMode:LiveGiftShowModeFromBottomToTop hiddenMode:LiveGiftHiddenModeRight appearMode:LiveGiftAppearModeLeft addMode:LiveGiftAddModeQueue title:btn.titleLabel.text];
         [self.navigationController pushViewController:testVC animated:YES];
     } else if (btn.tag == kTag + 2) {
         TestVC * testVC = [TestVC initWithShowMode:LiveGiftShowModeFromTopToBottom hiddenMode:LiveGiftHiddenModeNone appearMode:LiveGiftAppearModeNone addMode:LiveGiftAddModeReplace title:btn.titleLabel.text];
+        [self.navigationController pushViewController:testVC animated:YES];
+    } else if (btn.tag == kTag + 3) {
+        TestVC * testVC = [TestVC initWithShowMode:LiveGiftShowModeFromTopToBottom hiddenMode:LiveGiftHiddenModeLeft appearMode:LiveGiftAppearModeNone addMode:LiveGiftAddModeQueue title:btn.titleLabel.text canExchange:NO];
         [self.navigationController pushViewController:testVC animated:YES];
     }
 }
@@ -69,6 +74,14 @@ static NSInteger kTag = 300;
     if (!_btn3) {
         _btn3 = [self createBtnWithTag:2 title:@"直接出现 直接消失 自上而下 替换模式"];
         _btn3.backgroundColor = [UIColor blueColor];
+    }
+    return _btn3;
+}
+
+- (UIButton *)btn4{
+    if (!_btn4) {
+        _btn4 = [self createBtnWithTag:3 title:@"直接出现 左消失 自上而下 队列模式 轨道固定"];
+        _btn4.backgroundColor = [UIColor blueColor];
     }
     return _btn3;
 }

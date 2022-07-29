@@ -14,6 +14,7 @@ static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移
 
 static NSInteger live_maxGiftShowCount = 3;
 static BOOL live_isEnableInterfaceDebug = NO;
+static BOOL live_railwayCanExchange = YES;
 
 static LiveGiftShowMode live_showModel = LiveGiftShowModeFromTopToBottom;
 static LiveGiftHiddenMode live_hiddenModel = LiveGiftHiddenModeRight;
@@ -144,10 +145,13 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
                 WLog(@"移除了第%zi个,移除后数组 = %@ ,词典 = %@",willReMoveShowView.index,weakSelf.showViewArr,weakSelf.showViewDict);
             }
             
-            // 比较数量大小排序
-            [weakSelf sortShowArr];
-            [weakSelf resetY];
-            if (weakSelf.addMode == LiveGiftAddModeAdd) {
+            if (live_railwayCanExchange) {
+                // 比较数量大小排序
+                [weakSelf sortShowArr];
+                [weakSelf resetY];
+            }
+            
+            if (weakSelf.addMode == LiveGiftAddModeQueue) {
                 [weakSelf showWaitView];
             } else if (weakSelf.addMode == LiveGiftAddModeReplace) {
                 if (willReMoveShowView.model.animatedTimer) {
@@ -178,17 +182,18 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
         }else{
             [oldShowView addGiftNumberFrom:1];
         }
-        // 比较数量大小排序
-        [self sortShowArr];
-        // 排序后调整Y值
-        [self resetY];
-        
+        if (live_railwayCanExchange) {
+            // 比较数量大小排序
+            [self sortShowArr];
+            // 排序后调整Y值
+            [self resetY];
+        }
     }
 }
 
 - (void)animatedWithGiftModel:(LiveGiftShowModel *)showModel {
     if (!showModel) { return ;}
-    if (self.addMode == LiveGiftAddModeAdd) {
+    if (self.addMode == LiveGiftAddModeQueue) {
         LiveGiftShowView * oldShowView = [self.showViewDict objectForKey:[self getDictKey:showModel]];
         // 不存在旧视图
         if (!oldShowView) {
@@ -253,6 +258,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
 }
 
 - (void)resetY {
+    NSLog(@"重置 Y 轴了");
     for (int i = 0; i < self.showViewArr.count; i++) {
         LiveGiftShowView * show = self.showViewArr[i];
         if ([show isKindOfClass:[LiveGiftShowView class]]) {
@@ -310,7 +316,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
         }
     }
     if ([self isDebug]) {
-        WLog(@"排序后数组==>>> %@",self.showViewArr);
+//        WLog(@"排序后数组==>>> %@",self.showViewArr);
     }
 }
 
@@ -328,8 +334,12 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
     }
 }
 
-- (void)setMaxGiftCount:(NSInteger)maxGiftCount{
-    live_maxGiftShowCount = maxGiftCount;
+- (void)setMaxRailwayCount:(NSInteger)maxRailwayCount{
+    live_maxGiftShowCount = maxRailwayCount;
+}
+
+- (void)setRailwayCanExchange:(BOOL)railwayCanExchange {
+    live_railwayCanExchange = railwayCanExchange;
 }
 
 //设置是否打印信息

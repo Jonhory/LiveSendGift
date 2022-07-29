@@ -57,11 +57,11 @@ typedef NS_ENUM(NSUInteger, LiveGiftAppearMode) {
  弹幕添加模式（当弹幕达到最大数量后新增弹幕时）,默认替换
  
  - LiveGiftAddModeReplace: 当有新弹幕时会替换
- - LiveGiftAddModeAdd: 当有新弹幕时会进入队列
+ - LiveGiftAddModeQueue: 当有新弹幕时会进入队列
  */
 typedef NS_ENUM(NSUInteger, LiveGiftAddMode) {
     LiveGiftAddModeReplace = 0,
-    LiveGiftAddModeAdd     = 1,
+    LiveGiftAddModeQueue   = 1,
 };
 
 @protocol LiveGiftShowCustomDelegate <NSObject>
@@ -90,11 +90,15 @@ typedef NS_ENUM(NSUInteger, LiveGiftAddMode) {
 - (void)enableInterfaceDebug:(BOOL)isDebug;
 
 /**
- 设置最大礼物数量
+ 设置最大礼物轨道数量
  
- @param maxGiftCount 默认为3
+ @param maxRailwayCount 默认为3
  */
-- (void)setMaxGiftCount:(NSInteger)maxGiftCount;
+- (void)setMaxRailwayCount:(NSInteger)maxRailwayCount;
+
+/// 轨道能否进行交换动画
+/// @param railwayCanExchange 默认 YES
+- (void)setRailwayCanExchange:(BOOL)railwayCanExchange;
 
 /**
  设置弹幕展现模式

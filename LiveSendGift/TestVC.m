@@ -46,12 +46,26 @@ static NSInteger kTag = 200;
 // 弹幕添加模式（当弹幕达到最大数量后新增弹幕时）
 @property(nonatomic, assign) LiveGiftAddMode addMode;
 
+@property(nonatomic, assign) BOOL canExchange;
+
 @end
 
 @implementation TestVC
 
++ (instancetype)initWithShowMode:(LiveGiftShowMode)showMode hiddenMode:(LiveGiftHiddenMode)hiddenMode appearMode:(LiveGiftAppearMode)appearMode addMode:(LiveGiftAddMode)addMode title:(NSString *)title canExchange:(BOOL)canExchange {
+    TestVC * vc = [[TestVC alloc]init];
+    vc.canExchange = canExchange;
+    vc.showMode = showMode;
+    vc.hiddenMode = hiddenMode;
+    vc.appearMode = appearMode;
+    vc.addMode = addMode;
+    vc.title = title;
+    return vc;
+}
+
 + (instancetype)initWithShowMode:(LiveGiftShowMode)showMode hiddenMode:(LiveGiftHiddenMode)hiddenMode appearMode:(LiveGiftAppearMode)appearMode addMode:(LiveGiftAddMode)addMode title:(NSString *)title{
     TestVC * vc = [[TestVC alloc]init];
+    vc.canExchange = YES;
     vc.showMode = showMode;
     vc.hiddenMode = hiddenMode;
     vc.appearMode = appearMode;
@@ -68,6 +82,8 @@ static NSInteger kTag = 200;
 }
 
 - (void)sendMultipleLiveGift {
+    if (self.canExchange == NO) return;
+    
     for (int i = 0; i<5; i++) {
         LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[i] userModel:self.firstUser];
         model.toNumber = 10;
@@ -174,11 +190,12 @@ static NSInteger kTag = 200;
         }
         
         _customGiftShow.addMode = self.addMode;
-        [_customGiftShow setMaxGiftCount:3];
+        [_customGiftShow setMaxRailwayCount:self.canExchange ? 3 : 2];
+        [_customGiftShow setRailwayCanExchange:self.canExchange];
         [_customGiftShow setShowMode:self.showMode];
         [_customGiftShow setAppearModel:self.appearMode];
         [_customGiftShow setHiddenModel:self.hiddenMode];
-        [_customGiftShow enableInterfaceDebug:NO];
+        [_customGiftShow enableInterfaceDebug:YES];
         _customGiftShow.delegate = self;
     }
     return _customGiftShow;

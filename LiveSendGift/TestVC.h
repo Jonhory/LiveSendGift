@@ -15,6 +15,7 @@
 
 @interface TestVC : UIViewController
 
++ (instancetype)initWithShowMode:(LiveGiftShowMode)showMode hiddenMode:(LiveGiftHiddenMode)hiddenMode appearMode:(LiveGiftAppearMode)appearMode addMode:(LiveGiftAddMode)addMode title:(NSString *)title canExchange:(BOOL)canExchange;
 + (instancetype)initWithShowMode:(LiveGiftShowMode)showMode hiddenMode:(LiveGiftHiddenMode)hiddenMode appearMode:(LiveGiftAppearMode)appearMode addMode:(LiveGiftAddMode)addMode title:(NSString *)title;
 
 @end
