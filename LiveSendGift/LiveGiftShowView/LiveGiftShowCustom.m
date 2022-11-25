@@ -90,6 +90,9 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
                     // 重置模型
                     [self resetView:oldestView nowModel:showModel isChangeNum:isResetNumber number:showNumber];
                 } else {
+                    if (showNumber > 0) {
+                        showModel.currentNumber = showNumber;
+                    }
                     [self addToQueue:showModel];
                 }
                 return;
@@ -258,7 +261,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
 }
 
 - (void)resetY {
-    NSLog(@"重置 Y 轴了");
+//    NSLog(@"重置 Y 轴了");
     for (int i = 0; i < self.showViewArr.count; i++) {
         LiveGiftShowView * show = self.showViewArr[i];
         if ([show isKindOfClass:[LiveGiftShowView class]]) {
@@ -383,6 +386,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
     [self.waitQueueArr addObject:showModel];
 }
 
+/// 展示等待队列
 - (void)showWaitView {
     NSUInteger showCount = 0;
     for (id object in self.showViewArr) {
@@ -392,7 +396,11 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
     }
     if (showCount < live_maxGiftShowCount) {
         LiveGiftShowModel * model = self.waitQueueArr.firstObject;
-        [self animatedWithGiftModel:model];
+        if (model.currentNumber > 0) {
+            [self addLiveGiftShowModel:model showNumber:model.currentNumber];
+        } else {
+            [self animatedWithGiftModel:model];
+        }
         [self.waitQueueArr removeObject:model];
     }
 }

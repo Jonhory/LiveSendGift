@@ -175,7 +175,7 @@ static NSInteger kTag = 200;
  */
 - (void)giftDidRemove:(LiveGiftShowModel *)showModel {
     WLog(@"用户：%@ 送出了 %@ 个 %@，每次送%@个", showModel.user.name, @(showModel.currentNumber).stringValue, showModel.giftModel.name, @(showModel.toNumber).stringValue);
-    WLog(@"点击了%@次，有没有微整除%d", @(showModel.currentNumber / showModel.toNumber).stringValue, (showModel.currentNumber % showModel.toNumber) > 0);
+    WLog(@"点击了%@次，有没有被整除%d", @(showModel.currentNumber / showModel.toNumber).stringValue, (showModel.currentNumber % showModel.toNumber) > 0);
 }
 
 /*

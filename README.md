@@ -10,6 +10,7 @@
 * 2017年12月25日11:39:39 修复在iOS11下可能出现的`.cxx destruct`崩溃问题。
 * 2021年3月23日确认了`for`循环添加礼物时会出现后续[礼物`toNumber`变大](https://github.com/Jonhory/LiveSendGift/issues/19)的问题。<del>已提交修复代码，待开发者确认是否完全修复。</del>
 * 2021年7月12日确认并解决了[内存释放](https://github.com/Jonhory/LiveSendGift/issues/20)问题。
+* 2022年11月25日确认并修复了[`addLiveGiftShowModel:showNumber:`显示异常](https://github.com/Jonhory/LiveSendGift/issues/21)问题。
 	
 	### 请使用2021/03/25之前的代码的开发者注意
 
