@@ -1,4 +1,4 @@
-![](http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbh46t93nj20ky0dsq3x.jpg)
+![](header.png)
 
 ## 感谢
 * 得益于某位不愿留名的同学的帮助，队列模式已经较好的实现了。
@@ -86,7 +86,7 @@
 * 修改了部分枚举名称更符合OC语法
 * 暴露了动画时长属性，方便开发者依据不同情况自行修改
 
-![](https://ws1.sinaimg.cn/large/c6a1cfeagy1fjq279e03tg20a30iek2l.gif)
+![](v1.901.gif)
 
 ### <a id="快速使用"></a>快速使用
 * 使用的第三方库:
@@ -131,10 +131,6 @@ LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[3]
 即可完成接入。每一次点击只需要`[self.giftShow addGiftListModel:listModel];`即可自动计数加一。最高支持显示9999。
 
 ### 特别说明
-
-* 层次结构说明,如下图:
-
-![](https://ws1.sinaimg.cn/large/c6a1cfeagy1ft3d4bi9cwj20zd0alwi2.jpg)
 
 * `LiveGiftShowCustom.m`中
 
