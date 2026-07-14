@@ -11,6 +11,8 @@
 #import "LiveGiftListModel.h"
 #import "LiveUserModel.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface LiveGiftShowModel : NSObject
 
 @property (nonatomic ,strong) LiveGiftListModel * giftModel;
@@ -22,8 +24,10 @@
 // 连续动画时使用
 @property (nonatomic, assign) NSUInteger toNumber;/** 连续增加的数量 */
 @property (nonatomic, assign) CGFloat interval;/** 连续增加时动画间隔 */
-@property (nonatomic, strong) dispatch_source_t animatedTimer;
+@property (nonatomic, strong, nullable) dispatch_source_t animatedTimer;
 
 + (instancetype)giftModel:(LiveGiftListModel *)giftModel userModel:(LiveUserModel *)userModel;
 
 @end
+
+NS_ASSUME_NONNULL_END

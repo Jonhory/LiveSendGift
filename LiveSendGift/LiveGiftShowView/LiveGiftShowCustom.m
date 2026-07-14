@@ -141,7 +141,8 @@ static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移
             frame = CGRectMake(-containerWidth, showViewY, 0, 0);
         }
         LiveGiftShowView * newShowView = [[LiveGiftShowView alloc]initWithFrame:frame];
-        // 赋值
+        // 赋值（imageLoader 须在 model 之前，setModel 内会触发图片加载）
+        newShowView.imageLoader = self.webImageLoader;
         newShowView.model = showModel;
         newShowView.hiddenMode = self.hiddenMode;
         // 改变礼物数量
@@ -451,6 +452,7 @@ static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移
         view.model.animatedTimer = nil;
     }
     //找到时间早的那个视图 替换模型 重置数字
+    view.imageLoader = self.webImageLoader;
     view.model = model;
     if (isChange) {
         [view resetTimeAndNumberFrom:number];

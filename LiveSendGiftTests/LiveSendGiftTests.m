@@ -99,6 +99,24 @@
     XCTAssertEqual(merged.toNumber, 2, @"合并后 toNumber 应累加");
 }
 
+/// 注入自定义图片加载器后，头像与礼物图都应走注入的加载器（SDWebImage 解耦）
+- (void)testInjectedImageLoaderIsUsed {
+    NSMutableArray<NSString *> *loadedUrls = [NSMutableArray array];
+    self.giftShow.webImageLoader = ^(UIImageView *imageView, NSString *urlString, UIImage *placeholder) {
+        [loadedUrls addObject:urlString ?: @"<nil>"];
+        imageView.image = placeholder;
+    };
+
+    LiveGiftShowModel *model = [self modelWithUserId:@"1001" name:@"小明" giftType:@"0"];
+    model.user.iconUrl = @"https://example.com/icon.png";
+    model.giftModel.picUrl = @"https://example.com/gift.png";
+    [self.giftShow addLiveGiftShowModel:model];
+
+    XCTAssertEqual(loadedUrls.count, 2, @"头像和礼物图都应通过注入的加载器加载");
+    XCTAssertTrue([loadedUrls containsObject:@"https://example.com/icon.png"]);
+    XCTAssertTrue([loadedUrls containsObject:@"https://example.com/gift.png"]);
+}
+
 /// 公开 API 从后台线程调用不应崩溃，且弹幕最终正常上屏
 - (void)testBackgroundThreadAddIsSafe {
     XCTestExpectation *exp = [self expectationWithDescription:@"background add"];

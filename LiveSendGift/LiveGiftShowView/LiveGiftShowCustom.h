@@ -63,6 +63,17 @@ typedef NS_ENUM(NSUInteger, LiveGiftAddMode) {
     LiveGiftAddModeQueue   = 1,
 };
 
+NS_ASSUME_NONNULL_BEGIN
+
+/**
+ 网络图片加载器（V2.0 新增，用于解耦 SDWebImage）
+
+ @param imageView   目标视图（头像 / 礼物图）
+ @param urlString   图片地址，可能为 nil
+ @param placeholder 占位图，可能为 nil
+ */
+typedef void (^LiveGiftWebImageLoader)(UIImageView *imageView, NSString * _Nullable urlString, UIImage * _Nullable placeholder);
+
 @protocol LiveGiftShowCustomDelegate <NSObject>
 
 @optional
@@ -79,7 +90,7 @@ typedef NS_ENUM(NSUInteger, LiveGiftAddMode) {
 @property(nonatomic, assign) CGFloat kAppearAnimationTime;/**< 出现时动画时长 */
 @property(nonatomic, assign) LiveGiftAddMode addMode;/** 弹幕添加模式,默认替换 */
 
-@property(nonatomic, weak) id<LiveGiftShowCustomDelegate> delegate;
+@property(nonatomic, weak, nullable) id<LiveGiftShowCustomDelegate> delegate;
 
 // V2.0：以下配置由全局 static 改为实例属性，多个实例互不影响。
 // 公开方法（addLiveGiftShowModel: 等）线程安全，非主线程调用会自动转到主队列。
@@ -90,6 +101,13 @@ typedef NS_ENUM(NSUInteger, LiveGiftAddMode) {
 @property(nonatomic, assign) LiveGiftHiddenMode hiddenMode;/**< 弹幕消失模式，默认向右移出 */
 @property(nonatomic, assign) LiveGiftAppearMode appearMode;/**< 弹幕出现模式，默认从左出现 */
 @property(nonatomic, assign) BOOL interfaceDebugEnabled;/**< 是否打印调试信息，默认 NO */
+
+/**
+ 网络图片加载器。默认 nil：集成了 SDWebImage 时自动使用 SDWebImage，
+ 否则仅显示占位图。使用 Kingfisher/自研加载器的宿主可注入此 block，
+ 即可完全不依赖 SDWebImage（CocoaPods 请用 `LiveSendGift/Core` subspec）。
+ */
+@property(nonatomic, copy, nullable) LiveGiftWebImageLoader webImageLoader;
 
 /**
  *  设置是否打印信息
@@ -135,3 +153,5 @@ typedef NS_ENUM(NSUInteger, LiveGiftAddMode) {
 - (void)animatedWithGiftModel:(LiveGiftShowModel *)showModel;
 
 @end
+
+NS_ASSUME_NONNULL_END

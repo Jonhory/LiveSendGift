@@ -9,10 +9,15 @@
 #import "LiveGiftShowView.h"
 #import "LiveGiftListModel.h"
 
+// SDWebImage 为可选依赖：未集成且未注入 webImageLoader 时仅显示占位图
 #if __has_include(<SDWebImage/SDWebImage.h>)
 #import <SDWebImage/SDWebImage.h>
-#else
+#define LIVE_HAS_SDWEBIMAGE 1
+#elif __has_include("UIImageView+WebCache.h")
 #import "UIImageView+WebCache.h"
+#define LIVE_HAS_SDWEBIMAGE 1
+#else
+#define LIVE_HAS_SDWEBIMAGE 0
 #endif
 #import "LiveGiftImageLoader.h"
 
@@ -74,12 +79,21 @@ static CGFloat const kGiftNumberWidth = 15.0;
     _model = model;
     
     self.nameLabel.text = model.user.name;
-    
-    [self.iconIV sd_setImageWithURL:[NSURL URLWithString:model.user.iconUrl] placeholderImage:LiveGiftImage(@"LiveDefaultIcon")];
-    
     self.sendLabel.text = model.giftModel.rewardMsg;
-    [self.giftIV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.giftModel.picUrl]] placeholderImage:nil];
-    
+
+    UIImage * iconPlaceholder = LiveGiftImage(@"LiveDefaultIcon");
+    if (self.imageLoader) {
+        // 宿主注入的加载器（Kingfisher / 自研等）
+        self.imageLoader(self.iconIV, model.user.iconUrl, iconPlaceholder);
+        self.imageLoader(self.giftIV, model.giftModel.picUrl, nil);
+    } else {
+#if LIVE_HAS_SDWEBIMAGE
+        [self.iconIV sd_setImageWithURL:[NSURL URLWithString:model.user.iconUrl ?: @""] placeholderImage:iconPlaceholder];
+        [self.giftIV sd_setImageWithURL:[NSURL URLWithString:model.giftModel.picUrl ?: @""] placeholderImage:nil];
+#else
+        self.iconIV.image = iconPlaceholder;
+#endif
+    }
 }
 
 /**

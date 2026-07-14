@@ -21,7 +21,8 @@ let package = Package(
             ],
             path: "LiveSendGift/LiveGiftShowView",
             resources: [
-                .process("LiveSendGiftAssets.xcassets")
+                .process("LiveSendGiftAssets.xcassets"),
+                .copy("PrivacyInfo.xcprivacy")
             ],
             publicHeadersPath: "."
         )
