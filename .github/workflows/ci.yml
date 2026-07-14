@@ -23,10 +23,13 @@ jobs:
       - name: Build & run tests
         run: |
           set -o pipefail
+          # 不写死设备名：runner 镜像更新会替换可用模拟器型号
+          DEVICE=$(xcrun simctl list devices available | grep -oE 'iPhone [0-9]+[^(]*' | head -1 | xargs)
+          echo "Using simulator: $DEVICE"
           xcodebuild test \
             -workspace LiveSendGift.xcworkspace \
             -scheme LiveSendGiftDemo \
-            -destination 'platform=iOS Simulator,name=iPhone 16'
+            -destination "platform=iOS Simulator,name=$DEVICE"
 
   swift-test:
     name: Swift 版 SPM Test
@@ -41,9 +44,11 @@ jobs:
           set -o pipefail
           rsync -a --exclude='*.xcodeproj' --exclude='*.xcworkspace' --exclude='Pods' . /tmp/spm-pkg
           cd /tmp/spm-pkg
+          DEVICE=$(xcrun simctl list devices available | grep -oE 'iPhone [0-9]+[^(]*' | head -1 | xargs)
+          echo "Using simulator: $DEVICE"
           xcodebuild test \
             -scheme LiveSendGift-Package \
-            -destination 'platform=iOS Simulator,name=iPhone 16'
+            -destination "platform=iOS Simulator,name=$DEVICE"
 
   lint:
     name: Pod lint
