@@ -5,6 +5,7 @@
 * 感谢[gxtai](https://github.com/gxtai)发现并解决[内存释放](https://github.com/Jonhory/LiveSendGift/issues/20)问题
 
 ## 重要信息
+* **2026年07月14日 发布 V2.0.0**：破坏性升级，详见[V2.0 版本说明](#V2)。本次改动由 AI（Claude）协助推进完成。
 * 2017年09月25日18:42:00 修复了在iOS11下必现`EXC_BAD_INSTRUCTION (code=EXC_I386_INVOP, subcode=0x0)`的崩溃BUG。
 * 已知bug提示：在替换模式`LiveGiftAddModeReplace`下使用`animatedWithGiftModel`方法将导致UI效果不理想的bug。建议是`animatedWithGiftModel`方法使用于`LiveGiftAddModeAdd`模式。
 * 2017年12月25日11:39:39 修复在iOS11下可能出现的`.cxx destruct`崩溃问题。
@@ -88,14 +89,60 @@
 
 ![](v1.901.gif)
 
+#### <a id="V2"></a> V2.0.0（2026-07-14，AI 协助推进）
+
+> 本版本为破坏性升级（major），最低支持 iOS 12.0。全部改动由 AI（Claude）协助完成，
+> 包含重构、修复、单元测试与发布配置。
+
+**修复**
+
+* 修复挂起多年的 [issue #17](https://github.com/Jonhory/LiveSendGift/issues/17)：同一弹幕并发连击时会叠加多个定时器导致数字失控。现在同 key 连击会合并进已有定时器（`toNumber` 累加），并有单元测试保障。
+* 修复弹幕移除回调中裸索引替换可能导致的越界崩溃（增加边界防护）。
+* 修复固定轨道 demo 中"同时添加多条"按钮无响应的问题。
+* 修复左移出弹幕不参与轨道补位判断的问题（原实现用浮点相等判断只覆盖右出场景）。
+
+**重构（破坏性变更）**
+
+* 全部配置由全局 `static` 改为**实例属性**，多个 `LiveGiftShowCustom` 实例互不影响：`maxRailwayCount` / `railwayCanExchange` / `showMode` / `hiddenMode` / `appearMode` / `interfaceDebugEnabled`。旧 setter 方法保留但标记 deprecated。
+* 公开 API **线程安全**：非主线程调用 `addLiveGiftShowModel:` / `animatedWithGiftModel:` 会自动转到主队列。
+* `LiveUserModel` 新增 `userId`：同名用户不再被错误合并（不传时退化为按 `name` 区分）。
+* `LiveGiftShowNumberView` 去掉带自增副作用的 `number` getter，改为显式的 `resetNumber:` / `increaseNumber` / `currentNumber`。
+* 命名修正：`creatDate`→`createDate`，`hiddenModel`（属性）→`hiddenMode`。
+* **移除 Masonry 依赖**（官方 2017 年后未再发版，阻塞 pod 校验与 SPM），布局改用系统 `NSLayoutAnchor`。
+* 弹幕移除定时器改用 block 版 `NSTimer`，不再强引用视图。
+
+**工程**
+
+* 支持 **CocoaPods**（`pod 'LiveSendGift'`）与 **Swift Package Manager**。
+* 库资源独立为 `LiveSendGiftAssets.xcassets`，三种集成方式均可正确加载图片。
+* 新增核心队列/计数逻辑的单元测试（覆盖 #17/#19/#21 的回归场景）。
+* 最低部署目标升至 iOS 12.0。
+
+### 安装
+
+**CocoaPods**
+
+```ruby
+pod 'LiveSendGift', '~> 2.0'
+```
+
+**Swift Package Manager**
+
+```
+https://github.com/Jonhory/LiveSendGift.git
+```
+
+**手动集成**
+
+拷贝 `LiveSendGift/LiveGiftShowView/` 整个目录（含 `LiveSendGiftAssets.xcassets`）到工程，另需引入 [SDWebImage](https://github.com/rs/SDWebImage)。
+
 ### <a id="快速使用"></a>快速使用
 * 使用的第三方库:
-  * [Masonry](https://github.com/SnapKit/Masonry)
   * [SDWebImage](https://github.com/rs/SDWebImage)
 
 * 两个模型:`LiveGiftListModel`和`LiveUserModel`
   * `LiveGiftListModel `是用来显示弹幕上右侧礼物图片`picUrl`和打赏的语句`rewardMsg`的，礼物有`type`字段
-  * `LiveUserModel `是用来显示送礼物的人的名称`name`和头像`iconUrl`
+  * `LiveUserModel `是用来显示送礼物的人的名称`name`和头像`iconUrl`，V2.0 起建议传`userId`（用于区分同名用户，不传则按`name`区分）
   
 * 导入`#import "LiveGiftShowCustom.h"`
 
@@ -105,16 +152,18 @@
 ```
 /*
  礼物视图支持很多配置属性，开发者按需选择。
+ V2.0 起全部为实例属性，多个实例互不影响。
  */
 - (LiveGiftShowCustom *)customGiftShow{
     if (!_customGiftShow) {
-        _customGiftShow = [LiveGiftShowCustom addToView:self.view];
-        _customGiftShow.addMode = LiveGiftAddModeAdd;
-        [_customGiftShow setMaxGiftCount:3];
-        [_customGiftShow setShowMode:LiveGiftShowModeFromTopToBottom];
-        [_customGiftShow setAppearModel:LiveGiftAppearModeLeft];
-        [_customGiftShow setHiddenModel:LiveGiftHiddenModeNone];
-        [_customGiftShow enableInterfaceDebug:YES];
+        // 建议按安全区计算 y，避免被导航栏遮挡
+        _customGiftShow = [LiveGiftShowCustom addToView:self.view y:self.view.safeAreaInsets.top + 10];
+        _customGiftShow.addMode = LiveGiftAddModeQueue;
+        _customGiftShow.maxRailwayCount = 3;
+        _customGiftShow.showMode = LiveGiftShowModeFromTopToBottom;
+        _customGiftShow.appearMode = LiveGiftAppearModeLeft;
+        _customGiftShow.hiddenMode = LiveGiftHiddenModeNone;
+        _customGiftShow.interfaceDebugEnabled = YES;
         _customGiftShow.delegate = self;
     }
     return _customGiftShow;
@@ -124,32 +173,33 @@
 * 在开发中使用
 
 ```
-LiveGiftShowModel * listModel = [LiveGiftShowModel giftModel:self.giftArr[3] 
+LiveGiftShowModel * showModel = [LiveGiftShowModel giftModel:self.giftArr[3] 
                                                    userModel:self.firstUser];
-[self.giftShow addGiftListModel:listModel];
+[self.customGiftShow addLiveGiftShowModel:showModel];
 ```
-即可完成接入。每一次点击只需要`[self.giftShow addGiftListModel:listModel];`即可自动计数加一。最高支持显示9999。
+即可完成接入。每一次点击只需要`[self.customGiftShow addLiveGiftShowModel:showModel];`即可自动计数加一。最高支持显示9999。
+
+* V2.0 起公开 API 线程安全，可直接在 IM/网络回调线程调用，内部会自动转到主队列。
 
 ### 特别说明
 
-* `LiveGiftShowCustom.m`中
+* `LiveGiftShowCustom.m`中（V2.0 起使用系统 NSLayoutAnchor 布局，宽度与`LiveGiftShowView.h`的`kViewWidth`保持同源）
 
 ```
 #pragma mark - 初始化
-+ (instancetype)addToView:(UIView *)superView{
++ (instancetype)addToView:(UIView *)superView y:(CGFloat)y {
     LiveGiftShowCustom * v = [[LiveGiftShowCustom alloc]init];
+    v.userInteractionEnabled = NO; // 保证弹幕后面的视图能响应点击事件
     [superView addSubview:v];
-    //布局
-    [v mas_makeConstraints:^(MASConstraintMaker *make) {
-        //这个改动之后要注意修改LiveGiftShowView.h的kViewWidth
-        make.width.equalTo(@244);
-        //将主视图的高度设置0.01，保证弹幕后面的视图能响应点击事件。
-        make.height.equalTo(@0.01);
-        //这个可以任意修改
-        make.left.equalTo(superView.mas_left);
-        //这个参数在的设定应该注意最大礼物数量时不要超出屏幕边界。
-        make.top.equalTo(superView.mas_top).offset(400);
-    }];
+    v.translatesAutoresizingMaskIntoConstraints = NO;
+    v.heightConstraint = [v.heightAnchor constraintEqualToConstant:(kViewHeight + kGiftViewMargin) * (v.maxRailwayCount - 1) + kViewHeight];
+    [NSLayoutConstraint activateConstraints:@[
+        [v.widthAnchor constraintEqualToConstant:kViewWidth],
+        v.heightConstraint,
+        [v.leftAnchor constraintEqualToAnchor:superView.leftAnchor],
+        // y 的设定应注意最大礼物数量时不要超出屏幕边界
+        [v.topAnchor constraintEqualToAnchor:superView.topAnchor constant:y],
+    ]];
     v.backgroundColor = [UIColor clearColor];
     return v;
 }
