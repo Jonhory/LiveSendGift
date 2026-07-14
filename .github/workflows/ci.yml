@@ -24,6 +24,23 @@ jobs:
             -scheme LiveSendGift \
             -destination 'platform=iOS Simulator,name=iPhone 16'
 
+  swift-test:
+    name: Swift 版 SPM Test
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      # 仓库根目录同时存在 workspace 与 Package.swift，
+      # xcodebuild 会优先解析 workspace，故在干净目录中按 SPM 包测试
+      - name: SPM test
+        run: |
+          set -o pipefail
+          rsync -a --exclude='*.xcodeproj' --exclude='*.xcworkspace' --exclude='Pods' . /tmp/spm-pkg
+          cd /tmp/spm-pkg
+          xcodebuild test \
+            -scheme LiveSendGift-Package \
+            -destination 'platform=iOS Simulator,name=iPhone 16'
+
   lint:
     name: Pod lint
     runs-on: macos-15
@@ -31,7 +48,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Lint podspec（默认 subspec 含 SDWebImage）
-        run: pod lib lint --allow-warnings
+        run: pod lib lint LiveSendGift.podspec --allow-warnings
 
       - name: Lint Core subspec（零三方依赖）
-        run: pod lib lint --allow-warnings --subspec=Core
+        run: pod lib lint LiveSendGift.podspec --allow-warnings --subspec=Core
+
+      - name: Lint Swift podspec
+        run: pod lib lint LiveSendGiftSwift.podspec --allow-warnings

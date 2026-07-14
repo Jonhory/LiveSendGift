@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'LiveSendGift'
-  s.version          = '2.0.0'
+  s.version          = '2.1.0'
   s.summary          = '直播送礼物弹幕效果：连击计数、轨道排序、队列/替换模式。'
   s.description      = <<-DESC
 直播间送礼物弹幕横幅效果：礼物连击数字累加、多用户弹幕按礼物数排序、

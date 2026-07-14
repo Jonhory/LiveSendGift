@@ -7,6 +7,7 @@
 * 感谢[gxtai](https://github.com/gxtai)发现并解决[内存释放](https://github.com/Jonhory/LiveSendGift/issues/20)问题
 
 ## 重要信息
+* **2026年07月14日 V2.1.0 新增 Swift 版（`LiveSendGiftSwift`）**：按 ObjC 版逻辑完整移植、行为一致、零三方依赖，推荐新项目使用，详见[Swift 版说明](#Swift)。本次改动由 AI（Claude）协助推进完成。
 * **2026年07月14日 发布 V2.0.0**：破坏性升级，详见[V2.0 版本说明](#V2)。本次改动由 AI（Claude）协助推进完成。
 * 2017年09月25日18:42:00 修复了在iOS11下必现`EXC_BAD_INSTRUCTION (code=EXC_I386_INVOP, subcode=0x0)`的崩溃BUG。
 * ~~已知bug提示：在替换模式`LiveGiftAddModeReplace`下使用`animatedWithGiftModel`方法将导致UI效果不理想的bug。建议是`animatedWithGiftModel`方法使用于`LiveGiftAddModeAdd`模式。~~（V2.0 重构了连击定时器逻辑，如仍能复现请提 issue）
@@ -124,6 +125,33 @@
 * **SDWebImage 变为可选依赖**：新增 `webImageLoader` 注入点，宿主可用 Kingfisher/自研加载器；CocoaPods 提供零三方依赖的 `LiveSendGift/Core` subspec。
 * demo 移除 MJExtension 依赖。
 * 新增 GitHub Actions CI（构建 + 测试 + pod lint）。
+
+#### <a id="Swift"></a> V2.1.0 Swift 版 LiveSendGiftSwift（2026-07-14，AI 协助推进）
+
+按 ObjC 版（V2.0）逻辑完整移植的 Swift 实现，位于 `Sources/LiveSendGiftSwift/`，与 ObjC 版共存于同一仓库：
+
+* **行为一致**：连击合并、轨道排序、队列/替换模式、线程安全、userId 区分同名用户——单元测试与 ObjC 版一一对应。
+* **零三方依赖**：内置 URLSession 图片加载器，可通过 `webImageLoader` 注入 Kingfisher/SDWebImage/自研加载器。
+* **API 更 Swift**：枚举小写 case、闭包回调（`onGiftRemoved`）取代 delegate。
+
+```swift
+import LiveSendGiftSwift
+
+let giftShow = LiveGiftShowCustom.add(to: view, y: view.safeAreaInsets.top + 10)
+giftShow.addMode = .queue
+giftShow.maxRailwayCount = 3
+giftShow.onGiftRemoved = { model in print("移除：\(model.user.name ?? "")") }
+
+let model = LiveGiftShowModel(
+    gift: LiveGiftItem(type: "0", name: "松果", picUrl: "https://...", rewardMsg: "扔出一颗松果"),
+    user: LiveGiftUser(userId: "1001", name: "小明", iconUrl: "https://..."))
+giftShow.add(model)            // 计数 +1
+giftShow.animate(with: model)  // 连击动画到 model.toNumber
+```
+
+安装：`pod 'LiveSendGiftSwift'`，或 SPM 选择 `LiveSendGiftSwift` product。
+
+ObjC 版（`LiveSendGift`）自 V2.1 起进入维护模式，只修 bug 不加新功能。
 
 ### 安装
 
