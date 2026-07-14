@@ -140,6 +140,18 @@ final class LiveSendGiftSwiftTests: XCTestCase {
         XCTAssertEqual(visibleBanners.count, 1, "后台线程调用应自动转主队列并正常上屏")
     }
 
+    /// 轮询等待条件成立（转动 RunLoop 让主线程定时器继续工作）。
+    /// CI runner 较慢，固定 sleep 的时序断言不可靠，统一用条件轮询。
+    @discardableResult
+    private func waitUntil(timeout: TimeInterval = 15, _ condition: () -> Bool) -> Bool {
+        let deadline = Date(timeIntervalSinceNow: timeout)
+        while Date() < deadline {
+            if condition() { return true }
+            RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.05))
+        }
+        return condition()
+    }
+
     /// 同 key 并发连击应合并进已有定时器，而不是叠加多个定时器导致数字失控（ObjC 版 issue #17）
     func testAnimatedTimerMergeForSameKey() {
         // toNumber 拉长到 20，保证第二发连击到来时首个定时器仍在存活期（20 ticks × 0.05s ≈ 1s）
@@ -148,11 +160,8 @@ final class LiveSendGiftSwiftTests: XCTestCase {
         first.interval = 0.05
         giftShow.animate(with: first)
 
-        // 等首个 tick 上屏，弹幕视图建立
-        let shown = expectation(description: "first tick")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { shown.fulfill() }
-        wait(for: [shown], timeout: 2)
-        XCTAssertEqual(visibleBanners.count, 1)
+        // 等首个 tick 上屏，弹幕视图建立且定时器仍在运行
+        XCTAssertTrue(waitUntil { visibleBanners.count == 1 }, "首个 tick 未上屏")
         XCTAssertNotNil(first.animatedTimer, "首个连击定时器应仍在运行")
 
         // 同 key 第二次连击：应合并进 first 的定时器
@@ -165,11 +174,7 @@ final class LiveSendGiftSwiftTests: XCTestCase {
         XCTAssertNil(second.animatedTimer, "不应为第二个模型开新定时器")
 
         // 等定时器跑完：最终计数应恰好为 25，且定时器已释放（不会"停不下来"）
-        let finished = expectation(description: "timer finished")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) { finished.fulfill() }
-        wait(for: [finished], timeout: 5)
-
-        XCTAssertNil(first.animatedTimer, "连击结束后定时器应释放")
+        XCTAssertTrue(waitUntil { first.animatedTimer == nil }, "连击结束后定时器应释放")
         XCTAssertEqual(visibleBanners.first?.numberView.currentNumber, 25, "最终计数应恰好等于合并后的 toNumber")
     }
 }

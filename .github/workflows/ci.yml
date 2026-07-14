@@ -23,10 +23,13 @@ jobs:
       - name: Build & run tests
         run: |
           set -o pipefail
+          # 不写死设备名：runner 镜像更新会替换可用模拟器型号
+          DEVICE=$(xcrun simctl list devices available | grep -oE 'iPhone [0-9]+[^(]*' | head -1 | xargs)
+          echo "Using simulator: $DEVICE"
           xcodebuild test \
             -workspace LiveSendGift.xcworkspace \
             -scheme LiveSendGiftDemo \
-            -destination 'platform=iOS Simulator,name=iPhone 16'
+            -destination "platform=iOS Simulator,name=$DEVICE"
 
   swift-test:
     name: Swift 版 SPM Test
@@ -41,9 +44,11 @@ jobs:
           set -o pipefail
           rsync -a --exclude='*.xcodeproj' --exclude='*.xcworkspace' --exclude='Pods' . /tmp/spm-pkg
           cd /tmp/spm-pkg
+          DEVICE=$(xcrun simctl list devices available | grep -oE 'iPhone [0-9]+[^(]*' | head -1 | xargs)
+          echo "Using simulator: $DEVICE"
           xcodebuild test \
             -scheme LiveSendGift-Package \
-            -destination 'platform=iOS Simulator,name=iPhone 16'
+            -destination "platform=iOS Simulator,name=$DEVICE"
 
   lint:
     name: Pod lint
@@ -53,11 +58,13 @@ jobs:
 
       - name: 版本一致性检查（podspec ↔ Info.plist）
         run: |
-          POD_VERSION=$(grep -o "s.version *= *'[^']*'" LiveSendGift.podspec | grep -o "[0-9.]*")
-          SWIFT_POD_VERSION=$(grep -o "s.version *= *'[^']*'" LiveSendGiftSwift.podspec | grep -o "[0-9.]*")
+          POD_VERSION=$(sed -n "s/.*s\.version *= *'\([^']*\)'.*/\1/p" LiveSendGift.podspec)
+          SWIFT_POD_VERSION=$(sed -n "s/.*s\.version *= *'\([^']*\)'.*/\1/p" LiveSendGiftSwift.podspec)
           PLIST_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" LiveSendGift/Info.plist)
           echo "LiveSendGift.podspec=$POD_VERSION LiveSendGiftSwift.podspec=$SWIFT_POD_VERSION Info.plist=$PLIST_VERSION"
-          test "$POD_VERSION" = "$SWIFT_POD_VERSION" && test "$POD_VERSION" = "$PLIST_VERSION"
+          test -n "$POD_VERSION"
+          test "$POD_VERSION" = "$SWIFT_POD_VERSION"
+          test "$POD_VERSION" = "$PLIST_VERSION"
 
       - name: Lint podspec（默认 subspec 含 SDWebImage）
         run: pod lib lint LiveSendGift.podspec --allow-warnings
