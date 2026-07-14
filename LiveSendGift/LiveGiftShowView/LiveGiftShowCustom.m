@@ -221,13 +221,14 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
     // 任务执行间隔时间
     uint64_t interval = showModel.interval * NSEC_PER_SEC;
     // 给定时器源绑定开始时间、间隔时间以及容忍误差时间
-    dispatch_source_set_timer(tt, start, interval, 0);
-    
+    // 容差取间隔的 10%，允许系统合并定时器唤醒，降低多弹幕连击时的瞬时 CPU
+    dispatch_source_set_timer(tt, start, interval, interval / 10);
+
     __block NSInteger i = 0;
     __weak __typeof(self)weakSelf = self;
     // 给定时器源绑定任务
     dispatch_source_set_event_handler(tt, ^{
-        if (!self.superview) {
+        if (!weakSelf.superview) {
             if (tt) {
                 dispatch_cancel(tt);
             }

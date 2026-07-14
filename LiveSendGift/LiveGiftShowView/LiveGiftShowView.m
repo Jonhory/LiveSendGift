@@ -32,6 +32,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
 @property (nonatomic ,assign) NSInteger liveTimerForSecond;
 
 @property (nonatomic ,assign) BOOL isSetNumber;
+@property (nonatomic ,assign) NSUInteger lastNumberLength;/**< 上次数字位数，位数不变时跳过约束更新 */
 
 @end
 
@@ -135,16 +136,14 @@ static CGFloat const kGiftNumberWidth = 15.0;
 - (void)handleNumber:(NSInteger )number{
     self.liveTimerForSecond = 0;
     //根据数字修改self.giftIV的约束 比如 1 占 10 的宽度，10 占 20的宽度
+    //位数没变时无需更新约束，连击场景下减少布局开销
     NSString * numStr = [NSString stringWithFormat:@"%zi",number];
-    CGFloat giftRight = numStr.length * kGiftNumberWidth + kGiftNumberWidth;
-    
-    [self.giftIV mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.mas_right).offset(-kGiftNumberWidth - giftRight);
-    }];
-    
-    if (numStr.length >= 4) {
+    if (numStr.length != self.lastNumberLength) {
+        self.lastNumberLength = numStr.length;
+        CGFloat giftRight = numStr.length >= 4 ? kGiftNumberWidth * 5 : numStr.length * kGiftNumberWidth + kGiftNumberWidth;
+
         [self.giftIV mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.mas_right).offset(-kGiftNumberWidth * 6);
+            make.right.equalTo(self.mas_right).offset(-kGiftNumberWidth - giftRight);
         }];
     }
     if (!CGAffineTransformIsIdentity(self.numberView.transform)) {

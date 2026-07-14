@@ -19,6 +19,7 @@
 @property (nonatomic ,strong) UIImageView * xIV;
 
 @property (nonatomic ,assign) NSInteger lastNumber;/**< 最后显示的数字 */
+@property (nonatomic ,assign) NSInteger lastLength;/**< 上次显示的位数，位数不变时跳过约束调整 */
 
 @end
 
@@ -70,87 +71,92 @@
         shi = 9;
         ge = 9;
     }
-    
+
+    NSInteger length = qian > 0 ? 4 : (bai > 0 ? 3 : (shi > 0 ? 2 : 1));
+
+    // 数字图片每次都要刷新（imageNamed 有缓存，开销极小）
+    self.digitIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",ge]];
+    if (length >= 2) {
+        self.ten_digitIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",shi]];
+    }
+    if (length >= 3) {
+        self.hundredIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",bai]];
+    }
+    if (length >= 4) {
+        self.thousandIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",qian]];
+    }
+
+    // 位数没变时跳过视图层级与约束调整，连击场景下避免每次计数都强制同步布局（CPU 峰值主因之一）
+    if (length == self.lastLength) {
+        return;
+    }
+    self.lastLength = length;
+
     [self addSubview:self.digitIV];
-    
+
     [self.digitIV mas_updateConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.mas_right);
         make.centerY.equalTo(self);
     }];
-    self.digitIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",ge]];
-    
-    NSInteger length = 1;
-    
-    if (qian > 0) {
-        length = 4;
+
+    if (length == 4) {
         [self addSubview:self.thousandIV];
         [self addSubview:self.hundredIV];
         [self addSubview:self.ten_digitIV];
-        
-        self.thousandIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",qian]];
-        self.hundredIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",bai]];
-        self.ten_digitIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",shi]];
-        
+
         [self.thousandIV mas_updateConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.hundredIV.mas_left);
             make.centerY.equalTo(self);
         }];
-        
+
         [self.hundredIV mas_updateConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.ten_digitIV.mas_left);
             make.centerY.equalTo(self);
         }];
-        
+
         [self.ten_digitIV mas_updateConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.digitIV.mas_left);
             make.centerY.equalTo(self.digitIV);
         }];
-    }else if (bai > 0){
-        length = 3;
+    }else if (length == 3){
         [self.thousandIV removeFromSuperview];
         [self addSubview:self.hundredIV];
         [self addSubview:self.ten_digitIV];
-        
-        self.hundredIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",bai]];
-        self.ten_digitIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",shi]];
-        
+
         [self.hundredIV mas_updateConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.ten_digitIV.mas_left);
             make.centerY.equalTo(self);
         }];
-        
+
         [self.ten_digitIV mas_updateConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.digitIV.mas_left);
             make.centerY.equalTo(self.digitIV);
         }];
-    }else if (shi > 0){
-        length = 2;
+    }else if (length == 2){
         [self.thousandIV removeFromSuperview];
         [self.hundredIV removeFromSuperview];
         [self addSubview:self.ten_digitIV];
-        
-        self.ten_digitIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"w_%zi",shi]];
+
         [self.ten_digitIV mas_updateConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.digitIV.mas_left);
             make.centerY.equalTo(self.digitIV);
         }];
     }else {
-        length = 1;
         [self.thousandIV removeFromSuperview];
         [self.hundredIV removeFromSuperview];
         [self.ten_digitIV removeFromSuperview];
     }
-    
+
     [self addSubview:self.xIV];
-    
+
     [self.xIV mas_updateConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.mas_right).offset(-15*length);
         make.centerY.equalTo(self).offset(2);
         make.width.equalTo(@15);
     }];
-    
+
     [self layoutIfNeeded];
-    
+
 }
 
 - (UIImageView *)xIV{
