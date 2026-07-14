@@ -10,6 +10,7 @@ import UIKit
 public let kLiveGiftViewWidth: CGFloat = 240.0  // 背景宽
 public let kLiveGiftViewHeight: CGFloat = 44.0  // 背景高
 
+@objc(SwiftLiveGiftShowView)
 public final class LiveGiftShowView: UIView {
 
     private static let nameLabelFont: CGFloat = 12.0

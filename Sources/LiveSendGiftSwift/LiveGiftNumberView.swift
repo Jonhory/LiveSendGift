@@ -7,6 +7,7 @@
 
 import UIKit
 
+@objc(SwiftLiveGiftNumberView)
 public final class LiveGiftNumberView: UIView {
 
     /// 下一次 increaseNumber 返回的数字

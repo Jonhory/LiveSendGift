@@ -9,6 +9,7 @@
 
 import UIKit
 
+@objc(SwiftLiveGiftShowCustom)
 public final class LiveGiftShowCustom: UIView {
 
     /// 两个弹幕之间的高度差

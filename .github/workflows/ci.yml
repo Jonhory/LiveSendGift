@@ -21,7 +21,7 @@ jobs:
           set -o pipefail
           xcodebuild test \
             -workspace LiveSendGift.xcworkspace \
-            -scheme LiveSendGift \
+            -scheme LiveSendGiftDemo \
             -destination 'platform=iOS Simulator,name=iPhone 16'
 
   swift-test:

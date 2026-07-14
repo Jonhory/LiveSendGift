@@ -18,6 +18,12 @@
 		BB5E4F201DD5E77C005CBFC5 /* HomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5E4F1F1DD5E77C005CBFC5 /* HomeVC.m */; };
 		BB91CB4F1DF42AD0002A76EB /* LiveGiftShowCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = BB91CB4E1DF42AD0002A76EB /* LiveGiftShowCustom.m */; };
 		BB91CB521DF42D32002A76EB /* TestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB91CB511DF42D32002A76EB /* TestVC.m */; };
+		AB21000000000000000000A1 /* SwiftTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB21000000000000000000A2 /* SwiftTestVC.swift */; };
+		AB21000000000000000000B /* LiveGiftModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB21000000000000000000C /* LiveGiftModels.swift */; };
+		AB21000000000000000001B /* LiveGiftImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB21000000000000000001C /* LiveGiftImageLoader.swift */; };
+		AB21000000000000000002B /* LiveGiftNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB21000000000000000002C /* LiveGiftNumberView.swift */; };
+		AB21000000000000000003B /* LiveGiftShowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB21000000000000000003C /* LiveGiftShowView.swift */; };
+		AB21000000000000000004B /* LiveGiftShowCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB21000000000000000004C /* LiveGiftShowCustom.swift */; };
 		BBD12B281DD59437007D31D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B271DD59437007D31D6 /* main.m */; };
 		BBD12B2B1DD59437007D31D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD12B2A1DD59437007D31D6 /* AppDelegate.m */; };
 		BBD12B331DD59437007D31D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBD12B321DD59437007D31D6 /* Assets.xcassets */; };
@@ -66,6 +72,12 @@
 		BB91CB4E1DF42AD0002A76EB /* LiveGiftShowCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveGiftShowCustom.m; sourceTree = "<group>"; };
 		BB91CB501DF42D32002A76EB /* TestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestVC.h; sourceTree = "<group>"; };
 		BB91CB511DF42D32002A76EB /* TestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestVC.m; sourceTree = "<group>"; };
+		AB21000000000000000000A2 /* SwiftTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTestVC.swift; sourceTree = "<group>"; };
+		AB21000000000000000000C /* LiveGiftModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveGiftModels.swift; sourceTree = "<group>"; };
+		AB21000000000000000001C /* LiveGiftImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveGiftImageLoader.swift; sourceTree = "<group>"; };
+		AB21000000000000000002C /* LiveGiftNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveGiftNumberView.swift; sourceTree = "<group>"; };
+		AB21000000000000000003C /* LiveGiftShowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveGiftShowView.swift; sourceTree = "<group>"; };
+		AB21000000000000000004C /* LiveGiftShowCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveGiftShowCustom.swift; sourceTree = "<group>"; };
 		BBD12B231DD59437007D31D6 /* LiveSendGift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveSendGift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBD12B271DD59437007D31D6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BBD12B291DD59437007D31D6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -128,6 +140,7 @@
 		BBD12B1A1DD59437007D31D6 = {
 			isa = PBXGroup;
 			children = (
+				AB21000000000000000000D0 /* LiveSendGiftSwift */,
 				BBD12B251DD59437007D31D6 /* LiveSendGift */,
 				BB3BEBE11DF6350600C9DDFF /* LiveSendGiftTests */,
 				BB3BEBEF1DF63D1B00C9DDFF /* LiveSendGiftUITests */,
@@ -158,6 +171,7 @@
 				BB5E4F1F1DD5E77C005CBFC5 /* HomeVC.m */,
 				BB91CB501DF42D32002A76EB /* TestVC.h */,
 				BB91CB511DF42D32002A76EB /* TestVC.m */,
+				AB21000000000000000000A2 /* SwiftTestVC.swift */,
 				BBD12B321DD59437007D31D6 /* Assets.xcassets */,
 				BBD12B371DD59437007D31D6 /* Info.plist */,
 				BBD12B261DD59437007D31D6 /* Supporting Files */,
@@ -212,6 +226,19 @@
 				F1861210C8E42E65B2543768 /* Pods-LiveSendGiftTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		AB21000000000000000000D0 /* LiveSendGiftSwift */ = {
+			isa = PBXGroup;
+			children = (
+				AB21000000000000000000C /* LiveGiftModels.swift */,
+				AB21000000000000000001C /* LiveGiftImageLoader.swift */,
+				AB21000000000000000002C /* LiveGiftNumberView.swift */,
+				AB21000000000000000003C /* LiveGiftShowView.swift */,
+				AB21000000000000000004C /* LiveGiftShowCustom.swift */,
+			);
+			name = LiveSendGiftSwift;
+			path = Sources/LiveSendGiftSwift;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -432,6 +459,12 @@
 				BB2E00941EBD6D9000580E33 /* LiveUserModel.m in Sources */,
 				BBD12B781DD59EFF007D31D6 /* LiveGiftShowNumberView.m in Sources */,
 				BB91CB521DF42D32002A76EB /* TestVC.m in Sources */,
+				AB21000000000000000000A1 /* SwiftTestVC.swift in Sources */,
+				AB21000000000000000000B /* LiveGiftModels.swift in Sources */,
+				AB21000000000000000001B /* LiveGiftImageLoader.swift in Sources */,
+				AB21000000000000000002B /* LiveGiftNumberView.swift in Sources */,
+				AB21000000000000000003B /* LiveGiftShowView.swift in Sources */,
+				AB21000000000000000004B /* LiveGiftShowCustom.swift in Sources */,
 				BB91CB4F1DF42AD0002A76EB /* LiveGiftShowCustom.m in Sources */,
 				BB5E4F201DD5E77C005CBFC5 /* HomeVC.m in Sources */,
 				BBD12B751DD59C1B007D31D6 /* LiveGiftShowView.m in Sources */,
@@ -603,6 +636,8 @@
 			baseConfigurationReference = 7729173E74450786A74B18B1 /* Pods-LiveSendGift.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				SWIFT_VERSION = 5.0;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = LiveSendGift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -617,6 +652,8 @@
 			baseConfigurationReference = C01F1BB1DE7BA1EFE3269BDC /* Pods-LiveSendGift.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				SWIFT_VERSION = 5.0;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = LiveSendGift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;

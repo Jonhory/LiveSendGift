@@ -8,6 +8,8 @@
 
 #import "HomeVC.h"
 #import "TestVC.h"
+// Swift 代码桥接头（SwiftTestVC）
+#import "LiveSendGift-Swift.h"
 
 #define SCREEN [UIScreen mainScreen].bounds.size
 
@@ -19,6 +21,7 @@ static NSInteger kTag = 300;
 @property (nonatomic ,weak) UIButton * btn2;
 @property (nonatomic ,weak) UIButton * btn3;
 @property (nonatomic ,weak) UIButton * btn4;
+@property (nonatomic ,weak) UIButton * btn5;
 
 @end
 
@@ -34,13 +37,14 @@ static NSInteger kTag = 300;
     [self btn2];
     [self btn3];
     [self btn4];
+    [self btn5];
 }
 
 // 全面屏适配：按安全区顶部重新排列按钮
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     CGFloat top = self.view.safeAreaInsets.top + 20;
-    NSArray<UIButton *> *btns = @[self.btn1, self.btn2, self.btn3, self.btn4];
+    NSArray<UIButton *> *btns = @[self.btn1, self.btn2, self.btn3, self.btn4, self.btn5];
     [btns enumerateObjectsUsingBlock:^(UIButton *btn, NSUInteger i, BOOL *stop) {
         CGRect f = btn.frame;
         f.origin.y = top + i * 50;
@@ -63,6 +67,10 @@ static NSInteger kTag = 300;
     } else if (btn.tag == kTag + 3) {
         TestVC * testVC = [TestVC initWithShowMode:LiveGiftShowModeFromTopToBottom hiddenMode:LiveGiftHiddenModeLeft appearMode:LiveGiftAppearModeNone addMode:LiveGiftAddModeQueue title:btn.titleLabel.text canExchange:NO];
         [self.navigationController pushViewController:testVC animated:YES];
+    } else if (btn.tag == kTag + 4) {
+        SwiftTestVC * swiftVC = [[SwiftTestVC alloc] init];
+        swiftVC.title = btn.titleLabel.text;
+        [self.navigationController pushViewController:swiftVC animated:YES];
     }
 }
 
@@ -96,6 +104,14 @@ static NSInteger kTag = 300;
         _btn4.backgroundColor = [UIColor blueColor];
     }
     return _btn4;
+}
+
+- (UIButton *)btn5{
+    if (!_btn5) {
+        _btn5 = [self createBtnWithTag:4 title:@"Swift 版演示 队列模式"];
+        _btn5.backgroundColor = [UIColor orangeColor];
+    }
+    return _btn5;
 }
 
 - (UIButton *)createBtnWithTag:(NSInteger)tag title:(NSString *)title {
