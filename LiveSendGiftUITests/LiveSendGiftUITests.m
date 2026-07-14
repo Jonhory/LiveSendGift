@@ -45,4 +45,16 @@
     XCTAssertGreaterThanOrEqual(bannerTop, navBottom, @"弹幕(top=%.1f)被返回按钮(bottom=%.1f)遮挡", bannerTop, navBottom);
 }
 
+/// 固定轨道模式下"同时添加多条"按钮应正常响应（V2.0 修复）
+- (void)testFixedRailwayBatchAddButtonResponds {
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    [app.buttons[@"直接出现 左消失 自上而下 队列模式 轨道固定"] tap];
+
+    // 该模式不自动发送，点按钮后弹幕才出现
+    [app.buttons[@"同时添加多条"] tap];
+
+    XCUIElement *msg = app.staticTexts[@"扔出一颗松果"];
+    XCTAssertTrue([msg waitForExistenceWithTimeout:5], @"点击按钮后弹幕未出现，按钮未响应");
+}
+
 @end

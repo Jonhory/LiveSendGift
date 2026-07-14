@@ -78,12 +78,13 @@ static NSInteger kTag = 200;
     [super viewDidAppear:animated];
 //    LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.firstUser];
 //    [self.customGiftShow addLiveGiftShowModel:model];
-    [self sendMultipleLiveGift];
+    // 固定轨道 demo 不自动发送；手动点"同时添加多条"按钮仍然有效
+    if (self.canExchange) {
+        [self sendMultipleLiveGift];
+    }
 }
 
 - (void)sendMultipleLiveGift {
-    if (self.canExchange == NO) return;
-    
     for (int i = 0; i<5; i++) {
         LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[i] userModel:self.firstUser];
         model.toNumber = 10;
@@ -199,12 +200,12 @@ static NSInteger kTag = 200;
         }
         
         _customGiftShow.addMode = self.addMode;
-        [_customGiftShow setMaxRailwayCount:self.canExchange ? 3 : 2];
-        [_customGiftShow setRailwayCanExchange:self.canExchange];
-        [_customGiftShow setShowMode:self.showMode];
-        [_customGiftShow setAppearModel:self.appearMode];
-        [_customGiftShow setHiddenModel:self.hiddenMode];
-        [_customGiftShow enableInterfaceDebug:YES];
+        _customGiftShow.maxRailwayCount = self.canExchange ? 3 : 2;
+        _customGiftShow.railwayCanExchange = self.canExchange;
+        _customGiftShow.showMode = self.showMode;
+        _customGiftShow.appearMode = self.appearMode;
+        _customGiftShow.hiddenMode = self.hiddenMode;
+        _customGiftShow.interfaceDebugEnabled = YES;
         _customGiftShow.delegate = self;
     }
     return _customGiftShow;
@@ -213,6 +214,7 @@ static NSInteger kTag = 200;
 - (LiveUserModel *)firstUser {
     if (!_firstUser) {
         _firstUser = [[LiveUserModel alloc]init];
+        _firstUser.userId = @"1001";
         _firstUser.name = @"first";
         _firstUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbg8tb6wqj20gl0qogni.jpg";
     }
@@ -222,6 +224,7 @@ static NSInteger kTag = 200;
 - (LiveUserModel *)secondUser {
     if (!_secondUser) {
         _secondUser = [[LiveUserModel alloc]init];
+        _secondUser.userId = @"1002";
         _secondUser.name = @"second";
         _secondUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgd5cr5nj209s0akgly.jpg";
     }
@@ -231,6 +234,7 @@ static NSInteger kTag = 200;
 - (LiveUserModel *)thirdUser {
     if (!_thirdUser) {
         _thirdUser = [[LiveUserModel alloc]init];
+        _thirdUser.userId = @"1003";
         _thirdUser.name = @"third";
         _thirdUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgeuwk21j205k05kq2w.jpg";
     }
@@ -240,6 +244,7 @@ static NSInteger kTag = 200;
 - (LiveUserModel *)fourthUser {
     if (!_fourthUser) {
         _fourthUser = [[LiveUserModel alloc]init];
+        _fourthUser.userId = @"1004";
         _fourthUser.name = @"fourth";
         _fourthUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgfpf5bgj205k07v3yk.jpg";
     }
@@ -249,6 +254,7 @@ static NSInteger kTag = 200;
 - (LiveUserModel *)fifthUser {
     if (!_fifthUser) {
         _fifthUser = [[LiveUserModel alloc]init];
+        _fifthUser.userId = @"1005";
         _fifthUser.name = @"fifth";
         _fifthUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgg5427qj205k05k748.jpg";
     }
