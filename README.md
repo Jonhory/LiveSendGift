@@ -2,6 +2,12 @@
 
 [![CI](https://github.com/Jonhory/LiveSendGift/actions/workflows/ci.yml/badge.svg)](https://github.com/Jonhory/LiveSendGift/actions/workflows/ci.yml)
 
+[English](README_EN.md) · [CHANGELOG](CHANGELOG.md) · [V1→V2 迁移指南](MIGRATION.md) · [贡献指南](CONTRIBUTING.md)
+
+## 定位
+
+LiveSendGift 专注直播间的**礼物连击横幅条**（头像 + 寄语 + `x N` 连击计数），轻量、零/低依赖。它**不做**全屏礼物特效——大动画请配合 SVGA / VAP / Lottie 等特效引擎使用，两者互补：横幅条管连击展示，特效引擎管大礼物。
+
 ## 感谢
 * 得益于某位不愿留名的同学的帮助，队列模式已经较好的实现了。
 * 感谢[gxtai](https://github.com/gxtai)发现并解决[内存释放](https://github.com/Jonhory/LiveSendGift/issues/20)问题
