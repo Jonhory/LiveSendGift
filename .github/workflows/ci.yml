@@ -53,11 +53,13 @@ jobs:
 
       - name: 版本一致性检查（podspec ↔ Info.plist）
         run: |
-          POD_VERSION=$(grep -o "s.version *= *'[^']*'" LiveSendGift.podspec | grep -o "[0-9.]*")
-          SWIFT_POD_VERSION=$(grep -o "s.version *= *'[^']*'" LiveSendGiftSwift.podspec | grep -o "[0-9.]*")
+          POD_VERSION=$(sed -n "s/.*s\.version *= *'\([^']*\)'.*/\1/p" LiveSendGift.podspec)
+          SWIFT_POD_VERSION=$(sed -n "s/.*s\.version *= *'\([^']*\)'.*/\1/p" LiveSendGiftSwift.podspec)
           PLIST_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" LiveSendGift/Info.plist)
           echo "LiveSendGift.podspec=$POD_VERSION LiveSendGiftSwift.podspec=$SWIFT_POD_VERSION Info.plist=$PLIST_VERSION"
-          test "$POD_VERSION" = "$SWIFT_POD_VERSION" && test "$POD_VERSION" = "$PLIST_VERSION"
+          test -n "$POD_VERSION"
+          test "$POD_VERSION" = "$SWIFT_POD_VERSION"
+          test "$POD_VERSION" = "$PLIST_VERSION"
 
       - name: Lint podspec（默认 subspec 含 SDWebImage）
         run: pod lib lint LiveSendGift.podspec --allow-warnings
