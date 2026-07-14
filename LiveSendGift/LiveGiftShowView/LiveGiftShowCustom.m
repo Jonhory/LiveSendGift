@@ -12,16 +12,9 @@
 static CGFloat const kGiftViewMargin = 50.0;/**< 两个弹幕之间的高度差 */
 static NSString * const kGiftViewRemoved = @"kGiftViewRemoved";/**< 弹幕已移除的key */
 
-static NSInteger live_maxGiftShowCount = 3;
-static BOOL live_isEnableInterfaceDebug = NO;
-static BOOL live_railwayCanExchange = YES;
-
-static LiveGiftShowMode live_showModel = LiveGiftShowModeFromTopToBottom;
-static LiveGiftHiddenMode live_hiddenModel = LiveGiftHiddenModeRight;
-static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
-
 @interface LiveGiftShowCustom ()
 
+@property (nonatomic ,strong) NSLayoutConstraint * heightConstraint;/**< 容器高度约束，随 maxRailwayCount 更新 */
 @property (nonatomic ,strong) NSMutableDictionary * showViewDict;/**< key([self getDictKey]):value(LiveGiftShowView*) */
 // 用来记录模型的顺序
 @property (nonatomic ,strong) NSMutableArray * showViewArr;/**< [LiveGiftShowView, @"kGiftViewRemoved"] */
@@ -39,26 +32,43 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
 
 + (instancetype)addToView:(UIView *)superView y:(CGFloat)y {
     LiveGiftShowCustom * v = [[LiveGiftShowCustom alloc]init];
-    v.kExchangeAnimationTime = 0.25;
-    v.kAppearAnimationTime = 0.5;
-    v.addMode = LiveGiftAddModeReplace;
     v.userInteractionEnabled = NO;
     [superView addSubview:v];
-    // 布局
-    [v mas_makeConstraints:^(MASConstraintMaker *make) {
-        // 这个改动之后要注意修改LiveGiftShowView.h的kViewWidth
-        make.width.equalTo(@244);
-        // 计算方法是：(kViewHeight+kGiftViewMargin)*(live_maxGiftShowCount-1)+kViewHeight
-        // (44+50)*(3-1)+44 = 232
-        make.height.equalTo(@232);
+    // 布局（V2.0 起用系统 NSLayoutAnchor，移除 Masonry 依赖）
+    v.translatesAutoresizingMaskIntoConstraints = NO;
+    v.heightConstraint = [v.heightAnchor constraintEqualToConstant:(kViewHeight + kGiftViewMargin) * (v.maxRailwayCount - 1) + kViewHeight];
+    [NSLayoutConstraint activateConstraints:@[
+        [v.widthAnchor constraintEqualToConstant:kViewWidth],
+        v.heightConstraint,
         // 这个可以任意修改
-        make.left.equalTo(superView.mas_left);
+        [v.leftAnchor constraintEqualToAnchor:superView.leftAnchor],
         // 这个参数在的设定应该注意最大礼物数量时不要超出屏幕边界
-        // 计算方法是：(kViewHeight+kGiftViewMargin)*live_maxGiftShowCount
-        make.top.equalTo(superView.mas_top).offset(y);
-    }];
+        [v.topAnchor constraintEqualToAnchor:superView.topAnchor constant:y],
+    ]];
     v.backgroundColor = [UIColor clearColor];
     return v;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        // 默认配置（V2.0 起为实例属性，多实例互不影响）
+        _kExchangeAnimationTime = 0.25;
+        _kAppearAnimationTime = 0.5;
+        _addMode = LiveGiftAddModeReplace;
+        _maxRailwayCount = 3;
+        _railwayCanExchange = YES;
+        _showMode = LiveGiftShowModeFromTopToBottom;
+        _hiddenMode = LiveGiftHiddenModeRight;
+        _appearMode = LiveGiftAppearModeLeft;
+        _interfaceDebugEnabled = NO;
+    }
+    return self;
+}
+
+- (void)setMaxRailwayCount:(NSInteger)maxRailwayCount {
+    _maxRailwayCount = maxRailwayCount;
+    self.heightConstraint.constant = (kViewHeight + kGiftViewMargin) * (maxRailwayCount - 1) + kViewHeight;
 }
 
 - (void)addLiveGiftShowModel:(LiveGiftShowModel *)showModel{
@@ -69,7 +79,15 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
     if (!showModel || ![showModel isKindOfClass:[LiveGiftShowModel class]]) {
         return;
     }
-    
+    // 线程安全：礼物消息常来自 IM/网络回调线程，统一转到主队列
+    if (![NSThread isMainThread]) {
+        __weak __typeof(self)weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf addLiveGiftShowModel:showModel showNumber:showNumber];
+        });
+        return;
+    }
+
     LiveGiftShowView * oldShowView = [self.showViewDict objectForKey:[self getDictKey:showModel]];
     
     // 判断是否强制修改显示的数字
@@ -78,13 +96,13 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
     // 如果不存在旧模型
     if (!oldShowView || ![oldShowView isKindOfClass:[LiveGiftShowView class]]) {
         // 如果当前弹幕数量大于最大限制
-        if (self.showViewArr.count >= live_maxGiftShowCount) {
+        if (self.showViewArr.count >= self.maxRailwayCount) {
             // 判断数组是否包含kGiftViewRemoved , 不包含的时候进行排序
             if (![self.showViewArr containsObject:kGiftViewRemoved]) {
                 if (self.addMode == LiveGiftAddModeReplace) {
                     // 排序 最小的时间在第一个
                     NSArray * sortArr = [self.showViewArr sortedArrayUsingComparator:^NSComparisonResult(LiveGiftShowView * obj1, LiveGiftShowView * obj2) {
-                        return [obj1.creatDate compare:obj2.creatDate];
+                        return [obj1.createDate compare:obj2.createDate];
                     }];
                     LiveGiftShowView * oldestView = sortArr.firstObject;
                     // 重置模型
@@ -101,29 +119,31 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
         
         // 计算视图Y值
         CGFloat   showViewY = 0;
-        if (live_showModel == LiveGiftShowModeFromTopToBottom) {
+        if (self.showMode == LiveGiftShowModeFromTopToBottom) {
             showViewY = (kViewHeight + kGiftViewMargin) * [self.showViewDict allKeys].count;
-        } else if (live_showModel == LiveGiftShowModeFromBottomToTop) {
+        } else if (self.showMode == LiveGiftShowModeFromBottomToTop) {
             showViewY = - ((kViewHeight + kGiftViewMargin) * [self.showViewDict allKeys].count);
         }
         // 获取已移除的key的index
         NSInteger kRemovedViewIndex = [self.showViewArr indexOfObject:kGiftViewRemoved];
         if ([self.showViewArr containsObject:kGiftViewRemoved]) {
-            if (live_showModel == LiveGiftShowModeFromTopToBottom) {
+            if (self.showMode == LiveGiftShowModeFromTopToBottom) {
                 showViewY = kRemovedViewIndex * (kViewHeight+kGiftViewMargin);
-            } else if (live_showModel == LiveGiftShowModeFromBottomToTop) {
+            } else if (self.showMode == LiveGiftShowModeFromBottomToTop) {
                 showViewY = - (kRemovedViewIndex * (kViewHeight+kGiftViewMargin));
             }
         }
         // 创建新模型
         CGRect frame = CGRectMake(0, showViewY, 0, 0);
-        if (live_appearModel == LiveGiftAppearModeLeft) {
-            frame = CGRectMake(-[UIScreen mainScreen].bounds.size.width, showViewY, 0, 0);
+        if (self.appearMode == LiveGiftAppearModeLeft) {
+            // 用宿主视图宽度计算离屏起点，iPad 分屏等非全屏容器下 mainScreen 宽度会偏大
+            CGFloat containerWidth = self.superview ? CGRectGetWidth(self.superview.bounds) : CGRectGetWidth([UIScreen mainScreen].bounds);
+            frame = CGRectMake(-containerWidth, showViewY, 0, 0);
         }
         LiveGiftShowView * newShowView = [[LiveGiftShowView alloc]initWithFrame:frame];
         // 赋值
         newShowView.model = showModel;
-        newShowView.hiddenModel = live_hiddenModel;
+        newShowView.hiddenMode = self.hiddenMode;
         // 改变礼物数量
         if (isResetNumber) {
             [newShowView resetTimeAndNumberFrom:showNumber];
@@ -138,8 +158,13 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
             if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(giftDidRemove:)]) {
                 [weakSelf.delegate giftDidRemove:willReMoveShowView.model];
             }
-            // 从数组移除
-            [weakSelf.showViewArr replaceObjectAtIndex:willReMoveShowView.index withObject:kGiftViewRemoved];
+            // 从数组移除（index 由 sortShowArr 手工维护，做边界防护避免状态不同步时越界崩溃）
+            if (willReMoveShowView.index >= 0 && willReMoveShowView.index < weakSelf.showViewArr.count) {
+                [weakSelf.showViewArr replaceObjectAtIndex:willReMoveShowView.index withObject:kGiftViewRemoved];
+            } else if ([weakSelf.showViewArr containsObject:willReMoveShowView]) {
+                NSInteger realIndex = [weakSelf.showViewArr indexOfObject:willReMoveShowView];
+                [weakSelf.showViewArr replaceObjectAtIndex:realIndex withObject:kGiftViewRemoved];
+            }
             // 从字典移除
             NSString * willReMoveShowViewKey = [weakSelf getDictKey:willReMoveShowView.model];
             [weakSelf.showViewDict removeObjectForKey:willReMoveShowViewKey];
@@ -148,7 +173,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
                 WLog(@"移除了第%zi个,移除后数组 = %@ ,词典 = %@",willReMoveShowView.index,weakSelf.showViewArr,weakSelf.showViewDict);
             }
             
-            if (live_railwayCanExchange) {
+            if (weakSelf.railwayCanExchange) {
                 // 比较数量大小排序
                 [weakSelf sortShowArr];
                 [weakSelf resetY];
@@ -159,6 +184,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
             } else if (weakSelf.addMode == LiveGiftAddModeReplace) {
                 if (willReMoveShowView.model.animatedTimer) {
                     dispatch_cancel(willReMoveShowView.model.animatedTimer);
+                    willReMoveShowView.model.animatedTimer = nil;
                 }
             }
         };
@@ -185,7 +211,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
         }else{
             [oldShowView addGiftNumberFrom:1];
         }
-        if (live_railwayCanExchange) {
+        if (self.railwayCanExchange) {
             // 比较数量大小排序
             [self sortShowArr];
             // 排序后调整Y值
@@ -196,10 +222,26 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
 
 - (void)animatedWithGiftModel:(LiveGiftShowModel *)showModel {
     if (!showModel) { return ;}
+    // 线程安全：统一转到主队列
+    if (![NSThread isMainThread]) {
+        __weak __typeof(self)weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf animatedWithGiftModel:showModel];
+        });
+        return;
+    }
+
+    // 同一弹幕已有连击定时器在跑时，合并次数而不是再开一个定时器。
+    // 多个并发定时器同时驱动同一个视图自增，是数字异常膨胀（issue #17）的根源。
+    LiveGiftShowView * showingView = [self.showViewDict objectForKey:[self getDictKey:showModel]];
+    if (showingView.model.animatedTimer != nil && showingView.model != showModel) {
+        showingView.model.toNumber += showModel.toNumber;
+        return;
+    }
+
     if (self.addMode == LiveGiftAddModeQueue) {
-        LiveGiftShowView * oldShowView = [self.showViewDict objectForKey:[self getDictKey:showModel]];
         // 不存在旧视图
-        if (!oldShowView) {
+        if (!showingView) {
             NSUInteger showCount = 0;
             for (id object in self.showViewArr) {
                 if ([object isKindOfClass:[LiveGiftShowView class]]) {
@@ -207,13 +249,13 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
                 }
             }
             // 弹幕数量大于最大数量
-            if (showCount >= live_maxGiftShowCount) {
+            if (showCount >= self.maxRailwayCount) {
                 [self addToQueue:showModel];
                 return;
             }
         }
     }
-    
+
     // 当前定时器源
     dispatch_source_t tt = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
     // 任务执行开始时间
@@ -224,32 +266,35 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
     // 容差取间隔的 10%，允许系统合并定时器唤醒，降低多弹幕连击时的瞬时 CPU
     dispatch_source_set_timer(tt, start, interval, interval / 10);
 
+    // 创建即持有，保证合并判断（animatedTimer != nil）在首个 tick 之前就生效
+    showModel.animatedTimer = tt;
+
     __block NSInteger i = 0;
     __weak __typeof(self)weakSelf = self;
     // 给定时器源绑定任务
     dispatch_source_set_event_handler(tt, ^{
         if (!weakSelf.superview) {
-            if (tt) {
-                dispatch_cancel(tt);
-            }
+            dispatch_cancel(tt);
+            showModel.animatedTimer = nil;
             return;
         }
         if (i < showModel.toNumber) {
             i ++;
-            showModel.animatedTimer = tt;
             [weakSelf addLiveGiftShowModel:showModel];
-        } else if (tt) {
+        } else {
             dispatch_cancel(tt);
+            // 置 nil 让后续同 key 的连击能重新开定时器 / 队列合并逻辑能正确判断
+            showModel.animatedTimer = nil;
         }
     });
-    
+
     // 启动定时器源
     dispatch_resume(tt);
 }
 
 - (void)appearWith:(LiveGiftShowView *)showView {
     // 出现的动画
-    if (live_appearModel == LiveGiftAppearModeLeft) {
+    if (self.appearMode == LiveGiftAppearModeLeft) {
         showView.isAppearAnimation = YES;
         [UIView animateWithDuration:self.kAppearAnimationTime animations:^{
             CGRect f = showView.frame;
@@ -267,7 +312,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
         LiveGiftShowView * show = self.showViewArr[i];
         if ([show isKindOfClass:[LiveGiftShowView class]]) {
             CGFloat showY = i * (kViewHeight+kGiftViewMargin);
-            if (live_showModel == LiveGiftShowModeFromBottomToTop) {
+            if (self.showMode == LiveGiftShowModeFromBottomToTop) {
                 showY = -showY;
             }
             if (show.frame.origin.y != showY) {
@@ -309,7 +354,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
             LiveGiftShowView * showViewI = self.showViewArr[i];
             LiveGiftShowView * showViewJ = self.showViewArr[j];
             if ([showViewI isKindOfClass:[LiveGiftShowView class]] && [showViewJ isKindOfClass:[LiveGiftShowView class]]) {
-                if ([showViewI.numberView getLastNumber] < [showViewJ.numberView getLastNumber]) {
+                if ([showViewI.numberView currentNumber] < [showViewJ.numberView currentNumber]) {
                     showViewI.index = j;
                     showViewI.isAnimation = YES;
                     showViewJ.index = i;
@@ -328,7 +373,9 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
     for (int j = i; j < self.showViewArr.count; j++) {
         LiveGiftShowView * next = self.showViewArr[j];
         if ([next isKindOfClass:[LiveGiftShowView class]]) {
-            if (next.frame.origin.x == [UIScreen mainScreen].bounds.size.width) {
+            // 正在飞出的视图不参与补位（原实现用 frame.origin.x == 屏幕宽度 的浮点相等判断，
+            // 只覆盖右出场景且依赖动画结束时机，改用语义明确的状态位）
+            if (next.isLeavingAnimation) {
                 continue;
             }
             next.index = i-1;
@@ -338,33 +385,22 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
     }
 }
 
-- (void)setMaxRailwayCount:(NSInteger)maxRailwayCount{
-    live_maxGiftShowCount = maxRailwayCount;
-}
+#pragma mark - Deprecated（V2.0 起请直接使用同名属性）
 
-- (void)setRailwayCanExchange:(BOOL)railwayCanExchange {
-    live_railwayCanExchange = railwayCanExchange;
-}
-
-//设置是否打印信息
 - (void)enableInterfaceDebug:(BOOL)isDebug {
-    live_isEnableInterfaceDebug = isDebug;
-}
-
-- (void)setShowMode:(LiveGiftShowMode)model{
-    live_showModel = model;
+    self.interfaceDebugEnabled = isDebug;
 }
 
 - (void)setHiddenModel:(LiveGiftHiddenMode)model {
-    live_hiddenModel = model;
+    self.hiddenMode = model;
 }
 
 - (void)setAppearModel:(LiveGiftAppearMode)model {
-    live_appearModel = model;
+    self.appearMode = model;
 }
 
 - (BOOL)isDebug {
-    return live_isEnableInterfaceDebug;
+    return self.interfaceDebugEnabled;
 }
 
 #pragma mark - Private
@@ -395,7 +431,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
             showCount ++;
         }
     }
-    if (showCount < live_maxGiftShowCount) {
+    if (showCount < self.maxRailwayCount) {
         LiveGiftShowModel * model = self.waitQueueArr.firstObject;
         if (model.currentNumber > 0) {
             [self addLiveGiftShowModel:model showNumber:model.currentNumber];
@@ -412,6 +448,7 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
     
     if (view.model.animatedTimer) {
         dispatch_cancel(view.model.animatedTimer);
+        view.model.animatedTimer = nil;
     }
     //找到时间早的那个视图 替换模型 重置数字
     view.model = model;
@@ -425,8 +462,9 @@ static LiveGiftAppearMode live_appearModel = LiveGiftAppearModeLeft;
 }
 
 - (NSString *)getDictKey:(LiveGiftShowModel *)model{
-    //默认以 用户名+礼物类型 为key
-    NSString * key = [NSString stringWithFormat:@"%@%@",model.user.name,model.giftModel.type];
+    // 优先以 userId+礼物类型 为 key，避免同名用户的弹幕被错误合并；未传 userId 时退化为用户名
+    NSString * userKey = model.user.userId.length > 0 ? model.user.userId : model.user.name;
+    NSString * key = [NSString stringWithFormat:@"%@%@",userKey,model.giftModel.type];
     return key;
 }
 

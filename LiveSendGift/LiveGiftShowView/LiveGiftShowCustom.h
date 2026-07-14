@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "Masonry.h"
 #import "LiveGiftShowModel.h"
 
 // 项目打包上线都不会打印日志
@@ -82,44 +81,36 @@ typedef NS_ENUM(NSUInteger, LiveGiftAddMode) {
 
 @property(nonatomic, weak) id<LiveGiftShowCustomDelegate> delegate;
 
+// V2.0：以下配置由全局 static 改为实例属性，多个实例互不影响。
+// 公开方法（addLiveGiftShowModel: 等）线程安全，非主线程调用会自动转到主队列。
+
+@property(nonatomic, assign) NSInteger maxRailwayCount;/**< 最大礼物轨道数量，默认 3 */
+@property(nonatomic, assign) BOOL railwayCanExchange;/**< 轨道能否进行交换动画，默认 YES */
+@property(nonatomic, assign) LiveGiftShowMode showMode;/**< 弹幕展现模式，默认自上而下 */
+@property(nonatomic, assign) LiveGiftHiddenMode hiddenMode;/**< 弹幕消失模式，默认向右移出 */
+@property(nonatomic, assign) LiveGiftAppearMode appearMode;/**< 弹幕出现模式，默认从左出现 */
+@property(nonatomic, assign) BOOL interfaceDebugEnabled;/**< 是否打印调试信息，默认 NO */
+
 /**
  *  设置是否打印信息
  *
  *  @param isDebug 开发的时候最好打开，默认是NO
  */
-- (void)enableInterfaceDebug:(BOOL)isDebug;
-
-/**
- 设置最大礼物轨道数量
- 
- @param maxRailwayCount 默认为3
- */
-- (void)setMaxRailwayCount:(NSInteger)maxRailwayCount;
-
-/// 轨道能否进行交换动画
-/// @param railwayCanExchange 默认 YES
-- (void)setRailwayCanExchange:(BOOL)railwayCanExchange;
-
-/**
- 设置弹幕展现模式
- 
- @param mode 弹幕展现模式
- */
-- (void)setShowMode:(LiveGiftShowMode)mode;
+- (void)enableInterfaceDebug:(BOOL)isDebug __deprecated_msg("Use the interfaceDebugEnabled property");
 
 /**
  设置弹幕消失模式
- 
+
  @param model 弹幕消失模式
  */
-- (void)setHiddenModel:(LiveGiftHiddenMode)model;
+- (void)setHiddenModel:(LiveGiftHiddenMode)model __deprecated_msg("Use the hiddenMode property");
 
 /**
  设置弹幕出现模式
- 
+
  @param model 弹幕出现模式
  */
-- (void)setAppearModel:(LiveGiftAppearMode)model;
+- (void)setAppearModel:(LiveGiftAppearMode)model __deprecated_msg("Use the appearMode property");
 
 /**
  增加或者更新一个礼物视图
