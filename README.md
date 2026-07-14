@@ -181,6 +181,20 @@ https://github.com/Jonhory/LiveSendGift.git
 
 拷贝 `LiveSendGift/LiveGiftShowView/` 整个目录（含 `LiveSendGiftAssets.xcassets`）到工程，另需引入 [SDWebImage](https://github.com/rs/SDWebImage)。
 
+### 工程结构与打开方式
+
+本仓库同时包含 CocoaPods 工程（demo + ObjC 库）与 SPM 包（含 Swift 版），请按需选择入口：
+
+| 想看什么 | 打开方式 |
+|---|---|
+| demo + ObjC 库（日常开发、跑模拟器） | 打开 `LiveSendGift.xcworkspace` |
+| Swift 版源码（`Sources/LiveSendGiftSwift/`，独立编译 / 跑 SPM 测试） | Xcode 菜单 File → Open 直接选择**仓库根目录文件夹**，Xcode 会以 SPM 包模式打开 |
+
+注意：
+
+* 项目使用 CocoaPods，**不要单独打开 `LiveSendGift.xcodeproj`**——缺少 Pods 工程会导致 SDWebImage 头文件与链接缺失，编译报错。`.xcodeproj` 只是 workspace 的组成部分。首次打开前先执行 `pod install`。
+* Swift 版只挂在 `Package.swift` 下，**不在 workspace 的文件导航器里**。若想在同一个 workspace 中看到全部代码，可以把仓库根目录（`Package.swift` 所在文件夹）拖进 workspace 侧边栏，作为 local package reference。
+
 ### <a id="快速使用"></a>快速使用
 * 使用的第三方库:
   * [SDWebImage](https://github.com/rs/SDWebImage)
