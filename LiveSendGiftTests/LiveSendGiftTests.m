@@ -5,136 +5,149 @@
 //  Created by Jonhory on 2016/12/6.
 //  Copyright © 2016年 com.wujh. All rights reserved.
 //
-/*
-XCTFail(format…) 生成一个失败的测试；
-
-XCTAssertNil(a1, format...)为空判断，a1为空时通过，反之不通过；
-
-XCTAssertNotNil(a1, format…)不为空判断，a1不为空时通过，反之不通过；
-
-XCTAssert(expression, format...)当expression求值为TRUE时通过；
-
-XCTAssertTrue(expression, format...)当expression求值为TRUE时通过；
-
-XCTAssertFalse(expression, format...)当expression求值为False时通过；
-
-XCTAssertEqualObjects(a1, a2, format...)判断相等，[a1 isEqual:a2]值为TRUE时通过，其中一个不为空时，不通过；
-
-XCTAssertNotEqualObjects(a1, a2, format...)判断不等，[a1 isEqual:a2]值为False时通过；
-
-XCTAssertEqual(a1, a2, format...)判断相等（当a1和a2是 C语言标量、结构体或联合体时使用,实际测试发现NSString也可以）；
-
-XCTAssertNotEqual(a1, a2, format...)判断不等（当a1和a2是 C语言标量、结构体或联合体时使用）；
-
-XCTAssertEqualWithAccuracy(a1, a2, accuracy, format...)判断相等，（double或float类型）提供一个误差范围，当在误差范围（+/-accuracy）以内相等时通过测试；
-
-XCTAssertNotEqualWithAccuracy(a1, a2, accuracy, format...) 判断不等，（double或float类型）提供一个误差范围，当在误差范围以内不等时通过测试；
-
-XCTAssertThrows(expression, format...)异常测试，当expression发生异常时通过；反之不通过；（很变态） XCTAssertThrowsSpecific(expression, specificException, format...) 异常测试，当expression发生specificException异常时通过；反之发生其他异常或不发生异常均不通过；
-
-XCTAssertThrowsSpecificNamed(expression, specificException, exception_name, format...)异常测试，当expression发生具体异常、具体异常名称的异常时通过测试，反之不通过；
-
-XCTAssertNoThrow(expression, format…)异常测试，当expression没有发生异常时通过测试；
-
-XCTAssertNoThrowSpecific(expression, specificException, format...)异常测试，当expression没有发生具体异常、具体异常名称的异常时通过测试，反之不通过；
-
-XCTAssertNoThrowSpecificNamed(expression, specificException, exception_name, format...)异常测试，当expression没有发生具体异常、具体异常名称的异常时通过测试，反之不通过
-
-特别注意下XCTAssertEqualObjects和XCTAssertEqual。
-
-XCTAssertEqualObjects(a1, a2, format...)的判断条件是[a1 isEqual:a2]是否返回一个YES。
-
-XCTAssertEqual(a1, a2, format...)的判断条件是a1 == a2是否返回一个YES。
-
-文／SOI（简书作者）
-原文链接：http://www.jianshu.com/p/c3fe84fa7a13
-著作权归作者所有，转载请联系作者获得授权，并标注“简书作者”。
-*/
+//  V2.0 新增：核心队列/计数逻辑的单元测试。
+//  历史 bug（#17 #19 #20 #21）全部出在这部分纯逻辑上，用单测防回归。
+//
 
 #import <XCTest/XCTest.h>
-#import "LiveGiftShowModel.h"
+#import "../LiveSendGift/LiveGiftShowView/LiveGiftShowCustom.h"
+#import "../LiveSendGift/LiveGiftShowView/LiveGiftShowView.h"
+#import "../LiveSendGift/LiveGiftShowView/LiveGiftShowNumberView.h"
 
 @interface LiveSendGiftTests : XCTestCase
-@property (nonatomic ,strong) NSMutableArray * showViewArr;
+
+@property (nonatomic, strong) UIView *hostView;
+@property (nonatomic, strong) LiveGiftShowCustom *giftShow;
+
 @end
 
 @implementation LiveSendGiftTests
 
 - (void)setUp {
     [super setUp];
-    //每次测试前调用，可以在测试之前创建在test case方法中需要用到的一些对象等
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-    
-    self.showViewArr = [[NSMutableArray alloc]init];
-    [self.showViewArr addObject:@"kk"];
-    [self.showViewArr addObject:@"kk"];
-    [self.showViewArr addObject:@"kk"];
-    [self.showViewArr addObject:@11];
-    [self.showViewArr addObject:@33];
-    [self.showViewArr addObject:@"kk"];
-    [self.showViewArr addObject:@22];
-
-
+    self.hostView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 375, 667)];
+    self.giftShow = [LiveGiftShowCustom addToView:self.hostView y:0];
 }
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    //每次测试结束时调用tearDown方法
-    
-    
-    
-    [super tearDown];
+- (LiveGiftShowModel *)modelWithUserId:(NSString *)userId name:(NSString *)name giftType:(NSString *)type {
+    LiveUserModel *user = [[LiveUserModel alloc] init];
+    user.userId = userId;
+    user.name = name;
+    LiveGiftListModel *gift = [[LiveGiftListModel alloc] init];
+    gift.type = type;
+    gift.name = @"测试礼物";
+    return [LiveGiftShowModel giftModel:gift userModel:user];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-    //1：定义变量和预期，2：执行方法得到实际值，3：断言
-    LiveGiftShowModel * model = [[LiveGiftShowModel alloc]init];
-    NSString * key = [self getDictKey:model];
-    
-    XCTAssertNotNil(key,@"key is nil");
-    
-}
-
-- (NSString *)getDictKey:(LiveGiftShowModel *)model{
-    //默认以 用户名+礼物类型 为key
-    NSString * key = [NSString stringWithFormat:@"%@%@",model.user.name,model.giftModel.type];
-    return key;
-}
-
-
-- (void)testSort{
-    NSLog(@"begin sort == %@",self.showViewArr);
-    for (int i = 0; i < self.showViewArr.count; i++) {
-        id current = self.showViewArr[i];
-        if ([current isKindOfClass:[NSString class]]){
-            if (i+1 < self.showViewArr.count) {
-                [self searchLiveShowViewFrom:i+1];
-            }
+- (NSArray<LiveGiftShowView *> *)visibleBanners {
+    NSMutableArray *banners = [NSMutableArray array];
+    for (UIView *sub in self.giftShow.subviews) {
+        if ([sub isKindOfClass:[LiveGiftShowView class]]) {
+            [banners addObject:sub];
         }
     }
-     NSLog(@"end Sort == %@",self.showViewArr);
-}
-- (void)searchLiveShowViewFrom:(int)i{
-    for (int j = i; j < self.showViewArr.count; j++) {
-        id  next = self.showViewArr[j];
-        if (![next isKindOfClass:[NSString class]]) {
-//            next.index = i-1;
-            [self.showViewArr exchangeObjectAtIndex:i-1 withObjectAtIndex:j];
-            NSLog(@"i-1 == %zi , j = %zi",i-1,j);
-            return;
-        }
-    }
+    return banners;
 }
 
+/// 数字视图：显式自增替代旧的副作用 getter，计数语义必须稳定
+- (void)testNumberViewIncrease {
+    LiveGiftShowNumberView *numberView = [[LiveGiftShowNumberView alloc] init];
+    [numberView resetNumber:5];
+    XCTAssertEqual([numberView increaseNumber], 5, @"重置后首次自增应返回起点值");
+    XCTAssertEqual([numberView increaseNumber], 6);
+    XCTAssertEqual([numberView currentNumber], 6, @"currentNumber 应为最后一次自增返回的值");
+    [numberView resetNumber:1];
+    XCTAssertEqual([numberView increaseNumber], 1, @"重置后计数应重新开始");
+}
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        //性能测试方法，通过测试block中方法执行的时间，比对设定的标准值和偏差觉得是否可以通过测试
-        // Put the code you want to measure the time of here.
-    }];
+/// 同名用户必须靠 userId 区分，不能被合并成一条弹幕
+- (void)testSameNameDifferentUserIdCreatesTwoBanners {
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"1001" name:@"小明" giftType:@"0"]];
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"1002" name:@"小明" giftType:@"0"]];
+    XCTAssertEqual([self visibleBanners].count, 2, @"同名不同 userId 应产生两条弹幕");
+}
+
+/// 同一用户同一礼物应合并为一条弹幕并计数
+- (void)testSameUserSameGiftMergesIntoOneBanner {
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"1001" name:@"小明" giftType:@"0"]];
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"1001" name:@"小明" giftType:@"0"]];
+    NSArray<LiveGiftShowView *> *banners = [self visibleBanners];
+    XCTAssertEqual(banners.count, 1);
+    XCTAssertEqual([banners.firstObject.numberView currentNumber], 2, @"两次添加应计数到 2");
+}
+
+/// 轨道数量上限 + 队列模式下同 key 等待模型合并（issue #19/#21 的回归防线）
+- (void)testMaxRailwayCountCapAndQueueMerge {
+    self.giftShow.addMode = LiveGiftAddModeQueue;
+    self.giftShow.maxRailwayCount = 2;
+
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"1" name:@"a" giftType:@"0"]];
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"2" name:@"b" giftType:@"0"]];
+    XCTAssertEqual([self visibleBanners].count, 2, @"最多显示 maxRailwayCount 条");
+
+    // 第三个用户进入等待队列
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"3" name:@"c" giftType:@"0"]];
+    NSArray *waitQueue = [self.giftShow valueForKey:@"waitQueueArr"];
+    XCTAssertEqual([self visibleBanners].count, 2);
+    XCTAssertEqual(waitQueue.count, 1, @"超出上限的弹幕应进入等待队列");
+
+    // 同 key 再来一条，应合并次数而不是排两条
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"3" name:@"c" giftType:@"0"]];
+    waitQueue = [self.giftShow valueForKey:@"waitQueueArr"];
+    XCTAssertEqual(waitQueue.count, 1, @"同 key 等待模型应合并");
+    LiveGiftShowModel *merged = waitQueue.firstObject;
+    XCTAssertEqual(merged.toNumber, 2, @"合并后 toNumber 应累加");
+}
+
+/// 公开 API 从后台线程调用不应崩溃，且弹幕最终正常上屏
+- (void)testBackgroundThreadAddIsSafe {
+    XCTestExpectation *exp = [self expectationWithDescription:@"background add"];
+    LiveGiftShowModel *model = [self modelWithUserId:@"1001" name:@"小明" giftType:@"0"];
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0), ^{
+        [self.giftShow addLiveGiftShowModel:model];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [exp fulfill];
+        });
+    });
+    [self waitForExpectations:@[exp] timeout:2];
+    XCTAssertEqual([self visibleBanners].count, 1, @"后台线程调用应自动转主队列并正常上屏");
+}
+
+/// issue #17：同 key 并发连击应合并进已有定时器，而不是叠加多个定时器导致数字失控
+- (void)testAnimatedTimerMergeForSameKey {
+    // toNumber 拉长到 20，保证第二发连击到来时首个定时器仍在存活期（20 ticks × 0.05s ≈ 1s）
+    LiveGiftShowModel *first = [self modelWithUserId:@"1001" name:@"小明" giftType:@"0"];
+    first.toNumber = 20;
+    first.interval = 0.05;
+    [self.giftShow animatedWithGiftModel:first];
+
+    // 等首个 tick 上屏，弹幕视图建立
+    XCTestExpectation *shown = [self expectationWithDescription:@"first tick"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [shown fulfill];
+    });
+    [self waitForExpectations:@[shown] timeout:2];
+    XCTAssertEqual([self visibleBanners].count, 1);
+    XCTAssertNotNil(first.animatedTimer, @"首个连击定时器应仍在运行");
+
+    // 同 key 第二次连击：应合并进 first 的定时器
+    LiveGiftShowModel *second = [self modelWithUserId:@"1001" name:@"小明" giftType:@"0"];
+    second.toNumber = 5;
+    second.interval = 0.05;
+    [self.giftShow animatedWithGiftModel:second];
+
+    XCTAssertEqual(first.toNumber, 25, @"同 key 连击应合并 toNumber");
+    XCTAssertNil(second.animatedTimer, @"不应为第二个模型开新定时器");
+
+    // 等定时器跑完：最终计数应恰好为 25，且定时器已释放（不会“停不下来”）
+    XCTestExpectation *finished = [self expectationWithDescription:@"timer finished"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [finished fulfill];
+    });
+    [self waitForExpectations:@[finished] timeout:5];
+
+    XCTAssertNil(first.animatedTimer, @"连击结束后定时器应释放");
+    XCTAssertEqual([[self visibleBanners].firstObject.numberView currentNumber], 25, @"最终计数应恰好等于合并后的 toNumber");
 }
 
 @end
