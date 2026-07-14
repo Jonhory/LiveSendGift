@@ -33,11 +33,26 @@ func liveGiftImage(_ name: String) -> UIImage? {
     return UIImage(named: name, in: classBundle, compatibleWith: nil)
 }
 
+/// 跨并发域传递非 Sendable 值的封装（仅在明确回到主线程使用时安全）
+private struct UncheckedSendableBox<T>: @unchecked Sendable {
+    let value: T
+}
+
+/// 单张图片响应体上限：礼物图/头像都是小图，超过视为异常来源直接丢弃
+private let liveGiftMaxImageBytes = 10 * 1024 * 1024
+
 /// 默认网络图片加载器：URLSession + NSCache。
 /// ponytail: 无磁盘缓存与请求合并，重度场景请注入 Kingfisher/SDWebImage 等专业加载器。
+@MainActor
 enum LiveGiftDefaultWebImageLoader {
 
-    private static let cache = NSCache<NSString, UIImage>()
+    private static let cache: NSCache<NSString, UIImage> = {
+        let cache = NSCache<NSString, UIImage>()
+        // 以字节为 cost 限制内存缓存总量，避免不可信 URL 撑爆内存
+        cache.totalCostLimit = 50 * 1024 * 1024
+        cache.countLimit = 200
+        return cache
+    }()
 
     static func load(_ imageView: UIImageView, _ urlString: String?, _ placeholder: UIImage?) {
         imageView.image = placeholder
@@ -46,11 +61,12 @@ enum LiveGiftDefaultWebImageLoader {
             imageView.image = cached
             return
         }
+        let box = UncheckedSendableBox(value: imageView)
         URLSession.shared.dataTask(with: url) { data, _, _ in
-            guard let data, let image = UIImage(data: data) else { return }
-            cache.setObject(image, forKey: urlString as NSString)
+            guard let data, data.count <= liveGiftMaxImageBytes, let image = UIImage(data: data) else { return }
             DispatchQueue.main.async {
-                imageView.image = image
+                cache.setObject(image, forKey: urlString as NSString, cost: data.count)
+                box.value.image = image
             }
         }.resume()
     }

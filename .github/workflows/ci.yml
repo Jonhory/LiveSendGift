@@ -6,12 +6,16 @@ on:
   pull_request:
     branches: [main]
 
+# 供应链最小权限：所有 job 只读代码
+permissions:
+  contents: read
+
 jobs:
   test:
     name: Build & Test
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Pod install
         run: pod install
@@ -28,7 +32,7 @@ jobs:
     name: Swift 版 SPM Test
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       # 仓库根目录同时存在 workspace 与 Package.swift，
       # xcodebuild 会优先解析 workspace，故在干净目录中按 SPM 包测试
@@ -45,7 +49,15 @@ jobs:
     name: Pod lint
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: 版本一致性检查（podspec ↔ Info.plist）
+        run: |
+          POD_VERSION=$(grep -o "s.version *= *'[^']*'" LiveSendGift.podspec | grep -o "[0-9.]*")
+          SWIFT_POD_VERSION=$(grep -o "s.version *= *'[^']*'" LiveSendGiftSwift.podspec | grep -o "[0-9.]*")
+          PLIST_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" LiveSendGift/Info.plist)
+          echo "LiveSendGift.podspec=$POD_VERSION LiveSendGiftSwift.podspec=$SWIFT_POD_VERSION Info.plist=$PLIST_VERSION"
+          test "$POD_VERSION" = "$SWIFT_POD_VERSION" && test "$POD_VERSION" = "$PLIST_VERSION"
 
       - name: Lint podspec（默认 subspec 含 SDWebImage）
         run: pod lib lint LiveSendGift.podspec --allow-warnings

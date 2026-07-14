@@ -215,7 +215,7 @@ static NSInteger kTag = 200;
         _firstUser = [[LiveUserModel alloc] init];
         _firstUser.userId = @"1001";
         _firstUser.name = @"first";
-        _firstUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbg8tb6wqj20gl0qogni.jpg";
+        _firstUser.iconUrl = @"https://ww1.sinaimg.cn/large/c6a1cfeagy1ffbg8tb6wqj20gl0qogni.jpg";
     }
     return _firstUser;
 }
@@ -225,7 +225,7 @@ static NSInteger kTag = 200;
         _secondUser = [[LiveUserModel alloc] init];
         _secondUser.userId = @"1002";
         _secondUser.name = @"second";
-        _secondUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgd5cr5nj209s0akgly.jpg";
+        _secondUser.iconUrl = @"https://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgd5cr5nj209s0akgly.jpg";
     }
     return _secondUser;
 }
@@ -235,7 +235,7 @@ static NSInteger kTag = 200;
         _thirdUser = [[LiveUserModel alloc] init];
         _thirdUser.userId = @"1003";
         _thirdUser.name = @"third";
-        _thirdUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgeuwk21j205k05kq2w.jpg";
+        _thirdUser.iconUrl = @"https://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgeuwk21j205k05kq2w.jpg";
     }
     return _thirdUser;
 }
@@ -245,7 +245,7 @@ static NSInteger kTag = 200;
         _fourthUser = [[LiveUserModel alloc] init];
         _fourthUser.userId = @"1004";
         _fourthUser.name = @"fourth";
-        _fourthUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgfpf5bgj205k07v3yk.jpg";
+        _fourthUser.iconUrl = @"https://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgfpf5bgj205k07v3yk.jpg";
     }
     return _fourthUser;
 }
@@ -255,7 +255,7 @@ static NSInteger kTag = 200;
         _fifthUser = [[LiveUserModel alloc] init];
         _fifthUser.userId = @"1005";
         _fifthUser.name = @"fifth";
-        _fifthUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgg5427qj205k05k748.jpg";
+        _fifthUser.iconUrl = @"https://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgg5427qj205k05k748.jpg";
     }
     return _fifthUser;
 }
@@ -293,23 +293,23 @@ static NSInteger kTag = 200;
             [self giftWithType:@"0"
                           name:@"松果"
                      rewardMsg:@"扔出一颗松果"
-                        picUrl:@"http://ww3.sinaimg.cn/large/c6a1cfeagw1fbks9dl7ryj205k05kweo.jpg"],
+                        picUrl:@"https://ww3.sinaimg.cn/large/c6a1cfeagw1fbks9dl7ryj205k05kweo.jpg"],
             [self giftWithType:@"1"
                           name:@"花束"
                      rewardMsg:@"献上一束花"
-                        picUrl:@"http://ww1.sinaimg.cn/large/c6a1cfeagw1fbksa4vf7uj205k05kaa0.jpg"],
+                        picUrl:@"https://ww1.sinaimg.cn/large/c6a1cfeagw1fbksa4vf7uj205k05kaa0.jpg"],
             [self giftWithType:@"2"
                           name:@"果汁"
                      rewardMsg:@"递上果汁"
-                        picUrl:@"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksajipb8j205k05kjri.jpg"],
+                        picUrl:@"https://ww2.sinaimg.cn/large/c6a1cfeagw1fbksajipb8j205k05kjri.jpg"],
             [self giftWithType:@"3"
                           name:@"棒棒糖"
                      rewardMsg:@"递上棒棒糖"
-                        picUrl:@"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksasl9qwj205k05kt8k.jpg"],
+                        picUrl:@"https://ww2.sinaimg.cn/large/c6a1cfeagw1fbksasl9qwj205k05kt8k.jpg"],
             [self giftWithType:@"4"
                           name:@"泡泡糖"
                      rewardMsg:@"一起吃泡泡糖吧"
-                        picUrl:@"http://a3.qpic.cn/psb?/V12A6SP10iIW9i/AL.CfLAFH*W.Ge1n*.LwpXSImK.Hm1eCMtt4rm5WvCA!/b/dFOyjUpCBwAA&bo=yADIAAAAAAABACc!&rf=viewer_4"],
+                        picUrl:@"https://a3.qpic.cn/psb?/V12A6SP10iIW9i/AL.CfLAFH*W.Ge1n*.LwpXSImK.Hm1eCMtt4rm5WvCA!/b/dFOyjUpCBwAA&bo=yADIAAAAAAABACc!&rf=viewer_4"],
         ];
     }
     return _giftDataSource;

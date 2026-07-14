@@ -30,21 +30,21 @@ public final class SwiftTestVC: UIViewController {
     private let users: [LiveGiftUser] = ["first", "second", "third", "fourth", "fifth"].enumerated().map {
         LiveGiftUser(
             userId: "\(2001 + $0.offset)", name: $0.element,
-            iconUrl: "http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbg8tb6wqj20gl0qogni.jpg")
+            iconUrl: "https://ww1.sinaimg.cn/large/c6a1cfeagy1ffbg8tb6wqj20gl0qogni.jpg")
     }
 
     private let gifts: [LiveGiftItem] = [
         LiveGiftItem(
-            type: "0", name: "松果", picUrl: "http://ww3.sinaimg.cn/large/c6a1cfeagw1fbks9dl7ryj205k05kweo.jpg",
+            type: "0", name: "松果", picUrl: "https://ww3.sinaimg.cn/large/c6a1cfeagw1fbks9dl7ryj205k05kweo.jpg",
             rewardMsg: "扔出一颗松果"),
         LiveGiftItem(
-            type: "1", name: "花束", picUrl: "http://ww1.sinaimg.cn/large/c6a1cfeagw1fbksa4vf7uj205k05kaa0.jpg",
+            type: "1", name: "花束", picUrl: "https://ww1.sinaimg.cn/large/c6a1cfeagw1fbksa4vf7uj205k05kaa0.jpg",
             rewardMsg: "献上一束花"),
         LiveGiftItem(
-            type: "2", name: "果汁", picUrl: "http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksajipb8j205k05kjri.jpg",
+            type: "2", name: "果汁", picUrl: "https://ww2.sinaimg.cn/large/c6a1cfeagw1fbksajipb8j205k05kjri.jpg",
             rewardMsg: "递上果汁"),
         LiveGiftItem(
-            type: "3", name: "棒棒糖", picUrl: "http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksasl9qwj205k05kt8k.jpg",
+            type: "3", name: "棒棒糖", picUrl: "https://ww2.sinaimg.cn/large/c6a1cfeagw1fbksasl9qwj205k05kt8k.jpg",
             rewardMsg: "递上棒棒糖"),
         LiveGiftItem(type: "4", name: "泡泡糖", picUrl: "", rewardMsg: "一起吃泡泡糖吧"),
     ]

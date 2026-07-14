@@ -1,0 +1,13 @@
+version: 2
+updates:
+  # GitHub Actions 版本更新（含 SHA pin 的升级 PR）
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+
+  # Swift Package Manager 依赖（SDWebImage）
+  - package-ecosystem: swift
+    directory: /
+    schedule:
+      interval: weekly
