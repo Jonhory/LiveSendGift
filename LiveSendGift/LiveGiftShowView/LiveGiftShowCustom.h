@@ -114,21 +114,21 @@ typedef void (^LiveGiftWebImageLoader)(UIImageView *imageView, NSString *_Nullab
  *
  *  @param isDebug 开发的时候最好打开，默认是NO
  */
-- (void)enableInterfaceDebug:(BOOL)isDebug __deprecated_msg("Use the interfaceDebugEnabled property");
+- (void)enableInterfaceDebug:(BOOL)isDebug __deprecated_msg("Use the interfaceDebugEnabled property. Will be removed in 3.0");
 
 /**
  设置弹幕消失模式
 
  @param model 弹幕消失模式
  */
-- (void)setHiddenModel:(LiveGiftHiddenMode)model __deprecated_msg("Use the hiddenMode property");
+- (void)setHiddenModel:(LiveGiftHiddenMode)model __deprecated_msg("Use the hiddenMode property. Will be removed in 3.0");
 
 /**
  设置弹幕出现模式
 
  @param model 弹幕出现模式
  */
-- (void)setAppearModel:(LiveGiftAppearMode)model __deprecated_msg("Use the appearMode property");
+- (void)setAppearModel:(LiveGiftAppearMode)model __deprecated_msg("Use the appearMode property. Will be removed in 3.0");
 
 /**
  增加或者更新一个礼物视图

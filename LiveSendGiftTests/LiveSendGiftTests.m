@@ -76,6 +76,59 @@
     XCTAssertEqual([banners.firstObject.numberView currentNumber], 2, @"两次添加应计数到 2");
 }
 
+/// 轨道交换：更新计数后，礼物数大的弹幕应排在上面（历史 bug 高发区）
+- (void)testRailwaySortByGiftCount {
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"1" name:@"a" giftType:@"0"] showNumber:1];
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"2" name:@"b" giftType:@"0"] showNumber:5];
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"3" name:@"c" giftType:@"0"] showNumber:3];
+
+    // 更新已有弹幕触发排序：user1 从 1 -> 2
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"1" name:@"a" giftType:@"0"]];
+
+    NSArray *showViewArr = [self.giftShow valueForKey:@"showViewArr"];
+    NSMutableArray *counts = [NSMutableArray array];
+    for (id obj in showViewArr) {
+        if ([obj isKindOfClass:[LiveGiftShowView class]]) {
+            [counts addObject:@([[(LiveGiftShowView *)obj numberView] currentNumber])];
+        }
+    }
+    NSArray *expected = @[ @5, @3, @2 ];
+    XCTAssertEqualObjects(counts, expected, @"槽位应按计数降序排列");
+}
+
+/// 弹幕移除后空槽补位，新弹幕复用空出的轨道
+- (void)testFreedSlotIsCompactedAndReused {
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"1" name:@"a" giftType:@"0"] showNumber:1];
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"2" name:@"b" giftType:@"0"] showNumber:3];
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"3" name:@"c" giftType:@"0"] showNumber:2];
+
+    // 模拟第 0 槽弹幕超时移除
+    NSArray *showViewArr = [self.giftShow valueForKey:@"showViewArr"];
+    LiveGiftShowView *first = showViewArr.firstObject;
+    XCTAssertTrue([first isKindOfClass:[LiveGiftShowView class]]);
+    first.liveGiftShowViewTimeOut(first);
+
+    showViewArr = [self.giftShow valueForKey:@"showViewArr"];
+    NSMutableArray *counts = [NSMutableArray array];
+    for (id obj in showViewArr) {
+        if ([obj isKindOfClass:[LiveGiftShowView class]]) {
+            [counts addObject:@([[(LiveGiftShowView *)obj numberView] currentNumber])];
+        }
+    }
+    NSArray *expected = @[ @3, @2 ];
+    XCTAssertEqualObjects(counts, expected, @"剩余弹幕应前移补位并保持降序");
+
+    // 新弹幕占用空槽
+    [self.giftShow addLiveGiftShowModel:[self modelWithUserId:@"9" name:@"d" giftType:@"0"]];
+    NSInteger viewCount = 0;
+    for (id obj in [self.giftShow valueForKey:@"showViewArr"]) {
+        if ([obj isKindOfClass:[LiveGiftShowView class]]) {
+            viewCount++;
+        }
+    }
+    XCTAssertEqual(viewCount, 3, @"新弹幕应复用空出的轨道");
+}
+
 /// 轨道数量上限 + 队列模式下同 key 等待模型合并（issue #19/#21 的回归防线）
 - (void)testMaxRailwayCountCapAndQueueMerge {
     self.giftShow.addMode = LiveGiftAddModeQueue;

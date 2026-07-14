@@ -66,8 +66,7 @@ public final class LiveGiftShowView: UIView {
     private let sendLabel = UILabel()
     private let giftIV = UIImageView()
 
-    private var liveTimer: Timer?
-    private var liveTimerSeconds = 0
+    private var timeoutWorkItem: DispatchWorkItem?
     private var isNumberSet = false
     /// 上次数字位数，位数不变时跳过约束更新
     private var lastNumberLength = 0
@@ -87,9 +86,7 @@ public final class LiveGiftShowView: UIView {
         setupContentConstraints()
     }
 
-    deinit {
-        stopTimer()
-    }
+    // 无需 deinit 清理：timeoutWorkItem 仅弱引用 self，视图释放后到点空转一次即结束
 
     // MARK: - 计数
 
@@ -129,8 +126,6 @@ public final class LiveGiftShowView: UIView {
 
     /// 处理显示数字，重置消失倒计时并播放缩放动画
     private func handleNumber(_ number: Int) {
-        liveTimerSeconds = 0
-
         // 位数没变时无需更新约束，连击场景下减少布局开销
         let length = String(number).count
         if length != lastNumberLength {
@@ -155,29 +150,26 @@ public final class LiveGiftShowView: UIView {
                 self.numberView.transform = .identity
             })
 
-        startTimerIfNeeded()
+        // 计数变化即重置消失倒计时；相比每秒轮询的 Timer 更省电
+        scheduleTimeout(after: TimeInterval(timeOut) + 1)
     }
 
-    private func startTimerIfNeeded() {
-        guard liveTimer == nil else { return }
-        let timer = Timer(timeInterval: 1.0, repeats: true) { [weak self] _ in
-            self?.liveTimerRunning()
+    private func scheduleTimeout(after delay: TimeInterval) {
+        timeoutWorkItem?.cancel()
+        let item = DispatchWorkItem { [weak self] in
+            self?.timeoutFired()
         }
-        RunLoop.current.add(timer, forMode: .common)
-        liveTimer = timer
+        timeoutWorkItem = item
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: item)
     }
 
-    private func liveTimerRunning() {
-        guard superview != nil else {
-            stopTimer()
-            return
-        }
-
-        liveTimerSeconds += 1
-        guard liveTimerSeconds > timeOut else { return }
+    private func timeoutFired() {
+        guard superview != nil else { return }
 
         if isAnimating {
+            // 正在交换动画，宽限 1 秒后重试（对齐旧轮询行为）
             isAnimating = false
+            scheduleTimeout(after: 1)
             return
         }
         isAnimating = true
@@ -205,13 +197,6 @@ public final class LiveGiftShowView: UIView {
                     self.removeFromSuperview()
                 })
         }
-
-        stopTimer()
-    }
-
-    private func stopTimer() {
-        liveTimer?.invalidate()
-        liveTimer = nil
     }
 
     private func setupContentConstraints() {

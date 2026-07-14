@@ -37,8 +37,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
 @property (nonatomic, weak) UILabel *sendLabel;  /**< 送出 */
 @property (nonatomic, weak) UIImageView *giftIV; /**< 礼物图片 */
 
-@property (nonatomic, strong) NSTimer *liveTimer; /**< 定时器控制自身移除 */
-@property (nonatomic, assign) NSInteger liveTimerForSecond;
+@property (nonatomic, strong) dispatch_block_t timeoutBlock; /**< 超时移除任务，计数变化时重置 */
 
 @property (nonatomic, assign) BOOL isSetNumber;
 @property (nonatomic, assign) NSUInteger lastNumberLength;               /**< 上次数字位数，位数不变时跳过约束更新 */
@@ -53,7 +52,6 @@ static CGFloat const kGiftNumberWidth = 15.0;
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, kViewWidth, kViewHeight)];
     if (self) {
-        self.liveTimerForSecond = 0;
         [self setupContentContraints];
         self.createDate = [NSDate date];
         self.kTimeOut = 3;
@@ -66,7 +64,6 @@ static CGFloat const kGiftNumberWidth = 15.0;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.liveTimerForSecond = 0;
         [self setupContentContraints];
     }
     return self;
@@ -154,7 +151,6 @@ static CGFloat const kGiftNumberWidth = 15.0;
  @param number 显示数字的值
  */
 - (void)handleNumber:(NSInteger)number {
-    self.liveTimerForSecond = 0;
     // 根据数字修改self.giftIV的约束 比如 1 占 10 的宽度，10 占 20的宽度
     // 位数没变时无需更新约束，连击场景下减少布局开销
     NSString *numStr = [NSString stringWithFormat:@"%zi", number];
@@ -176,21 +172,34 @@ static CGFloat const kGiftNumberWidth = 15.0;
             self.numberView.transform = CGAffineTransformIdentity;
         }];
 
-    [self.liveTimer setFireDate:[NSDate date]];
+    // 计数变化即重置消失倒计时；相比每秒轮询的 NSTimer 更省电
+    [self scheduleTimeoutAfter:self.kTimeOut + 1];
 }
 
-- (void)liveTimerRunning {
+/// 重排超时任务，delay 秒后未再收到计数变化则触发移除
+- (void)scheduleTimeoutAfter:(NSTimeInterval)delay {
+    if (self.timeoutBlock) {
+        dispatch_block_cancel(self.timeoutBlock);
+    }
+    __weak __typeof(self) weakSelf = self;
+    dispatch_block_t block = dispatch_block_create(0, ^{
+        [weakSelf timeoutFired];
+    });
+    self.timeoutBlock = block;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), block);
+}
+
+- (void)timeoutFired {
     if (!self.superview) {
-        [self stopTimer];
         return;
     }
-
-    self.liveTimerForSecond += 1;
-    if (self.liveTimerForSecond > self.kTimeOut) {
-        if (self.isAnimation == YES) {
-            self.isAnimation = NO;
-            return;
-        }
+    if (self.isAnimation == YES) {
+        // 正在交换动画，宽限 1 秒后重试（对齐旧轮询行为）
+        self.isAnimation = NO;
+        [self scheduleTimeoutAfter:1];
+        return;
+    }
+    {
         self.isAnimation = YES;
         self.isLeavingAnimation = YES;
         // 用 window 宽度计算飞出距离，iPad 分屏等非全屏场景下 mainScreen 宽度会偏大
@@ -225,8 +234,6 @@ static CGFloat const kGiftNumberWidth = 15.0;
                     [self removeFromSuperview];
                 }];
         }
-
-        [self stopTimer];
     }
 }
 
@@ -346,31 +353,10 @@ static CGFloat const kGiftNumberWidth = 15.0;
 }
 
 
-- (NSTimer *)liveTimer {
-    if (!_liveTimer) {
-        // block 版 API + weak，避免 timer 强引用 view：
-        // 宿主直接移除容器时，view 不再被 runloop 拖住延迟释放
-        __weak __typeof(self) weakSelf = self;
-        _liveTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                                     repeats:YES
-                                                       block:^(NSTimer *_Nonnull timer) {
-                                                           [weakSelf liveTimerRunning];
-                                                       }];
-        [[NSRunLoop currentRunLoop] addTimer:_liveTimer forMode:NSRunLoopCommonModes];
-    }
-    return _liveTimer;
-}
-
-- (void)stopTimer {
-    if (_liveTimer) {
-        [_liveTimer invalidate];
-        _liveTimer = nil;
-    }
-}
-
 - (void)dealloc {
-    // timer 不再强引用 self，需在视图销毁时主动停掉
-    [self stopTimer];
+    if (_timeoutBlock) {
+        dispatch_block_cancel(_timeoutBlock);
+    }
 }
 
 @end

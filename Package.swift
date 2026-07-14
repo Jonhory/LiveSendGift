@@ -35,6 +35,10 @@ let package = Package(
             resources: [
                 .process("LiveSendGiftAssets.xcassets"),
                 .copy("PrivacyInfo.xcprivacy")
+            ],
+            swiftSettings: [
+                // 为 Swift 6 迁移提前收紧并发检查
+                .enableExperimentalFeature("StrictConcurrency")
             ]
         ),
         .testTarget(

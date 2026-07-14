@@ -73,6 +73,41 @@ final class LiveSendGiftSwiftTests: XCTestCase {
         XCTAssertEqual(giftShow.waitQueue.first?.toNumber, 2, "合并后 toNumber 应累加")
     }
 
+    /// 轨道交换：更新计数后，礼物数大的弹幕应排在上面（历史 bug 高发区）
+    func testRailwaySortByGiftCount() {
+        giftShow.add(makeModel(userId: "1", name: "a", giftType: "0"), showNumber: 1)
+        giftShow.add(makeModel(userId: "2", name: "b", giftType: "0"), showNumber: 5)
+        giftShow.add(makeModel(userId: "3", name: "c", giftType: "0"), showNumber: 3)
+
+        // 更新已有弹幕触发排序：user1 从 1 -> 2
+        giftShow.add(makeModel(userId: "1", name: "a", giftType: "0"))
+
+        let counts = giftShow.slots.compactMap { $0?.numberView.currentNumber }
+        XCTAssertEqual(counts, [5, 3, 2], "槽位应按计数降序排列")
+        // Y 值应与槽位一致
+        for (i, slot) in giftShow.slots.enumerated() {
+            XCTAssertEqual(slot?.frame.origin.y, CGFloat(i) * (kLiveGiftViewHeight + 50), "第 \(i) 槽 Y 值不匹配")
+        }
+    }
+
+    /// 弹幕移除后空槽补位，新弹幕复用空出的轨道
+    func testFreedSlotIsCompactedAndReused() {
+        giftShow.add(makeModel(userId: "1", name: "a", giftType: "0"), showNumber: 1)
+        giftShow.add(makeModel(userId: "2", name: "b", giftType: "0"), showNumber: 3)
+        giftShow.add(makeModel(userId: "3", name: "c", giftType: "0"), showNumber: 2)
+
+        // 模拟第 0 槽弹幕超时移除
+        let first = giftShow.slots[0]!
+        first.onTimeOut?(first)
+
+        XCTAssertEqual(giftShow.slots.compactMap { $0?.numberView.currentNumber }, [3, 2], "剩余弹幕应前移补位并保持降序")
+        XCTAssertNil(giftShow.slots[2], "末位槽应空出")
+
+        // 新弹幕占用空槽
+        giftShow.add(makeModel(userId: "9", name: "d", giftType: "0"))
+        XCTAssertEqual(giftShow.slots.compactMap { $0 }.count, 3, "新弹幕应复用空出的轨道")
+    }
+
     /// 注入自定义图片加载器后，头像与礼物图都应走注入的加载器
     func testInjectedImageLoaderIsUsed() {
         var loadedUrls: [String] = []
