@@ -118,6 +118,13 @@ static NSInteger kTag = 200;
     animateBtn.center = CGPointMake(SCREEN.width/2, SCREEN.height - 80);
 }
 
+// 全面屏适配：底部按钮避开安全区
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    UIButton * animateBtn = [self.view viewWithTag:205];
+    animateBtn.center = CGPointMake(SCREEN.width/2, SCREEN.height - self.view.safeAreaInsets.bottom - 60);
+}
+
 /*
  以下是测试方法：
  分别是三种添加视图的方法

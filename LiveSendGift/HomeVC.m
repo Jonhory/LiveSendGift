@@ -36,6 +36,18 @@ static NSInteger kTag = 300;
     [self btn4];
 }
 
+// 全面屏适配：按安全区顶部重新排列按钮
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    CGFloat top = self.view.safeAreaInsets.top + 20;
+    NSArray<UIButton *> *btns = @[self.btn1, self.btn2, self.btn3, self.btn4];
+    [btns enumerateObjectsUsingBlock:^(UIButton *btn, NSUInteger i, BOOL *stop) {
+        CGRect f = btn.frame;
+        f.origin.y = top + i * 50;
+        btn.frame = f;
+    }];
+}
+
 - (void)goTestVC:(UIButton *)btn {
     NSLog(@"%@", btn.titleLabel.text);
     
@@ -83,7 +95,7 @@ static NSInteger kTag = 300;
         _btn4 = [self createBtnWithTag:3 title:@"直接出现 左消失 自上而下 队列模式 轨道固定"];
         _btn4.backgroundColor = [UIColor blueColor];
     }
-    return _btn3;
+    return _btn4;
 }
 
 - (UIButton *)createBtnWithTag:(NSInteger)tag title:(NSString *)title {
