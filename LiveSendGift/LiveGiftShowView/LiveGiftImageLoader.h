@@ -9,7 +9,7 @@
 
 #import <UIKit/UIKit.h>
 
-static inline UIImage * _Nullable LiveGiftImage(NSString * _Nonnull name) {
+static inline UIImage *_Nullable LiveGiftImage(NSString *_Nonnull name) {
     // 手动拷贝集成 / demo：资源编译进主 bundle
     UIImage *image = [UIImage imageNamed:name];
     if (image) {

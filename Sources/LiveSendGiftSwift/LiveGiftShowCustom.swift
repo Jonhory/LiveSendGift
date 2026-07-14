@@ -26,7 +26,8 @@ public final class LiveGiftShowCustom: UIView {
     /// 最大礼物轨道数量，默认 3
     public var maxRailwayCount: Int = 3 {
         didSet {
-            heightConstraint?.constant = (kLiveGiftViewHeight + Self.giftViewMargin) * CGFloat(maxRailwayCount - 1) + kLiveGiftViewHeight
+            heightConstraint?.constant =
+                (kLiveGiftViewHeight + Self.giftViewMargin) * CGFloat(maxRailwayCount - 1) + kLiveGiftViewHeight
         }
     }
     /// 轨道能否进行交换动画，默认 true
@@ -70,7 +71,8 @@ public final class LiveGiftShowCustom: UIView {
         superView.addSubview(v)
         v.translatesAutoresizingMaskIntoConstraints = false
         let height = v.heightAnchor.constraint(
-            equalToConstant: (kLiveGiftViewHeight + giftViewMargin) * CGFloat(v.maxRailwayCount - 1) + kLiveGiftViewHeight)
+            equalToConstant: (kLiveGiftViewHeight + giftViewMargin) * CGFloat(v.maxRailwayCount - 1)
+                + kLiveGiftViewHeight)
         v.heightConstraint = height
         NSLayoutConstraint.activate([
             v.widthAnchor.constraint(equalToConstant: kLiveGiftViewWidth),
@@ -208,7 +210,8 @@ public final class LiveGiftShowCustom: UIView {
         // 多个并发定时器同时驱动同一个视图自增，是数字异常膨胀（ObjC 版 issue #17）的根源。
         let key = dictKey(showModel)
         if let showing = showViewDict[key], let runningModel = showing.model,
-           runningModel.animatedTimer != nil, runningModel !== showModel {
+            runningModel.animatedTimer != nil, runningModel !== showModel
+        {
             runningModel.toNumber += showModel.toNumber
             return
         }
@@ -223,9 +226,10 @@ public final class LiveGiftShowCustom: UIView {
 
         let timer = DispatchSource.makeTimerSource(queue: .main)
         // 容差取间隔的 10%，允许系统合并定时器唤醒，降低多弹幕连击时的瞬时 CPU
-        timer.schedule(deadline: .now(),
-                       repeating: showModel.interval,
-                       leeway: .milliseconds(Int(showModel.interval * 100)))
+        timer.schedule(
+            deadline: .now(),
+            repeating: showModel.interval,
+            leeway: .milliseconds(Int(showModel.interval * 100)))
         // 创建即持有，保证合并判断（animatedTimer != nil）在首个 tick 之前就生效
         showModel.animatedTimer = timer
 
@@ -254,13 +258,16 @@ public final class LiveGiftShowCustom: UIView {
     private func appear(_ view: LiveGiftShowView) {
         guard appearMode == .left else { return }
         view.isAppearAnimation = true
-        UIView.animate(withDuration: appearAnimationTime, animations: {
-            var f = view.frame
-            f.origin.x = 0
-            view.frame = f
-        }, completion: { _ in
-            view.isAppearAnimation = false
-        })
+        UIView.animate(
+            withDuration: appearAnimationTime,
+            animations: {
+                var f = view.frame
+                f.origin.x = 0
+                view.frame = f
+            },
+            completion: { _ in
+                view.isAppearAnimation = false
+            })
     }
 
     /// 空槽位补位 + 按当前计数降序排序
@@ -279,7 +286,8 @@ public final class LiveGiftShowCustom: UIView {
         for i in 0..<slots.count {
             for j in i..<slots.count {
                 guard let viewI = slots[i], let viewJ = slots[j],
-                      viewI.numberView.currentNumber < viewJ.numberView.currentNumber else { continue }
+                    viewI.numberView.currentNumber < viewJ.numberView.currentNumber
+                else { continue }
                 viewI.index = j
                 viewI.isAnimating = true
                 viewJ.index = i

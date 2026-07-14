@@ -6,8 +6,8 @@
 //  Copyright © 2016年 com.wujh. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "LiveGiftShowCustom.h"
+#import <UIKit/UIKit.h>
 
 @interface UIColor (RandomColor)
 + (UIColor *)randomColor;

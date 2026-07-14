@@ -9,26 +9,26 @@
 
 #import "TestVC.h"
 
-#define RGB(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]
+#define RGB(r, g, b) [UIColor colorWithRed:r / 255.0 green:g / 255.0 blue:b / 255.0 alpha:1.0]
 #define SCREEN [UIScreen mainScreen].bounds.size
 static NSInteger kTag = 200;
 
 @implementation UIColor (RandomColor)
 
-+ (UIColor *)randomColor{
-    CGFloat hue = ( arc4random() % 256 / 256.0 );  //0.0 to 1.0
-    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  // 0.5 to 1.0,away from white
-    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //0.5 to 1.0,away from black
++ (UIColor *)randomColor {
+    CGFloat hue = (arc4random() % 256 / 256.0);              // 0.0 to 1.0
+    CGFloat saturation = (arc4random() % 128 / 256.0) + 0.5; // 0.5 to 1.0,away from white
+    CGFloat brightness = (arc4random() % 128 / 256.0) + 0.5; // 0.5 to 1.0,away from black
     return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
 }
 @end
 
-@interface TestVC ()<LiveGiftShowCustomDelegate>
+@interface TestVC () <LiveGiftShowCustomDelegate>
 
-@property (nonatomic ,weak) LiveGiftShowCustom * customGiftShow;
+@property (nonatomic, weak) LiveGiftShowCustom *customGiftShow;
 
-@property (nonatomic ,strong) NSArray <LiveGiftListModel *>* giftArr;
-@property (nonatomic ,strong) NSArray <LiveGiftListModel *>* giftDataSource;
+@property (nonatomic, strong) NSArray<LiveGiftListModel *> *giftArr;
+@property (nonatomic, strong) NSArray<LiveGiftListModel *> *giftDataSource;
 
 @property (nonatomic, strong) LiveUserModel *firstUser;
 @property (nonatomic, strong) LiveUserModel *secondUser;
@@ -37,22 +37,22 @@ static NSInteger kTag = 200;
 @property (nonatomic, strong) LiveUserModel *fifthUser;
 
 // 弹幕展现模式
-@property(nonatomic, assign) LiveGiftShowMode showMode;
+@property (nonatomic, assign) LiveGiftShowMode showMode;
 // 弹幕消失模式
-@property(nonatomic, assign) LiveGiftHiddenMode hiddenMode;
+@property (nonatomic, assign) LiveGiftHiddenMode hiddenMode;
 // 弹幕出现模式
-@property(nonatomic, assign) LiveGiftAppearMode appearMode;
+@property (nonatomic, assign) LiveGiftAppearMode appearMode;
 // 弹幕添加模式（当弹幕达到最大数量后新增弹幕时）
-@property(nonatomic, assign) LiveGiftAddMode addMode;
+@property (nonatomic, assign) LiveGiftAddMode addMode;
 
-@property(nonatomic, assign) BOOL canExchange;
+@property (nonatomic, assign) BOOL canExchange;
 
 @end
 
 @implementation TestVC
 
 + (instancetype)initWithShowMode:(LiveGiftShowMode)showMode hiddenMode:(LiveGiftHiddenMode)hiddenMode appearMode:(LiveGiftAppearMode)appearMode addMode:(LiveGiftAddMode)addMode title:(NSString *)title canExchange:(BOOL)canExchange {
-    TestVC * vc = [[TestVC alloc]init];
+    TestVC *vc = [[TestVC alloc] init];
     vc.canExchange = canExchange;
     vc.showMode = showMode;
     vc.hiddenMode = hiddenMode;
@@ -62,8 +62,8 @@ static NSInteger kTag = 200;
     return vc;
 }
 
-+ (instancetype)initWithShowMode:(LiveGiftShowMode)showMode hiddenMode:(LiveGiftHiddenMode)hiddenMode appearMode:(LiveGiftAppearMode)appearMode addMode:(LiveGiftAddMode)addMode title:(NSString *)title{
-    TestVC * vc = [[TestVC alloc]init];
++ (instancetype)initWithShowMode:(LiveGiftShowMode)showMode hiddenMode:(LiveGiftHiddenMode)hiddenMode appearMode:(LiveGiftAppearMode)appearMode addMode:(LiveGiftAddMode)addMode title:(NSString *)title {
+    TestVC *vc = [[TestVC alloc] init];
     vc.canExchange = YES;
     vc.showMode = showMode;
     vc.hiddenMode = hiddenMode;
@@ -75,8 +75,8 @@ static NSInteger kTag = 200;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-//    LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.firstUser];
-//    [self.customGiftShow addLiveGiftShowModel:model];
+    //    LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.firstUser];
+    //    [self.customGiftShow addLiveGiftShowModel:model];
     // 固定轨道 demo 不自动发送；手动点"同时添加多条"按钮仍然有效
     if (self.canExchange) {
         [self sendMultipleLiveGift];
@@ -84,8 +84,8 @@ static NSInteger kTag = 200;
 }
 
 - (void)sendMultipleLiveGift {
-    for (int i = 0; i<5; i++) {
-        LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[i] userModel:self.firstUser];
+    for (int i = 0; i < 5; i++) {
+        LiveGiftShowModel *model = [LiveGiftShowModel giftModel:self.giftArr[i] userModel:self.firstUser];
         model.toNumber = 10;
         model.interval = 0.15;
         [self.customGiftShow animatedWithGiftModel:model];
@@ -94,34 +94,34 @@ static NSInteger kTag = 200;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.view.backgroundColor = RGB(237, 237, 237);
-    
-    //初始化按钮
-    NSArray * titles = @[@"first",@"second",@"third",@"fourth",@"fifth"];
+
+    // 初始化按钮
+    NSArray *titles = @[ @"first", @"second", @"third", @"fourth", @"fifth" ];
     NSInteger maxCount = titles.count;
-    for (NSInteger i = 0; i<maxCount; i++) {
-        [self createBtnWithTag:i+kTag title:titles[i] maxCount:maxCount];
+    for (NSInteger i = 0; i < maxCount; i++) {
+        [self createBtnWithTag:i + kTag title:titles[i] maxCount:maxCount];
     }
-    
-    //初始化数据源
+
+    // 初始化数据源
     self.giftArr = self.giftDataSource;
 
-    //弹幕视图延迟到首次使用时创建（viewDidLoad 时 safeAreaInsets 还未确定）
+    // 弹幕视图延迟到首次使用时创建（viewDidLoad 时 safeAreaInsets 还未确定）
 
     [self animateBtn];
 }
 
-- (void)animateBtn{
-    UIButton * animateBtn = [self createBtnWithTag:205 title:@"同时添加多条" maxCount:3];
-    animateBtn.center = CGPointMake(SCREEN.width/2, SCREEN.height - 80);
+- (void)animateBtn {
+    UIButton *animateBtn = [self createBtnWithTag:205 title:@"同时添加多条" maxCount:3];
+    animateBtn.center = CGPointMake(SCREEN.width / 2, SCREEN.height - 80);
 }
 
 // 全面屏适配：底部按钮避开安全区
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    UIButton * animateBtn = [self.view viewWithTag:205];
-    animateBtn.center = CGPointMake(SCREEN.width/2, SCREEN.height - self.view.safeAreaInsets.bottom - 60);
+    UIButton *animateBtn = [self.view viewWithTag:205];
+    animateBtn.center = CGPointMake(SCREEN.width / 2, SCREEN.height - self.view.safeAreaInsets.bottom - 60);
 }
 
 /*
@@ -132,51 +132,51 @@ static NSInteger kTag = 200;
  addLiveGiftShowModel: showNumber: 普通的礼物显示视图，指定显示特定数字。
  */
 
-- (void)v15BtnClicked:(UIButton *)clickedBtn{
+- (void)v15BtnClicked:(UIButton *)clickedBtn {
     switch (clickedBtn.tag) {
-        case 200:{
-            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[0] userModel:self.firstUser];
-            model.toNumber = 8;
-            model.interval = 0.15;
-            [self.customGiftShow animatedWithGiftModel:model];
-            break;
-        }
-        case 201:{
-            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[1] userModel:self.secondUser];
-            [self.customGiftShow addLiveGiftShowModel:model];
-            break;
-        }
-        case 202:{
-            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[2] userModel:self.thirdUser];
-            [self.customGiftShow addLiveGiftShowModel:model showNumber:99];
-            break;
-        }
-        case 203:{
-            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.fourthUser];
-            model.toNumber = 3;
-            [self.customGiftShow animatedWithGiftModel:model];
-            break;
-        }
-        case 204:{
-            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[4] userModel:self.fifthUser];
-            model.toNumber = 2;
-            [self.customGiftShow animatedWithGiftModel:model];
-            break;
-        }
-        case 205:{
-//            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[4] userModel:self.fifthUser];
-//            [self.customGiftShow animatedWithGiftModel:model];
-            [self sendMultipleLiveGift];
-            break;
-        }
-        default:
-            break;
+    case 200: {
+        LiveGiftShowModel *model = [LiveGiftShowModel giftModel:self.giftArr[0] userModel:self.firstUser];
+        model.toNumber = 8;
+        model.interval = 0.15;
+        [self.customGiftShow animatedWithGiftModel:model];
+        break;
+    }
+    case 201: {
+        LiveGiftShowModel *model = [LiveGiftShowModel giftModel:self.giftArr[1] userModel:self.secondUser];
+        [self.customGiftShow addLiveGiftShowModel:model];
+        break;
+    }
+    case 202: {
+        LiveGiftShowModel *model = [LiveGiftShowModel giftModel:self.giftArr[2] userModel:self.thirdUser];
+        [self.customGiftShow addLiveGiftShowModel:model showNumber:99];
+        break;
+    }
+    case 203: {
+        LiveGiftShowModel *model = [LiveGiftShowModel giftModel:self.giftArr[3] userModel:self.fourthUser];
+        model.toNumber = 3;
+        [self.customGiftShow animatedWithGiftModel:model];
+        break;
+    }
+    case 204: {
+        LiveGiftShowModel *model = [LiveGiftShowModel giftModel:self.giftArr[4] userModel:self.fifthUser];
+        model.toNumber = 2;
+        [self.customGiftShow animatedWithGiftModel:model];
+        break;
+    }
+    case 205: {
+        //            LiveGiftShowModel * model = [LiveGiftShowModel giftModel:self.giftArr[4] userModel:self.fifthUser];
+        //            [self.customGiftShow animatedWithGiftModel:model];
+        [self sendMultipleLiveGift];
+        break;
+    }
+    default:
+        break;
     }
 }
 
 /**
  弹幕移除回调代理
- 
+
  @param showModel 数据模型
  */
 - (void)giftDidRemove:(LiveGiftShowModel *)showModel {
@@ -187,17 +187,17 @@ static NSInteger kTag = 200;
 /*
  礼物视图支持很多配置属性，开发者按需选择。
  */
-- (LiveGiftShowCustom *)customGiftShow{
+- (LiveGiftShowCustom *)customGiftShow {
     if (!_customGiftShow) {
-        //全面屏适配：首条弹幕位于安全区（含导航栏）下方 10pt，避免被返回按钮遮挡
+        // 全面屏适配：首条弹幕位于安全区（含导航栏）下方 10pt，避免被返回按钮遮挡
         CGFloat topY = self.view.safeAreaInsets.top + 10;
         if (self.showMode == LiveGiftShowModeFromBottomToTop) {
-            //自下而上时弹幕向上生长，y 是最下面一条的位置，预留两行让最上面一条也在安全区内
-            _customGiftShow = [LiveGiftShowCustom addToView:self.view y: topY + (44.0 + 50.0) * 2];
+            // 自下而上时弹幕向上生长，y 是最下面一条的位置，预留两行让最上面一条也在安全区内
+            _customGiftShow = [LiveGiftShowCustom addToView:self.view y:topY + (44.0 + 50.0) * 2];
         } else {
-            _customGiftShow = [LiveGiftShowCustom addToView:self.view y: topY];
+            _customGiftShow = [LiveGiftShowCustom addToView:self.view y:topY];
         }
-        
+
         _customGiftShow.addMode = self.addMode;
         _customGiftShow.maxRailwayCount = self.canExchange ? 3 : 2;
         _customGiftShow.railwayCanExchange = self.canExchange;
@@ -212,7 +212,7 @@ static NSInteger kTag = 200;
 
 - (LiveUserModel *)firstUser {
     if (!_firstUser) {
-        _firstUser = [[LiveUserModel alloc]init];
+        _firstUser = [[LiveUserModel alloc] init];
         _firstUser.userId = @"1001";
         _firstUser.name = @"first";
         _firstUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbg8tb6wqj20gl0qogni.jpg";
@@ -222,7 +222,7 @@ static NSInteger kTag = 200;
 
 - (LiveUserModel *)secondUser {
     if (!_secondUser) {
-        _secondUser = [[LiveUserModel alloc]init];
+        _secondUser = [[LiveUserModel alloc] init];
         _secondUser.userId = @"1002";
         _secondUser.name = @"second";
         _secondUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgd5cr5nj209s0akgly.jpg";
@@ -232,7 +232,7 @@ static NSInteger kTag = 200;
 
 - (LiveUserModel *)thirdUser {
     if (!_thirdUser) {
-        _thirdUser = [[LiveUserModel alloc]init];
+        _thirdUser = [[LiveUserModel alloc] init];
         _thirdUser.userId = @"1003";
         _thirdUser.name = @"third";
         _thirdUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgeuwk21j205k05kq2w.jpg";
@@ -242,7 +242,7 @@ static NSInteger kTag = 200;
 
 - (LiveUserModel *)fourthUser {
     if (!_fourthUser) {
-        _fourthUser = [[LiveUserModel alloc]init];
+        _fourthUser = [[LiveUserModel alloc] init];
         _fourthUser.userId = @"1004";
         _fourthUser.name = @"fourth";
         _fourthUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgfpf5bgj205k07v3yk.jpg";
@@ -252,7 +252,7 @@ static NSInteger kTag = 200;
 
 - (LiveUserModel *)fifthUser {
     if (!_fifthUser) {
-        _fifthUser = [[LiveUserModel alloc]init];
+        _fifthUser = [[LiveUserModel alloc] init];
         _fifthUser.userId = @"1005";
         _fifthUser.name = @"fifth";
         _fifthUser.iconUrl = @"http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbgg5427qj205k05k748.jpg";
@@ -260,26 +260,26 @@ static NSInteger kTag = 200;
     return _fifthUser;
 }
 
-- (UIButton *)createBtnWithTag:(NSInteger)tag title:(NSString *)title maxCount:(NSInteger)maxCount{
-    CGFloat btnWidth = (SCREEN.width - 40)/maxCount;
-    
+- (UIButton *)createBtnWithTag:(NSInteger)tag title:(NSString *)title maxCount:(NSInteger)maxCount {
+    CGFloat btnWidth = (SCREEN.width - 40) / maxCount;
+
     NSInteger number = tag - kTag;
-    
-    UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(20+number * btnWidth, 400, btnWidth, 40)];
+
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(20 + number * btnWidth, 400, btnWidth, 40)];
     btn.backgroundColor = [UIColor randomColor];
     btn.tag = tag;
-    
+
     [btn setTitle:title forState:UIControlStateNormal];
     [btn setTitle:title forState:UIControlStateHighlighted];
-    
+
     [btn addTarget:self action:@selector(v15BtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
+
     [self.view addSubview:btn];
     return btn;
 }
 
 - (LiveGiftListModel *)giftWithType:(NSString *)type name:(NSString *)name rewardMsg:(NSString *)rewardMsg picUrl:(NSString *)picUrl {
-    LiveGiftListModel * gift = [[LiveGiftListModel alloc]init];
+    LiveGiftListModel *gift = [[LiveGiftListModel alloc] init];
     gift.type = type;
     gift.name = name;
     gift.rewardMsg = rewardMsg;
@@ -287,21 +287,36 @@ static NSInteger kTag = 200;
     return gift;
 }
 
-- (NSArray <LiveGiftListModel *>*)giftDataSource{
+- (NSArray<LiveGiftListModel *> *)giftDataSource {
     if (!_giftDataSource) {
         _giftDataSource = @[
-            [self giftWithType:@"0" name:@"松果" rewardMsg:@"扔出一颗松果" picUrl:@"http://ww3.sinaimg.cn/large/c6a1cfeagw1fbks9dl7ryj205k05kweo.jpg"],
-            [self giftWithType:@"1" name:@"花束" rewardMsg:@"献上一束花" picUrl:@"http://ww1.sinaimg.cn/large/c6a1cfeagw1fbksa4vf7uj205k05kaa0.jpg"],
-            [self giftWithType:@"2" name:@"果汁" rewardMsg:@"递上果汁" picUrl:@"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksajipb8j205k05kjri.jpg"],
-            [self giftWithType:@"3" name:@"棒棒糖" rewardMsg:@"递上棒棒糖" picUrl:@"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksasl9qwj205k05kt8k.jpg"],
-            [self giftWithType:@"4" name:@"泡泡糖" rewardMsg:@"一起吃泡泡糖吧" picUrl:@"http://a3.qpic.cn/psb?/V12A6SP10iIW9i/AL.CfLAFH*W.Ge1n*.LwpXSImK.Hm1eCMtt4rm5WvCA!/b/dFOyjUpCBwAA&bo=yADIAAAAAAABACc!&rf=viewer_4"],
+            [self giftWithType:@"0"
+                          name:@"松果"
+                     rewardMsg:@"扔出一颗松果"
+                        picUrl:@"http://ww3.sinaimg.cn/large/c6a1cfeagw1fbks9dl7ryj205k05kweo.jpg"],
+            [self giftWithType:@"1"
+                          name:@"花束"
+                     rewardMsg:@"献上一束花"
+                        picUrl:@"http://ww1.sinaimg.cn/large/c6a1cfeagw1fbksa4vf7uj205k05kaa0.jpg"],
+            [self giftWithType:@"2"
+                          name:@"果汁"
+                     rewardMsg:@"递上果汁"
+                        picUrl:@"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksajipb8j205k05kjri.jpg"],
+            [self giftWithType:@"3"
+                          name:@"棒棒糖"
+                     rewardMsg:@"递上棒棒糖"
+                        picUrl:@"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksasl9qwj205k05kt8k.jpg"],
+            [self giftWithType:@"4"
+                          name:@"泡泡糖"
+                     rewardMsg:@"一起吃泡泡糖吧"
+                        picUrl:@"http://a3.qpic.cn/psb?/V12A6SP10iIW9i/AL.CfLAFH*W.Ge1n*.LwpXSImK.Hm1eCMtt4rm5WvCA!/b/dFOyjUpCBwAA&bo=yADIAAAAAAABACc!&rf=viewer_4"],
         ];
     }
     return _giftDataSource;
 }
 
-- (void)dealloc{
-    NSLog(@"delloc VC ==> %@",self);
+- (void)dealloc {
+    NSLog(@"delloc VC ==> %@", self);
 }
 
 - (void)didReceiveMemoryWarning {

@@ -77,7 +77,8 @@ public final class LiveGiftShowView: UIView {
     // MARK: - 初始化
 
     public override init(frame: CGRect) {
-        super.init(frame: CGRect(x: frame.origin.x, y: frame.origin.y, width: kLiveGiftViewWidth, height: kLiveGiftViewHeight))
+        super.init(
+            frame: CGRect(x: frame.origin.x, y: frame.origin.y, width: kLiveGiftViewWidth, height: kLiveGiftViewHeight))
         setupContentConstraints()
     }
 
@@ -134,7 +135,8 @@ public final class LiveGiftShowView: UIView {
         let length = String(number).count
         if length != lastNumberLength {
             lastNumberLength = length
-            let giftRight = length >= 4
+            let giftRight =
+                length >= 4
                 ? Self.giftNumberWidth * 5
                 : CGFloat(length) * Self.giftNumberWidth + Self.giftNumberWidth
             giftIVRightConstraint.constant = -Self.giftNumberWidth - giftRight
@@ -144,11 +146,14 @@ public final class LiveGiftShowView: UIView {
             numberView.layer.removeAllAnimations()
         }
         numberView.transform = .identity
-        UIView.animate(withDuration: numberAnimationTime, animations: {
-            self.numberView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-        }, completion: { _ in
-            self.numberView.transform = .identity
-        })
+        UIView.animate(
+            withDuration: numberAnimationTime,
+            animations: {
+                self.numberView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            },
+            completion: { _ in
+                self.numberView.transform = .identity
+            })
 
         startTimerIfNeeded()
     }
@@ -189,13 +194,16 @@ public final class LiveGiftShowView: UIView {
             onTimeOut?(self)
             removeFromSuperview()
         } else {
-            UIView.animate(withDuration: removeAnimationTime, delay: 0, options: .curveEaseIn, animations: {
-                self.transform = self.transform.translatedBy(x: xChanged, y: 0)
-            }, completion: { _ in
-                self.isLeavingAnimation = false
-                self.onTimeOut?(self)
-                self.removeFromSuperview()
-            })
+            UIView.animate(
+                withDuration: removeAnimationTime, delay: 0, options: .curveEaseIn,
+                animations: {
+                    self.transform = self.transform.translatedBy(x: xChanged, y: 0)
+                },
+                completion: { _ in
+                    self.isLeavingAnimation = false
+                    self.onTimeOut?(self)
+                    self.removeFromSuperview()
+                })
         }
 
         stopTimer()
@@ -224,7 +232,8 @@ public final class LiveGiftShowView: UIView {
         // 礼物图靠左约束低优先级，右边距（随数字位数变化）优先
         let giftLeft = giftIV.leftAnchor.constraint(equalTo: nameLabel.rightAnchor, constant: 5)
         giftLeft.priority = .defaultHigh
-        giftIVRightConstraint = giftIV.rightAnchor.constraint(equalTo: rightAnchor, constant: -Self.giftNumberWidth * 2 - 1)
+        giftIVRightConstraint = giftIV.rightAnchor.constraint(
+            equalTo: rightAnchor, constant: -Self.giftNumberWidth * 2 - 1)
 
         NSLayoutConstraint.activate([
             backIV.topAnchor.constraint(equalTo: topAnchor),

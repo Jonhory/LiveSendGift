@@ -10,8 +10,8 @@
 
 @implementation LiveGiftShowModel
 
-+ (instancetype)giftModel:(LiveGiftListModel *)giftModel userModel:(LiveUserModel *)userModel{
-    LiveGiftShowModel * model = [[LiveGiftShowModel alloc]init];
++ (instancetype)giftModel:(LiveGiftListModel *)giftModel userModel:(LiveUserModel *)userModel {
+    LiveGiftShowModel *model = [[LiveGiftShowModel alloc] init];
     model.giftModel = giftModel;
     model.user = userModel;
     model.interval = 0.35;

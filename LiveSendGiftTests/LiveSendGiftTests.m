@@ -9,10 +9,10 @@
 //  历史 bug（#17 #19 #20 #21）全部出在这部分纯逻辑上，用单测防回归。
 //
 
-#import <XCTest/XCTest.h>
 #import "../LiveSendGift/LiveGiftShowView/LiveGiftShowCustom.h"
-#import "../LiveSendGift/LiveGiftShowView/LiveGiftShowView.h"
 #import "../LiveSendGift/LiveGiftShowView/LiveGiftShowNumberView.h"
+#import "../LiveSendGift/LiveGiftShowView/LiveGiftShowView.h"
+#import <XCTest/XCTest.h>
 
 @interface LiveSendGiftTests : XCTestCase
 
@@ -127,7 +127,7 @@
             [exp fulfill];
         });
     });
-    [self waitForExpectations:@[exp] timeout:2];
+    [self waitForExpectations:@[ exp ] timeout:2];
     XCTAssertEqual([self visibleBanners].count, 1, @"后台线程调用应自动转主队列并正常上屏");
 }
 
@@ -144,7 +144,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [shown fulfill];
     });
-    [self waitForExpectations:@[shown] timeout:2];
+    [self waitForExpectations:@[ shown ] timeout:2];
     XCTAssertEqual([self visibleBanners].count, 1);
     XCTAssertNotNil(first.animatedTimer, @"首个连击定时器应仍在运行");
 
@@ -162,7 +162,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [finished fulfill];
     });
-    [self waitForExpectations:@[finished] timeout:5];
+    [self waitForExpectations:@[ finished ] timeout:5];
 
     XCTAssertNil(first.animatedTimer, @"连击结束后定时器应释放");
     XCTAssertEqual([[self visibleBanners].firstObject.numberView currentNumber], 25, @"最终计数应恰好等于合并后的 toNumber");

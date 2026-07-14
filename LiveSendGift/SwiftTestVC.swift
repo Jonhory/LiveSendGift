@@ -28,21 +28,30 @@ public final class SwiftTestVC: UIViewController {
     }()
 
     private let users: [LiveGiftUser] = ["first", "second", "third", "fourth", "fifth"].enumerated().map {
-        LiveGiftUser(userId: "\(2001 + $0.offset)", name: $0.element,
-                     iconUrl: "http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbg8tb6wqj20gl0qogni.jpg")
+        LiveGiftUser(
+            userId: "\(2001 + $0.offset)", name: $0.element,
+            iconUrl: "http://ww1.sinaimg.cn/large/c6a1cfeagy1ffbg8tb6wqj20gl0qogni.jpg")
     }
 
     private let gifts: [LiveGiftItem] = [
-        LiveGiftItem(type: "0", name: "松果", picUrl: "http://ww3.sinaimg.cn/large/c6a1cfeagw1fbks9dl7ryj205k05kweo.jpg", rewardMsg: "扔出一颗松果"),
-        LiveGiftItem(type: "1", name: "花束", picUrl: "http://ww1.sinaimg.cn/large/c6a1cfeagw1fbksa4vf7uj205k05kaa0.jpg", rewardMsg: "献上一束花"),
-        LiveGiftItem(type: "2", name: "果汁", picUrl: "http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksajipb8j205k05kjri.jpg", rewardMsg: "递上果汁"),
-        LiveGiftItem(type: "3", name: "棒棒糖", picUrl: "http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksasl9qwj205k05kt8k.jpg", rewardMsg: "递上棒棒糖"),
+        LiveGiftItem(
+            type: "0", name: "松果", picUrl: "http://ww3.sinaimg.cn/large/c6a1cfeagw1fbks9dl7ryj205k05kweo.jpg",
+            rewardMsg: "扔出一颗松果"),
+        LiveGiftItem(
+            type: "1", name: "花束", picUrl: "http://ww1.sinaimg.cn/large/c6a1cfeagw1fbksa4vf7uj205k05kaa0.jpg",
+            rewardMsg: "献上一束花"),
+        LiveGiftItem(
+            type: "2", name: "果汁", picUrl: "http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksajipb8j205k05kjri.jpg",
+            rewardMsg: "递上果汁"),
+        LiveGiftItem(
+            type: "3", name: "棒棒糖", picUrl: "http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksasl9qwj205k05kt8k.jpg",
+            rewardMsg: "递上棒棒糖"),
         LiveGiftItem(type: "4", name: "泡泡糖", picUrl: "", rewardMsg: "一起吃泡泡糖吧"),
     ]
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 237/255.0, green: 237/255.0, blue: 237/255.0, alpha: 1)
+        view.backgroundColor = UIColor(red: 237 / 255.0, green: 237 / 255.0, blue: 237 / 255.0, alpha: 1)
 
         let titles = ["first", "second", "third", "fourth", "fifth"]
         let buttonWidth = (view.bounds.width - 40) / CGFloat(titles.count)
@@ -59,8 +68,9 @@ public final class SwiftTestVC: UIViewController {
         super.viewDidLayoutSubviews()
         // 全面屏适配：底部按钮避开安全区
         if let batchButton = view.viewWithTag(Self.buttonTag + 5) {
-            batchButton.center = CGPoint(x: view.bounds.width / 2,
-                                         y: view.bounds.height - view.safeAreaInsets.bottom - 60)
+            batchButton.center = CGPoint(
+                x: view.bounds.width / 2,
+                y: view.bounds.height - view.safeAreaInsets.bottom - 60)
         }
     }
 

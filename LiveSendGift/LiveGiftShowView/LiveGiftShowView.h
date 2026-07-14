@@ -6,38 +6,38 @@
 //  Copyright © 2016年 com.wujh. All rights reserved.
 //  一个弹幕效果视图
 
-#import <UIKit/UIKit.h>
+#import "LiveGiftShowCustom.h"
 #import "LiveGiftShowModel.h"
 #import "LiveGiftShowNumberView.h"
-#import "LiveGiftShowCustom.h"
+#import <UIKit/UIKit.h>
 
-static CGFloat const kViewWidth = 240.0;//背景宽
-static CGFloat const kViewHeight = 44.0;//背景高
+static CGFloat const kViewWidth = 240.0; // 背景宽
+static CGFloat const kViewHeight = 44.0; // 背景高
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LiveGiftShowView : UIView
 
-@property (nonatomic, assign) NSInteger kTimeOut;/**< 超时移除时长 */
-@property (nonatomic, assign) CGFloat kRemoveAnimationTime;/**< 移除动画时长 */
-@property (nonatomic, assign) CGFloat kNumberAnimationTime;/**< 数字改变动画时长 */
+@property (nonatomic, assign) NSInteger kTimeOut;           /**< 超时移除时长 */
+@property (nonatomic, assign) CGFloat kRemoveAnimationTime; /**< 移除动画时长 */
+@property (nonatomic, assign) CGFloat kNumberAnimationTime; /**< 数字改变动画时长 */
 
-@property (nonatomic ,copy ,nullable) NSDate * createDate;/**< 视图创建时间，用于LiveGiftShow替换旧的视图 V1.5在内部创建*/
-@property (nonatomic ,assign) NSInteger index;/**< 用于LiveGiftShow判断是第几个视图 */
+@property (nonatomic, copy, nullable) NSDate *createDate; /**< 视图创建时间，用于LiveGiftShow替换旧的视图 V1.5在内部创建*/
+@property (nonatomic, assign) NSInteger index;            /**< 用于LiveGiftShow判断是第几个视图 */
 
-@property (nonatomic ,strong ,nullable) LiveGiftShowModel * model;/**< 数据源*/
+@property (nonatomic, strong, nullable) LiveGiftShowModel *model; /**< 数据源*/
 
-@property (nonatomic, assign) LiveGiftHiddenMode hiddenMode;/**< 消失模式*/
+@property (nonatomic, assign) LiveGiftHiddenMode hiddenMode; /**< 消失模式*/
 
-@property (nonatomic ,weak ,nullable) LiveGiftShowNumberView * numberView;
+@property (nonatomic, weak, nullable) LiveGiftShowNumberView *numberView;
 
-@property (nonatomic ,copy ,nullable) LiveGiftWebImageLoader imageLoader;/**< 网络图片加载器，nil 时默认走 SDWebImage，须在 model 之前赋值 */
+@property (nonatomic, copy, nullable) LiveGiftWebImageLoader imageLoader; /**< 网络图片加载器，nil 时默认走 SDWebImage，须在 model 之前赋值 */
 
-@property (nonatomic ,assign) BOOL isAnimation;/**< 是否正处于动画，用于上下视图交换位置时使用 */
-@property (nonatomic ,assign) BOOL isLeavingAnimation;/**< 是否正处于动画，用于视图正在向右飞出时不要交换位置 */
-@property (nonatomic, assign) BOOL isAppearAnimation;/**< 是否正处于动画，用于出现动画时和交换位置的动画冲突*/
+@property (nonatomic, assign) BOOL isAnimation;        /**< 是否正处于动画，用于上下视图交换位置时使用 */
+@property (nonatomic, assign) BOOL isLeavingAnimation; /**< 是否正处于动画，用于视图正在向右飞出时不要交换位置 */
+@property (nonatomic, assign) BOOL isAppearAnimation;  /**< 是否正处于动画，用于出现动画时和交换位置的动画冲突*/
 
-@property (nonatomic ,copy ,nullable) void(^liveGiftShowViewTimeOut)(LiveGiftShowView *);
+@property (nonatomic, copy, nullable) void (^liveGiftShowViewTimeOut)(LiveGiftShowView *);
 
 
 /**
@@ -67,7 +67,6 @@ NS_ASSUME_NONNULL_BEGIN
  @param number 任意数字 >9999 则显示9999
  */
 - (void)changeGiftNumber:(NSInteger)number;
-
 
 
 @end

@@ -25,8 +25,9 @@ func liveGiftImage(_ name: String) -> UIImage? {
     // CocoaPods resource_bundles 集成：资源在 LiveSendGiftSwift.bundle 内
     let classBundle = Bundle(for: LiveGiftShowCustom.self)
     if let url = classBundle.url(forResource: "LiveSendGiftSwift", withExtension: "bundle"),
-       let bundle = Bundle(url: url),
-       let image = UIImage(named: name, in: bundle, compatibleWith: nil) {
+        let bundle = Bundle(url: url),
+        let image = UIImage(named: name, in: bundle, compatibleWith: nil)
+    {
         return image
     }
     return UIImage(named: name, in: classBundle, compatibleWith: nil)

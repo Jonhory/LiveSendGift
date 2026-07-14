@@ -1,0 +1,19 @@
+# LiveSendGift ObjC 代码格式化配置（xcrun clang-format -i <files>）
+BasedOnStyle: LLVM
+Language: ObjC
+IndentWidth: 4
+ObjCBlockIndentWidth: 4
+TabWidth: 4
+UseTab: Never
+# 不强制按列宽折行，保持原有换行结构，减少无意义 diff
+ColumnLimit: 0
+PointerAlignment: Right
+ObjCSpaceAfterProperty: true
+ObjCSpaceBeforeProtocolList: true
+SpacesBeforeTrailingComments: 1
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 2
+AllowShortFunctionsOnASingleLine: None
+AllowShortBlocksOnASingleLine: Never
+AllowShortIfStatementsOnASingleLine: Never
+BreakBeforeBraces: Attach

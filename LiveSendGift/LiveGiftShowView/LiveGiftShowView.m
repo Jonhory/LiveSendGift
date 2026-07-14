@@ -21,28 +21,28 @@
 #endif
 #import "LiveGiftImageLoader.h"
 
-static CGFloat const kNameLabelFont = 12.0;//送礼者
-#define kNameLabelTextColor [UIColor whiteColor]//送礼者颜色
+static CGFloat const kNameLabelFont = 12.0;      // 送礼者
+#define kNameLabelTextColor [UIColor whiteColor] // 送礼者颜色
 
-static CGFloat const kGiftLabelFont = 10.0;//送出礼物寄语  字体大小
-#define kGiftLabelTextColor [UIColor orangeColor]//礼物寄语 字体颜色
+static CGFloat const kGiftLabelFont = 10.0;       // 送出礼物寄语  字体大小
+#define kGiftLabelTextColor [UIColor orangeColor] // 礼物寄语 字体颜色
 
 static CGFloat const kGiftNumberWidth = 15.0;
 
 @interface LiveGiftShowView ()
 
-@property (nonatomic ,weak) UIImageView * backIV;/**< 背景图 */
-@property (nonatomic ,weak) UIImageView * iconIV;/**< 头像 */
-@property (nonatomic ,weak) UILabel * nameLabel;/**< 名称 */
-@property (nonatomic ,weak) UILabel * sendLabel;/**< 送出 */
-@property (nonatomic ,weak) UIImageView * giftIV;/**< 礼物图片 */
+@property (nonatomic, weak) UIImageView *backIV; /**< 背景图 */
+@property (nonatomic, weak) UIImageView *iconIV; /**< 头像 */
+@property (nonatomic, weak) UILabel *nameLabel;  /**< 名称 */
+@property (nonatomic, weak) UILabel *sendLabel;  /**< 送出 */
+@property (nonatomic, weak) UIImageView *giftIV; /**< 礼物图片 */
 
-@property (nonatomic ,strong) NSTimer * liveTimer;/**< 定时器控制自身移除 */
-@property (nonatomic ,assign) NSInteger liveTimerForSecond;
+@property (nonatomic, strong) NSTimer *liveTimer; /**< 定时器控制自身移除 */
+@property (nonatomic, assign) NSInteger liveTimerForSecond;
 
-@property (nonatomic ,assign) BOOL isSetNumber;
-@property (nonatomic ,assign) NSUInteger lastNumberLength;/**< 上次数字位数，位数不变时跳过约束更新 */
-@property (nonatomic ,strong) NSLayoutConstraint * giftIVRightConstraint;/**< 礼物图右边距，随数字位数调整 */
+@property (nonatomic, assign) BOOL isSetNumber;
+@property (nonatomic, assign) NSUInteger lastNumberLength;               /**< 上次数字位数，位数不变时跳过约束更新 */
+@property (nonatomic, strong) NSLayoutConstraint *giftIVRightConstraint; /**< 礼物图右边距，随数字位数调整 */
 
 @end
 
@@ -50,7 +50,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
 
 #pragma mark - 初始化
 
-- (instancetype)initWithFrame:(CGRect)frame{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, kViewWidth, kViewHeight)];
     if (self) {
         self.liveTimerForSecond = 0;
@@ -63,7 +63,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
     return self;
 }
 
-- (instancetype)init{
+- (instancetype)init {
     self = [super init];
     if (self) {
         self.liveTimerForSecond = 0;
@@ -72,23 +72,24 @@ static CGFloat const kGiftNumberWidth = 15.0;
     return self;
 }
 
-- (void)setModel:(LiveGiftShowModel *)model{
+- (void)setModel:(LiveGiftShowModel *)model {
     if (!model) {
         return;
     }
     _model = model;
-    
+
     self.nameLabel.text = model.user.name;
     self.sendLabel.text = model.giftModel.rewardMsg;
 
-    UIImage * iconPlaceholder = LiveGiftImage(@"LiveDefaultIcon");
+    UIImage *iconPlaceholder = LiveGiftImage(@"LiveDefaultIcon");
     if (self.imageLoader) {
         // 宿主注入的加载器（Kingfisher / 自研等）
         self.imageLoader(self.iconIV, model.user.iconUrl, iconPlaceholder);
         self.imageLoader(self.giftIV, model.giftModel.picUrl, nil);
     } else {
 #if LIVE_HAS_SDWEBIMAGE
-        [self.iconIV sd_setImageWithURL:[NSURL URLWithString:model.user.iconUrl ?: @""] placeholderImage:iconPlaceholder];
+        [self.iconIV sd_setImageWithURL:[NSURL URLWithString:model.user.iconUrl ?: @""]
+                       placeholderImage:iconPlaceholder];
         [self.giftIV sd_setImageWithURL:[NSURL URLWithString:model.giftModel.picUrl ?: @""] placeholderImage:nil];
 #else
         self.iconIV.image = iconPlaceholder;
@@ -98,29 +99,29 @@ static CGFloat const kGiftNumberWidth = 15.0;
 
 /**
  重置定时器和计数
- 
+
  @param number 计数
  */
-- (void)resetTimeAndNumberFrom:(NSInteger)number{
+- (void)resetTimeAndNumberFrom:(NSInteger)number {
     [self.numberView resetNumber:number];
     [self addGiftNumberFrom:number];
 }
 
 /**
  获取用户名
- 
+
  @return 获取用户名
  */
-- (NSString *)getUserName{
+- (NSString *)getUserName {
     return self.nameLabel.text;
 }
 
 /**
  礼物数量自增1使用该方法
- 
+
  @param number 从多少开始计数
  */
-- (void)addGiftNumberFrom:(NSInteger)number{
+- (void)addGiftNumberFrom:(NSInteger)number {
     if (!self.isSetNumber) {
         [self.numberView resetNumber:number];
         self.isSetNumber = YES;
@@ -136,10 +137,10 @@ static CGFloat const kGiftNumberWidth = 15.0;
 
 /**
  设置任意数字时使用该方法
- 
+
  @param number 任意数字 >9999 则显示9999
  */
-- (void)changeGiftNumber:(NSInteger)number{
+- (void)changeGiftNumber:(NSInteger)number {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.numberView changeNumber:number];
         [self handleNumber:number];
@@ -149,14 +150,14 @@ static CGFloat const kGiftNumberWidth = 15.0;
 #pragma mark - Private
 /**
  处理显示数字 开启定时器
- 
+
  @param number 显示数字的值
  */
-- (void)handleNumber:(NSInteger )number{
+- (void)handleNumber:(NSInteger)number {
     self.liveTimerForSecond = 0;
-    //根据数字修改self.giftIV的约束 比如 1 占 10 的宽度，10 占 20的宽度
-    //位数没变时无需更新约束，连击场景下减少布局开销
-    NSString * numStr = [NSString stringWithFormat:@"%zi",number];
+    // 根据数字修改self.giftIV的约束 比如 1 占 10 的宽度，10 占 20的宽度
+    // 位数没变时无需更新约束，连击场景下减少布局开销
+    NSString *numStr = [NSString stringWithFormat:@"%zi", number];
     if (numStr.length != self.lastNumberLength) {
         self.lastNumberLength = numStr.length;
         CGFloat giftRight = numStr.length >= 4 ? kGiftNumberWidth * 5 : numStr.length * kGiftNumberWidth + kGiftNumberWidth;
@@ -166,22 +167,24 @@ static CGFloat const kGiftNumberWidth = 15.0;
         [self.numberView.layer removeAllAnimations];
     }
     self.numberView.transform = CGAffineTransformIdentity;
-    
-    [UIView animateWithDuration:self.kNumberAnimationTime animations:^{
-        self.numberView.transform = CGAffineTransformMakeScale(1.5, 1.5);
-    } completion:^(BOOL finished) {
-        self.numberView.transform = CGAffineTransformIdentity;
-    }];
-    
+
+    [UIView animateWithDuration:self.kNumberAnimationTime
+        animations:^{
+            self.numberView.transform = CGAffineTransformMakeScale(1.5, 1.5);
+        }
+        completion:^(BOOL finished) {
+            self.numberView.transform = CGAffineTransformIdentity;
+        }];
+
     [self.liveTimer setFireDate:[NSDate date]];
 }
 
-- (void)liveTimerRunning{
+- (void)liveTimerRunning {
     if (!self.superview) {
         [self stopTimer];
         return;
     }
-    
+
     self.liveTimerForSecond += 1;
     if (self.liveTimerForSecond > self.kTimeOut) {
         if (self.isAnimation == YES) {
@@ -192,15 +195,15 @@ static CGFloat const kGiftNumberWidth = 15.0;
         self.isLeavingAnimation = YES;
         // 用 window 宽度计算飞出距离，iPad 分屏等非全屏场景下 mainScreen 宽度会偏大
         CGFloat xChanged = self.window ? CGRectGetWidth(self.window.bounds) : CGRectGetWidth([UIScreen mainScreen].bounds);
-        
+
         switch (self.hiddenMode) {
-            case LiveGiftHiddenModeLeft:
-                xChanged = -xChanged;
-                break;
-            default:
-                break;
+        case LiveGiftHiddenModeLeft:
+            xChanged = -xChanged;
+            break;
+        default:
+            break;
         }
-        
+
         if (self.hiddenMode == LiveGiftHiddenModeNone) {
             self.isLeavingAnimation = NO;
             if (self.liveGiftShowViewTimeOut) {
@@ -208,24 +211,27 @@ static CGFloat const kGiftNumberWidth = 15.0;
             }
             [self removeFromSuperview];
         } else {
-            [UIView animateWithDuration:self.kRemoveAnimationTime delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-                self.transform = CGAffineTransformTranslate(self.transform, xChanged, 0);
-            } completion:^(BOOL finished) {
-                self.isLeavingAnimation = NO;
-                if (self.liveGiftShowViewTimeOut) {
-                    self.liveGiftShowViewTimeOut(self);
+            [UIView animateWithDuration:self.kRemoveAnimationTime
+                delay:0
+                options:UIViewAnimationOptionCurveEaseIn
+                animations:^{
+                    self.transform = CGAffineTransformTranslate(self.transform, xChanged, 0);
                 }
-                [self removeFromSuperview];
-            }];
+                completion:^(BOOL finished) {
+                    self.isLeavingAnimation = NO;
+                    if (self.liveGiftShowViewTimeOut) {
+                        self.liveGiftShowViewTimeOut(self);
+                    }
+                    [self removeFromSuperview];
+                }];
         }
-        
+
         [self stopTimer];
     }
-    
 }
 
 
-- (void)setupContentContraints{
+- (void)setupContentContraints {
     // V2.0 起用系统 NSLayoutAnchor，移除 Masonry 依赖
     self.backIV.translatesAutoresizingMaskIntoConstraints = NO;
     self.iconIV.translatesAutoresizingMaskIntoConstraints = NO;
@@ -235,7 +241,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
     self.numberView.translatesAutoresizingMaskIntoConstraints = NO;
 
     // 礼物图靠左约束低优先级，右边距（随数字位数变化）优先
-    NSLayoutConstraint * giftLeft = [self.giftIV.leftAnchor constraintEqualToAnchor:self.nameLabel.rightAnchor constant:5];
+    NSLayoutConstraint *giftLeft = [self.giftIV.leftAnchor constraintEqualToAnchor:self.nameLabel.rightAnchor constant:5];
     giftLeft.priority = UILayoutPriorityDefaultHigh;
     self.giftIVRightConstraint = [self.giftIV.rightAnchor constraintEqualToAnchor:self.rightAnchor constant:-kGiftNumberWidth * 2 - 1];
 
@@ -245,16 +251,20 @@ static CGFloat const kGiftNumberWidth = 15.0;
         [self.backIV.leftAnchor constraintEqualToAnchor:self.leftAnchor],
         [self.backIV.rightAnchor constraintEqualToAnchor:self.rightAnchor],
 
-        [self.iconIV.leftAnchor constraintEqualToAnchor:self.leftAnchor constant:6],
+        [self.iconIV.leftAnchor constraintEqualToAnchor:self.leftAnchor
+                                               constant:6],
         [self.iconIV.widthAnchor constraintEqualToConstant:30],
         [self.iconIV.heightAnchor constraintEqualToConstant:30],
         [self.iconIV.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
 
-        [self.nameLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:9],
-        [self.nameLabel.leftAnchor constraintEqualToAnchor:self.iconIV.rightAnchor constant:6],
+        [self.nameLabel.topAnchor constraintEqualToAnchor:self.topAnchor
+                                                 constant:9],
+        [self.nameLabel.leftAnchor constraintEqualToAnchor:self.iconIV.rightAnchor
+                                                  constant:6],
         [self.nameLabel.widthAnchor constraintEqualToConstant:86],
 
-        [self.sendLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-9],
+        [self.sendLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor
+                                                    constant:-9],
         [self.sendLabel.leftAnchor constraintEqualToAnchor:self.nameLabel.leftAnchor],
 
         giftLeft,
@@ -263,13 +273,14 @@ static CGFloat const kGiftNumberWidth = 15.0;
         [self.giftIV.heightAnchor constraintEqualToConstant:24],
         [self.giftIV.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
 
-        [self.numberView.rightAnchor constraintEqualToAnchor:self.rightAnchor constant:-kGiftNumberWidth],
+        [self.numberView.rightAnchor constraintEqualToAnchor:self.rightAnchor
+                                                    constant:-kGiftNumberWidth],
         [self.numberView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
         [self.numberView.heightAnchor constraintEqualToAnchor:self.heightAnchor],
     ]];
 }
 
-- (UIImageView *)backIV{
+- (UIImageView *)backIV {
     if (!_backIV) {
         _backIV = [self createIV];
         _backIV.image = LiveGiftImage(@"w_liveGiftBack");
@@ -277,7 +288,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
     return _backIV;
 }
 
-- (UIImageView *)iconIV{
+- (UIImageView *)iconIV {
     if (!_iconIV) {
         _iconIV = [self createIV];
         _iconIV.image = LiveGiftImage(@"LiveDefaultIcon");
@@ -287,7 +298,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
     return _iconIV;
 }
 
-- (UILabel *)nameLabel{
+- (UILabel *)nameLabel {
     if (!_nameLabel) {
         _nameLabel = [self createLabel];
         _nameLabel.textColor = kNameLabelTextColor;
@@ -296,7 +307,7 @@ static CGFloat const kGiftNumberWidth = 15.0;
     return _nameLabel;
 }
 
-- (UILabel *)sendLabel{
+- (UILabel *)sendLabel {
     if (!_sendLabel) {
         _sendLabel = [self createLabel];
         _sendLabel.font = [UIFont systemFontOfSize:kGiftLabelFont];
@@ -306,56 +317,58 @@ static CGFloat const kGiftNumberWidth = 15.0;
 }
 
 
-- (UIImageView *)giftIV{
+- (UIImageView *)giftIV {
     if (!_giftIV) {
         _giftIV = [self createIV];
     }
     return _giftIV;
 }
 
-- (LiveGiftShowNumberView *)numberView{
+- (LiveGiftShowNumberView *)numberView {
     if (!_numberView) {
-        LiveGiftShowNumberView * nv = [[LiveGiftShowNumberView alloc]init];
+        LiveGiftShowNumberView *nv = [[LiveGiftShowNumberView alloc] init];
         [self addSubview:nv];
         _numberView = nv;
     }
     return _numberView;
 }
 
-- (UIImageView *)createIV{
-    UIImageView * iv = [[UIImageView alloc]init];
+- (UIImageView *)createIV {
+    UIImageView *iv = [[UIImageView alloc] init];
     [self addSubview:iv];
     return iv;
 }
 
-- (UILabel * )createLabel{
-    UILabel * label = [[UILabel alloc]init];
+- (UILabel *)createLabel {
+    UILabel *label = [[UILabel alloc] init];
     [self addSubview:label];
     return label;
 }
 
 
-- (NSTimer *)liveTimer{
+- (NSTimer *)liveTimer {
     if (!_liveTimer) {
         // block 版 API + weak，避免 timer 强引用 view：
         // 宿主直接移除容器时，view 不再被 runloop 拖住延迟释放
-        __weak __typeof(self)weakSelf = self;
-        _liveTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 repeats:YES block:^(NSTimer * _Nonnull timer) {
-            [weakSelf liveTimerRunning];
-        }];
+        __weak __typeof(self) weakSelf = self;
+        _liveTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                     repeats:YES
+                                                       block:^(NSTimer *_Nonnull timer) {
+                                                           [weakSelf liveTimerRunning];
+                                                       }];
         [[NSRunLoop currentRunLoop] addTimer:_liveTimer forMode:NSRunLoopCommonModes];
     }
     return _liveTimer;
 }
 
-- (void)stopTimer{
+- (void)stopTimer {
     if (_liveTimer) {
         [_liveTimer invalidate];
         _liveTimer = nil;
     }
 }
 
-- (void)dealloc{
+- (void)dealloc {
     // timer 不再强引用 self，需在视图销毁时主动停掉
     [self stopTimer];
 }

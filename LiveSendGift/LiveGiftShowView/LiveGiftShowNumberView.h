@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param numberStr 显示的数字
  */
-- (void)changeNumber:(NSInteger )numberStr;
+- (void)changeNumber:(NSInteger)numberStr;
 
 @end
 

@@ -17,11 +17,11 @@ static NSInteger kTag = 300;
 
 @interface HomeVC ()
 
-@property (nonatomic ,weak) UIButton * btn1;
-@property (nonatomic ,weak) UIButton * btn2;
-@property (nonatomic ,weak) UIButton * btn3;
-@property (nonatomic ,weak) UIButton * btn4;
-@property (nonatomic ,weak) UIButton * btn5;
+@property (nonatomic, weak) UIButton *btn1;
+@property (nonatomic, weak) UIButton *btn2;
+@property (nonatomic, weak) UIButton *btn3;
+@property (nonatomic, weak) UIButton *btn4;
+@property (nonatomic, weak) UIButton *btn5;
 
 @end
 
@@ -30,9 +30,9 @@ static NSInteger kTag = 300;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor lightGrayColor];
-    
+
     self.title = @"LiveSendGift";
-    
+
     [self btn1];
     [self btn2];
     [self btn3];
@@ -44,7 +44,7 @@ static NSInteger kTag = 300;
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     CGFloat top = self.view.safeAreaInsets.top + 20;
-    NSArray<UIButton *> *btns = @[self.btn1, self.btn2, self.btn3, self.btn4, self.btn5];
+    NSArray<UIButton *> *btns = @[ self.btn1, self.btn2, self.btn3, self.btn4, self.btn5 ];
     [btns enumerateObjectsUsingBlock:^(UIButton *btn, NSUInteger i, BOOL *stop) {
         CGRect f = btn.frame;
         f.origin.y = top + i * 50;
@@ -54,27 +54,27 @@ static NSInteger kTag = 300;
 
 - (void)goTestVC:(UIButton *)btn {
     NSLog(@"%@", btn.titleLabel.text);
-    
+
     if (btn.tag == kTag + 0) {
-        TestVC * testVC = [TestVC initWithShowMode:LiveGiftShowModeFromTopToBottom hiddenMode:LiveGiftHiddenModeLeft appearMode:LiveGiftAppearModeLeft addMode:LiveGiftAddModeQueue title:btn.titleLabel.text];
+        TestVC *testVC = [TestVC initWithShowMode:LiveGiftShowModeFromTopToBottom hiddenMode:LiveGiftHiddenModeLeft appearMode:LiveGiftAppearModeLeft addMode:LiveGiftAddModeQueue title:btn.titleLabel.text];
         [self.navigationController pushViewController:testVC animated:YES];
     } else if (btn.tag == kTag + 1) {
-        TestVC * testVC = [TestVC initWithShowMode:LiveGiftShowModeFromBottomToTop hiddenMode:LiveGiftHiddenModeRight appearMode:LiveGiftAppearModeLeft addMode:LiveGiftAddModeQueue title:btn.titleLabel.text];
+        TestVC *testVC = [TestVC initWithShowMode:LiveGiftShowModeFromBottomToTop hiddenMode:LiveGiftHiddenModeRight appearMode:LiveGiftAppearModeLeft addMode:LiveGiftAddModeQueue title:btn.titleLabel.text];
         [self.navigationController pushViewController:testVC animated:YES];
     } else if (btn.tag == kTag + 2) {
-        TestVC * testVC = [TestVC initWithShowMode:LiveGiftShowModeFromTopToBottom hiddenMode:LiveGiftHiddenModeNone appearMode:LiveGiftAppearModeNone addMode:LiveGiftAddModeReplace title:btn.titleLabel.text];
+        TestVC *testVC = [TestVC initWithShowMode:LiveGiftShowModeFromTopToBottom hiddenMode:LiveGiftHiddenModeNone appearMode:LiveGiftAppearModeNone addMode:LiveGiftAddModeReplace title:btn.titleLabel.text];
         [self.navigationController pushViewController:testVC animated:YES];
     } else if (btn.tag == kTag + 3) {
-        TestVC * testVC = [TestVC initWithShowMode:LiveGiftShowModeFromTopToBottom hiddenMode:LiveGiftHiddenModeLeft appearMode:LiveGiftAppearModeNone addMode:LiveGiftAddModeQueue title:btn.titleLabel.text canExchange:NO];
+        TestVC *testVC = [TestVC initWithShowMode:LiveGiftShowModeFromTopToBottom hiddenMode:LiveGiftHiddenModeLeft appearMode:LiveGiftAppearModeNone addMode:LiveGiftAddModeQueue title:btn.titleLabel.text canExchange:NO];
         [self.navigationController pushViewController:testVC animated:YES];
     } else if (btn.tag == kTag + 4) {
-        SwiftTestVC * swiftVC = [[SwiftTestVC alloc] init];
+        SwiftTestVC *swiftVC = [[SwiftTestVC alloc] init];
         swiftVC.title = btn.titleLabel.text;
         [self.navigationController pushViewController:swiftVC animated:YES];
     }
 }
 
-- (UIButton *)btn1{
+- (UIButton *)btn1 {
     if (!_btn1) {
         _btn1 = [self createBtnWithTag:0 title:@"左出现 左消失 自上而下 队列模式"];
         _btn1.backgroundColor = [UIColor blueColor];
@@ -82,7 +82,7 @@ static NSInteger kTag = 300;
     return _btn1;
 }
 
-- (UIButton *)btn2{
+- (UIButton *)btn2 {
     if (!_btn2) {
         _btn2 = [self createBtnWithTag:1 title:@"左出现 右消失 自下而上 队列模式"];
         _btn2.backgroundColor = [UIColor blueColor];
@@ -90,7 +90,7 @@ static NSInteger kTag = 300;
     return _btn2;
 }
 
-- (UIButton *)btn3{
+- (UIButton *)btn3 {
     if (!_btn3) {
         _btn3 = [self createBtnWithTag:2 title:@"直接出现 直接消失 自上而下 替换模式"];
         _btn3.backgroundColor = [UIColor blueColor];
@@ -98,7 +98,7 @@ static NSInteger kTag = 300;
     return _btn3;
 }
 
-- (UIButton *)btn4{
+- (UIButton *)btn4 {
     if (!_btn4) {
         _btn4 = [self createBtnWithTag:3 title:@"直接出现 左消失 自上而下 队列模式 轨道固定"];
         _btn4.backgroundColor = [UIColor blueColor];
@@ -106,7 +106,7 @@ static NSInteger kTag = 300;
     return _btn4;
 }
 
-- (UIButton *)btn5{
+- (UIButton *)btn5 {
     if (!_btn5) {
         _btn5 = [self createBtnWithTag:4 title:@"Swift 版演示 队列模式"];
         _btn5.backgroundColor = [UIColor orangeColor];
@@ -116,22 +116,22 @@ static NSInteger kTag = 300;
 
 - (UIButton *)createBtnWithTag:(NSInteger)tag title:(NSString *)title {
     CGFloat btnWidth = SCREEN.width / 3 * 2.0;
-    
+
     NSInteger number = tag;
-    
-    UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 88 + 20 + number * 50, btnWidth, 40)];
+
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 88 + 20 + number * 50, btnWidth, 40)];
     btn.backgroundColor = [UIColor randomColor];
     btn.tag = kTag + tag;
-    
+
     btn.titleLabel.adjustsFontSizeToFitWidth = YES;
     [btn setTitle:title forState:UIControlStateNormal];
-    
+
     [btn addTarget:self action:@selector(goTestVC:) forControlEvents:UIControlEventTouchUpInside];
-    
+
     [self.view addSubview:btn];
-    
+
     btn.center = CGPointMake(self.view.center.x, btn.center.y);
-    
+
     return btn;
 }
 
