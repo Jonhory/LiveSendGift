@@ -8,7 +8,10 @@ let package = Package(
         .iOS(.v12)
     ],
     products: [
-        .library(name: "LiveSendGift", targets: ["LiveSendGift"])
+        // ObjC 版（V2.x 起维护模式）
+        .library(name: "LiveSendGift", targets: ["LiveSendGift"]),
+        // Swift 版（推荐新项目使用，零三方依赖）
+        .library(name: "LiveSendGiftSwift", targets: ["LiveSendGiftSwift"])
     ],
     dependencies: [
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.0.0")
@@ -25,6 +28,19 @@ let package = Package(
                 .copy("PrivacyInfo.xcprivacy")
             ],
             publicHeadersPath: "."
+        ),
+        .target(
+            name: "LiveSendGiftSwift",
+            path: "Sources/LiveSendGiftSwift",
+            resources: [
+                .process("LiveSendGiftAssets.xcassets"),
+                .copy("PrivacyInfo.xcprivacy")
+            ]
+        ),
+        .testTarget(
+            name: "LiveSendGiftSwiftTests",
+            dependencies: ["LiveSendGiftSwift"],
+            path: "Tests/LiveSendGiftSwiftTests"
         )
     ]
 )
