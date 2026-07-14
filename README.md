@@ -151,6 +151,8 @@ giftShow.animate(with: model)  // 连击动画到 model.toNumber
 
 安装：`pod 'LiveSendGiftSwift'`，或 SPM 选择 `LiveSendGiftSwift` product。
 
+demo 首页的「**Swift 版演示 队列模式**」入口即为 Swift 版效果演示，可与 ObjC 版各模式对照。
+
 ObjC 版（`LiveSendGift`）自 V2.1 起进入维护模式，只修 bug 不加新功能。
 
 ### 安装
@@ -183,17 +185,27 @@ https://github.com/Jonhory/LiveSendGift.git
 
 ### 工程结构与打开方式
 
-本仓库同时包含 CocoaPods 工程（demo + ObjC 库）与 SPM 包（含 Swift 版），请按需选择入口：
+本仓库同时包含 CocoaPods 工程（demo + ObjC 库 + Swift 库源码）与 SPM 包，请按需选择入口：
 
-| 想看什么 | 打开方式 |
+| 想做什么 | 打开方式 |
 |---|---|
-| demo + ObjC 库（日常开发、跑模拟器） | 打开 `LiveSendGift.xcworkspace` |
-| Swift 版源码（`Sources/LiveSendGiftSwift/`，独立编译 / 跑 SPM 测试） | Xcode 菜单 File → Open 直接选择**仓库根目录文件夹**，Xcode 会以 SPM 包模式打开 |
+| 日常开发、跑 demo（含 ObjC 与 Swift 两套演示页）、跑全部测试 | 打开 `LiveSendGift.xcworkspace`，scheme 选 **`LiveSendGiftDemo`** |
+| 以 SPM 包模式独立编译 / 跑包测试 | Xcode 菜单 File → Open 直接选择**仓库根目录文件夹**，scheme 选 `LiveSendGift-Package` |
 
 注意：
 
 * 项目使用 CocoaPods，**不要单独打开 `LiveSendGift.xcodeproj`**——缺少 Pods 工程会导致 SDWebImage 头文件与链接缺失，编译报错。`.xcodeproj` 只是 workspace 的组成部分。首次打开前先执行 `pod install`。
-* Swift 版只挂在 `Package.swift` 下，**不在 workspace 的文件导航器里**。若想在同一个 workspace 中看到全部代码，可以把仓库根目录（`Package.swift` 所在文件夹）拖进 workspace 侧边栏，作为 local package reference。
+* workspace 中请使用共享 scheme **`LiveSendGiftDemo`**：本地 SPM 包的 `LiveSendGift` library product 与 app 的自动 scheme 同名，直接选 `LiveSendGift` 可能解析到包产物而无法运行/测试。
+* Swift 库源码（`Sources/LiveSendGiftSwift/`）以**同一份文件**编入 demo target，在 workspace 导航器的 `LiveSendGiftSwift` 分组下可直接查看与编辑；demo 首页的「Swift 版演示 队列模式」入口可与 ObjC 版效果对照。
+
+### 代码风格
+
+仓库根目录提供 `.clang-format`（ObjC）与 `.swift-format`（Swift）配置，提交前请格式化：
+
+```bash
+xcrun clang-format -i <改动的 .h/.m>
+xcrun swift-format format -i --configuration .swift-format <改动的 .swift>
+```
 
 ### <a id="快速使用"></a>快速使用
 * 使用的第三方库:
