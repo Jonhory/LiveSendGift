@@ -8,7 +8,6 @@
 
 
 #import "TestVC.h"
-#import "MJExtension.h"
 
 #define RGB(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]
 #define SCREEN [UIScreen mainScreen].bounds.size
@@ -29,7 +28,7 @@ static NSInteger kTag = 200;
 @property (nonatomic ,weak) LiveGiftShowCustom * customGiftShow;
 
 @property (nonatomic ,strong) NSArray <LiveGiftListModel *>* giftArr;
-@property (nonatomic ,strong) NSArray * giftDataSource;
+@property (nonatomic ,strong) NSArray <LiveGiftListModel *>* giftDataSource;
 
 @property (nonatomic, strong) LiveUserModel *firstUser;
 @property (nonatomic, strong) LiveUserModel *secondUser;
@@ -106,7 +105,7 @@ static NSInteger kTag = 200;
     }
     
     //初始化数据源
-    self.giftArr = [LiveGiftListModel mj_objectArrayWithKeyValuesArray:self.giftDataSource];
+    self.giftArr = self.giftDataSource;
 
     //弹幕视图延迟到首次使用时创建（viewDidLoad 时 safeAreaInsets 还未确定）
 
@@ -279,49 +278,23 @@ static NSInteger kTag = 200;
     return btn;
 }
 
-- (NSArray *)giftDataSource{
+- (LiveGiftListModel *)giftWithType:(NSString *)type name:(NSString *)name rewardMsg:(NSString *)rewardMsg picUrl:(NSString *)picUrl {
+    LiveGiftListModel * gift = [[LiveGiftListModel alloc]init];
+    gift.type = type;
+    gift.name = name;
+    gift.rewardMsg = rewardMsg;
+    gift.picUrl = picUrl;
+    return gift;
+}
+
+- (NSArray <LiveGiftListModel *>*)giftDataSource{
     if (!_giftDataSource) {
         _giftDataSource = @[
-            @{
-                @"name": @"松果",
-                @"rewardMsg": @"扔出一颗松果",
-                @"personSort": @"0",
-                @"goldCount": @"3",
-                @"type": @"0",
-                @"picUrl": @"http://ww3.sinaimg.cn/large/c6a1cfeagw1fbks9dl7ryj205k05kweo.jpg",
-            },
-            @{
-                @"name": @"花束",
-                @"rewardMsg": @"献上一束花",
-                @"personSort": @"6",
-                @"goldCount": @"66",
-                @"type": @"1",
-                @"picUrl": @"http://ww1.sinaimg.cn/large/c6a1cfeagw1fbksa4vf7uj205k05kaa0.jpg",
-            },
-            @{
-                @"name": @"果汁",
-                @"rewardMsg": @"递上果汁",
-                @"personSort": @"3",
-                @"goldCount": @"18",
-                @"type": @"2",
-                @"picUrl": @"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksajipb8j205k05kjri.jpg",
-            },
-            @{
-                @"name": @"棒棒糖",
-                @"rewardMsg": @"递上棒棒糖",
-                @"personSort": @"2",
-                @"goldCount": @"8",
-                @"type": @"3",
-                @"picUrl": @"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksasl9qwj205k05kt8k.jpg",
-            },
-            @{
-                @"name": @"泡泡糖",
-                @"rewardMsg": @"一起吃泡泡糖吧",
-                @"personSort": @"2",
-                @"goldCount": @"8",
-                @"type": @"4",
-                @"picUrl": @"http://a3.qpic.cn/psb?/V12A6SP10iIW9i/AL.CfLAFH*W.Ge1n*.LwpXSImK.Hm1eCMtt4rm5WvCA!/b/dFOyjUpCBwAA&bo=yADIAAAAAAABACc!&rf=viewer_4"
-            },
+            [self giftWithType:@"0" name:@"松果" rewardMsg:@"扔出一颗松果" picUrl:@"http://ww3.sinaimg.cn/large/c6a1cfeagw1fbks9dl7ryj205k05kweo.jpg"],
+            [self giftWithType:@"1" name:@"花束" rewardMsg:@"献上一束花" picUrl:@"http://ww1.sinaimg.cn/large/c6a1cfeagw1fbksa4vf7uj205k05kaa0.jpg"],
+            [self giftWithType:@"2" name:@"果汁" rewardMsg:@"递上果汁" picUrl:@"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksajipb8j205k05kjri.jpg"],
+            [self giftWithType:@"3" name:@"棒棒糖" rewardMsg:@"递上棒棒糖" picUrl:@"http://ww2.sinaimg.cn/large/c6a1cfeagw1fbksasl9qwj205k05kt8k.jpg"],
+            [self giftWithType:@"4" name:@"泡泡糖" rewardMsg:@"一起吃泡泡糖吧" picUrl:@"http://a3.qpic.cn/psb?/V12A6SP10iIW9i/AL.CfLAFH*W.Ge1n*.LwpXSImK.Hm1eCMtt4rm5WvCA!/b/dFOyjUpCBwAA&bo=yADIAAAAAAABACc!&rf=viewer_4"],
         ];
     }
     return _giftDataSource;

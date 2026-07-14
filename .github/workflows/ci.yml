@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    name: Build & Test
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pod install
+        run: pod install
+
+      - name: Build & run tests
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -workspace LiveSendGift.xcworkspace \
+            -scheme LiveSendGift \
+            -destination 'platform=iOS Simulator,name=iPhone 16'
+
+  lint:
+    name: Pod lint
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lint podspec（默认 subspec 含 SDWebImage）
+        run: pod lib lint --allow-warnings
+
+      - name: Lint Core subspec（零三方依赖）
+        run: pod lib lint --allow-warnings --subspec=Core

@@ -1,5 +1,7 @@
 ![](header.png)
 
+[![CI](https://github.com/Jonhory/LiveSendGift/actions/workflows/ci.yml/badge.svg)](https://github.com/Jonhory/LiveSendGift/actions/workflows/ci.yml)
+
 ## 感谢
 * 得益于某位不愿留名的同学的帮助，队列模式已经较好的实现了。
 * 感谢[gxtai](https://github.com/gxtai)发现并解决[内存释放](https://github.com/Jonhory/LiveSendGift/issues/20)问题
@@ -7,7 +9,7 @@
 ## 重要信息
 * **2026年07月14日 发布 V2.0.0**：破坏性升级，详见[V2.0 版本说明](#V2)。本次改动由 AI（Claude）协助推进完成。
 * 2017年09月25日18:42:00 修复了在iOS11下必现`EXC_BAD_INSTRUCTION (code=EXC_I386_INVOP, subcode=0x0)`的崩溃BUG。
-* 已知bug提示：在替换模式`LiveGiftAddModeReplace`下使用`animatedWithGiftModel`方法将导致UI效果不理想的bug。建议是`animatedWithGiftModel`方法使用于`LiveGiftAddModeAdd`模式。
+* ~~已知bug提示：在替换模式`LiveGiftAddModeReplace`下使用`animatedWithGiftModel`方法将导致UI效果不理想的bug。建议是`animatedWithGiftModel`方法使用于`LiveGiftAddModeAdd`模式。~~（V2.0 重构了连击定时器逻辑，如仍能复现请提 issue）
 * 2017年12月25日11:39:39 修复在iOS11下可能出现的`.cxx destruct`崩溃问题。
 * 2021年3月23日确认了`for`循环添加礼物时会出现后续[礼物`toNumber`变大](https://github.com/Jonhory/LiveSendGift/issues/19)的问题。<del>已提交修复代码，待开发者确认是否完全修复。</del>
 * 2021年7月12日确认并解决了[内存释放](https://github.com/Jonhory/LiveSendGift/issues/20)问题。
@@ -117,13 +119,28 @@
 * 库资源独立为 `LiveSendGiftAssets.xcassets`，三种集成方式均可正确加载图片。
 * 新增核心队列/计数逻辑的单元测试（覆盖 #17/#19/#21 的回归场景）。
 * 最低部署目标升至 iOS 12.0。
+* 全部头文件补充 nullability 标注，Swift 侧不再是隐式解包可选值。
+* 内置 `PrivacyInfo.xcprivacy` 隐私清单（零收集、零 required-reason API）。
+* **SDWebImage 变为可选依赖**：新增 `webImageLoader` 注入点，宿主可用 Kingfisher/自研加载器；CocoaPods 提供零三方依赖的 `LiveSendGift/Core` subspec。
+* demo 移除 MJExtension 依赖。
+* 新增 GitHub Actions CI（构建 + 测试 + pod lint）。
 
 ### 安装
 
 **CocoaPods**
 
 ```ruby
-pod 'LiveSendGift', '~> 2.0'
+pod 'LiveSendGift', '~> 2.0'          # 默认含 SDWebImage
+# 或者：零三方依赖，配合 webImageLoader 注入自己的图片加载
+pod 'LiveSendGift/Core', '~> 2.0'
+```
+
+使用自研/Kingfisher 等加载器时注入：
+
+```objc
+_customGiftShow.webImageLoader = ^(UIImageView *imageView, NSString *urlString, UIImage *placeholder) {
+    // 用你的图片库加载 urlString 到 imageView，placeholder 为占位图
+};
 ```
 
 **Swift Package Manager**
