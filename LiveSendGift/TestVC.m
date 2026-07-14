@@ -106,10 +106,9 @@ static NSInteger kTag = 200;
     
     //初始化数据源
     self.giftArr = [LiveGiftListModel mj_objectArrayWithKeyValuesArray:self.giftDataSource];
-    
-    //初始化弹幕视图
-    [self customGiftShow];
-    
+
+    //弹幕视图延迟到首次使用时创建（viewDidLoad 时 safeAreaInsets 还未确定）
+
     [self animateBtn];
 }
 
@@ -190,10 +189,13 @@ static NSInteger kTag = 200;
  */
 - (LiveGiftShowCustom *)customGiftShow{
     if (!_customGiftShow) {
+        //全面屏适配：首条弹幕位于安全区（含导航栏）下方 10pt，避免被返回按钮遮挡
+        CGFloat topY = self.view.safeAreaInsets.top + 10;
         if (self.showMode == LiveGiftShowModeFromBottomToTop) {
-            _customGiftShow = [LiveGiftShowCustom addToView:self.view y: (44.0 + 50.0) * 3];
+            //自下而上时弹幕向上生长，y 是最下面一条的位置，预留两行让最上面一条也在安全区内
+            _customGiftShow = [LiveGiftShowCustom addToView:self.view y: topY + (44.0 + 50.0) * 2];
         } else {
-            _customGiftShow = [LiveGiftShowCustom addToView:self.view];
+            _customGiftShow = [LiveGiftShowCustom addToView:self.view y: topY];
         }
         
         _customGiftShow.addMode = self.addMode;

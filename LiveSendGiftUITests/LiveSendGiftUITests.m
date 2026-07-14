@@ -16,155 +16,33 @@
 
 - (void)setUp {
     [super setUp];
-    
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-    
-    // In UI tests it is usually best to stop immediately when a failure occurs.
     self.continueAfterFailure = NO;
-    // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
     [[[XCUIApplication alloc] init] launch];
-    
-    // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
 }
 
-
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-
-- (void)testExample {
-    
-    
+/// 弹幕视图不应被导航栏返回按钮遮挡
+- (void)testGiftBannerBelowNavBar {
     XCUIApplication *app = [[XCUIApplication alloc] init];
-    [app.buttons[@"Go TestVC = V1.9"] tap];
-    
-    XCUIElement *firstButton = app.buttons[@"first"];
-    [firstButton tap];
-    
-    XCUIElement *secondButton = app.buttons[@"second"];
-    [secondButton tap];
-    
-    XCUIElement *thirdButton = app.buttons[@"third"];
-    [thirdButton tap];
-    
-    XCUIElement *fifthButton = app.buttons[@"fifth"];
-    [fifthButton tap];
-    [fifthButton tap];
-    [fifthButton tap];
-    [secondButton tap];
-    [firstButton tap];
-    [secondButton tap];
-    [thirdButton tap];
-    
-    XCUIElement *fourthButton = app.buttons[@"fourth"];
-    [fourthButton tap];
-    [fourthButton swipeLeft];
-    [secondButton tap];
-    [firstButton tap];
-    [firstButton tap];
-    [firstButton tap];
-    [secondButton tap];
-    [thirdButton tap];
-    [fourthButton tap];
-    [fourthButton tap];
-    [fifthButton tap];
-    [fifthButton tap];
-    [firstButton tap];
-    [firstButton tap];
-    [firstButton tap];
-    [secondButton tap];
-    [thirdButton tap];
-    [fourthButton tap];
-    [fourthButton tap];
-    [fourthButton tap];
-    [thirdButton tap];
-    [secondButton tap];
-    [secondButton tap];
-    [firstButton tap];
-    [firstButton tap];
-    [firstButton tap];
-    [firstButton tap];
-    [secondButton tap];
-    [secondButton tap];
-    [thirdButton tap];
-    [fourthButton tap];
-    [fourthButton tap];
-    [fifthButton tap];
-    [fifthButton tap];
-    [fifthButton tap];
-    [thirdButton tap];
-    [secondButton tap];
-    [firstButton tap];
-    
-//    XCUIElement *element = [[[app.otherElements containingType:XCUIElementTypeNavigationBar identifier:@"Home VC"] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element;
-//    [[[element childrenMatchingType:XCUIElementTypeOther] elementBoundByIndex:0] tap];
-//    [[element childrenMatchingType:XCUIElementTypeOther].element tap];
-//    [app.navigationBars[@"Home VC"] tap];
-    
-    // Use recording to get started writing UI tests.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+    [app.buttons[@"左出现 左消失 自上而下 队列模式"] tap];
+
+    // 进入页面后自动发送弹幕，等待第一条出现
+    XCUIElement *msg = app.staticTexts[@"扔出一颗松果"];
+    XCTAssertTrue([msg waitForExistenceWithTimeout:5], @"弹幕未出现");
+
+    // 等出现动画结束再取坐标
+    sleep(1);
+
+    XCUIElement *backButton = app.navigationBars.buttons.firstMatch;
+    CGFloat navBottom = CGRectGetMaxY(backButton.frame);
+    // sendLabel 底部距弹幕底部 9pt，弹幕高 44pt，反推弹幕顶部
+    CGFloat bannerTop = CGRectGetMaxY(msg.frame) + 9 - 44;
+
+    XCTAttachment *att = [XCTAttachment attachmentWithScreenshot:[XCUIScreen mainScreen].screenshot];
+    att.name = @"gift-banner";
+    att.lifetime = XCTAttachmentLifetimeKeepAlways;
+    [self addAttachment:att];
+
+    XCTAssertGreaterThanOrEqual(bannerTop, navBottom, @"弹幕(top=%.1f)被返回按钮(bottom=%.1f)遮挡", bannerTop, navBottom);
 }
 
-- (void)testV17 {
-    
-    XCUIApplication *app = [[XCUIApplication alloc] init];
-    [app.buttons[@"Go TestVC = V1.7"] tap];
-    
-    XCUIElement *secondButton = app.buttons[@"second"];
-    [secondButton tap];
-    
-    XCUIElement *thirdButton = app.buttons[@"third"];
-    [thirdButton tap];
-    
-    XCUIElement *firstButton = app.buttons[@"first"];
-    [firstButton tap];
-    [secondButton tap];
-    [thirdButton tap];
-    
-    XCUIElement *fourthButton = app.buttons[@"fourth"];
-    [fourthButton tap];
-    
-    XCUIElement *fifthButton = app.buttons[@"fifth"];
-    [fifthButton tap];
-    [fourthButton tap];
-    [thirdButton tap];
-    [secondButton tap];
-    [firstButton tap];
-    [secondButton tap];
-    [thirdButton tap];
-    [secondButton tap];
-    [firstButton tap];
-    [secondButton tap];
-    [secondButton tap];
-    [thirdButton tap];
-    [thirdButton tap];
-    [secondButton tap];
-    [secondButton tap];
-    [secondButton tap];
-    [secondButton tap];
-    [secondButton tap];
-    [secondButton tap];
-    [secondButton tap];
-    [secondButton tap];
-    [secondButton tap];
-    [secondButton tap];
-    [fourthButton tap];
-    [fifthButton tap];
-    [fourthButton tap];
-    [fifthButton tap];
-    [fourthButton tap];
-    [fifthButton tap];
-    [fourthButton tap];
-    [fifthButton tap];
-    [fourthButton tap];
-    [fifthButton tap];
-    [fifthButton tap];
-    [fifthButton tap];
-    [fifthButton tap];
-    [thirdButton tap];
-    [thirdButton tap];
-    [thirdButton tap];
-    
-}
 @end
