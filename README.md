@@ -284,6 +284,11 @@ LiveGiftShowModel * showModel = [LiveGiftShowModel giftModel:self.giftArr[3]
 |kGiftNumberWidth|kTimeOut|kNumberAnimationTime|kRemoveAnimationTime|
 |15.0|3|0.25|0.5|
 
-## <a id="关于我"></a>关于我
- * 如果在使用过程中遇到问题，或者想要与我分享／吐槽／建议／意见<jonhory@163.com>
+## 反馈
+
+使用过程中遇到问题或有建议，请直接在本项目提 [issue](https://github.com/Jonhory/LiveSendGift/issues)。
+
+## License
+
+本项目基于 [MIT License](LICENSE) 开源。
 
