@@ -15,7 +15,7 @@ jobs:
     name: Build & Test
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Pod install
         run: pod install
@@ -35,7 +35,7 @@ jobs:
     name: Swift 版 SPM Test
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       # 仓库根目录同时存在 workspace 与 Package.swift，
       # xcodebuild 会优先解析 workspace，故在干净目录中按 SPM 包测试
@@ -54,7 +54,7 @@ jobs:
     name: Pod lint
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: 版本一致性检查（podspec ↔ Info.plist）
         run: |
